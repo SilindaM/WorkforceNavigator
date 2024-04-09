@@ -3,6 +3,7 @@
   using AutoMapper;
   using Domain.Account;
   using Domain.Dtos.Account;
+  using Domain.Dtos.LeaveAllocation;
   using Domain.Dtos.LeaveRequest;
   using Domain.Enties.Leaves;
   using Domain.Entities;
@@ -19,6 +20,7 @@
       CreateMap<Log, GetLogDto>().ReverseMap();
       CreateMap<Message, GetMessageDto>().ReverseMap();
       CreateMap<LeaveRequest, CreateLeaveRequestDto>().ReverseMap();
+      CreateMap<LeaveAllocation, EmployeeLeaveAllocationDto>().ReverseMap();
       CreateMap<ApplicationUser, UserInfoResult>().ReverseMap();
 
     }

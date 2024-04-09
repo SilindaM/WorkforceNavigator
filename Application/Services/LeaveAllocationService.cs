@@ -19,6 +19,7 @@
   using System.Collections.Generic;
   using System.ComponentModel.DataAnnotations;
   using System.Linq;
+  using System.Security.Claims;
   using System.Text;
   using System.Threading.Tasks;
 
@@ -26,11 +27,28 @@
   {
     private readonly DataContext dataContext;
     private readonly ILogService logService;
+    private readonly IMapper mapper;
 
-    public LeaveAllocationService(DataContext dataContext,ILogService logService)
+    public LeaveAllocationService(DataContext dataContext,ILogService logService,IMapper mapper)
     {
       this.dataContext = dataContext;
       this.logService = logService;
+      this.mapper = mapper;
+    }
+    public async Task<IEnumerable<LeaveAllocationDto>> GetLeaveAllocations()
+    {
+      var leaveAllocations = await (from la in dataContext.LeaveAllocations
+                                    join u in dataContext.Users on la.Username equals u.UserName
+                                    select new LeaveAllocationDto
+                                    {
+                                      Username = u.UserName,
+                                      FirstName = u.FirstName,
+                                      LastName = u.LastName,
+                                      NumberOfDays = la.NumberOfDays,
+                                      LeaveName= la.LeaveType.Name
+                                    }).ToListAsync();
+
+      return leaveAllocations;
     }
 
     public async Task<GeneralServiceResponseDto> CreateLeaveAllocation(string username)
@@ -62,108 +80,75 @@
         return ResponseHelper.CreateResponse(true, 200, "LeaveAllocated Successfully");
     }
 
+    public async Task<IEnumerable<EmployeeLeaveAllocationDto>> GetLeaveAllocationsByUsername(string username)
+    {
+      var employee = await dataContext.Users.FirstOrDefaultAsync(x => x.UserName == username);
+      if (employee == null)
+      {
+        return (IEnumerable<EmployeeLeaveAllocationDto>)ResponseHelper.CreateResponse(false, 400, "User not found");
+      }
+      var leaveAllocations = await dataContext.LeaveAllocations
+          .Include(x => x.LeaveType) // Include related LeaveType entity
+          .Where(x => x.Username == username) // Filter by username
+          .Select(x => new EmployeeLeaveAllocationDto
+          {
+            NumberOfDays = x.NumberOfDays,
+            LeaveName = x.LeaveType.Name,
+          })
+          .ToListAsync();
+
+      return mapper.Map<IEnumerable<EmployeeLeaveAllocationDto>>(leaveAllocations);
+
+    }
+    public async Task<IEnumerable<EmployeeLeaveAllocationDto>> GetMyLeavesAllocations(ClaimsPrincipal User)
+    {
+      var employee = await dataContext.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+      if (employee == null)
+      {
+        return (IEnumerable<EmployeeLeaveAllocationDto>)ResponseHelper.CreateResponse(false, 400, "User not found");
+      }
+      var leaveAllocations = await dataContext.LeaveAllocations
+          .Include(x => x.LeaveType) // Include related LeaveType entity
+          .Where(x => x.Username == User.Identity.Name) // Filter by username
+          .Select(x => new EmployeeLeaveAllocationDto
+          {
+            NumberOfDays = x.NumberOfDays,
+            LeaveName = x.LeaveType.Name,
+          })
+          .ToListAsync();
+
+      return mapper.Map<IEnumerable<EmployeeLeaveAllocationDto>>(leaveAllocations);
+
+    }
 
 
-    //public async Task<Result<List<EmployeeLeaveAllocationDto>>> GetLeaveAllocationByLeaveType(int leaveTypeId)
-    //{
-    //  var allocation = await dataContext.LeaveAllocations
-    //      .Where(z => z.LeaveTypeId == leaveTypeId)
-    //      .FirstOrDefaultAsync();
 
-    //  if (allocation is null)
-    //  {
-    //    return Result.Fail<List<EmployeeLeaveAllocationDto>>("No leaves for the leaveTypeId");
-    //  }
+    public async Task<IEnumerable<LeaveAllocationDto>> GetLeaveAllocationsByLeaveType(string LeaveName)
+    {
+      var allocation = await dataContext.LeaveAllocations
+          .Where(z => z.LeaveType.Name == LeaveName)
+          .FirstOrDefaultAsync();
 
-    //  var leaveAllocations = dataContext.LeaveAllocations
-    //      .Include(la => la.Employee)
-    //      .Include(la => la.LeaveType)
-    //      .Where(la => la.LeaveTypeId == leaveTypeId)
-    //      .Select(la => new EmployeeLeaveAllocationDto
-    //      {
-    //        FirstName = la.Employee.FirstName,
-    //        LastName = la.Employee.LastName,
-    //        LeaveName = la.LeaveType.Name,
-    //        NumberOfDays = la.NumberOfDays
-    //      })
-    //      .ToList();
+      if (allocation is null)
+      {
+        return (IEnumerable<LeaveAllocationDto>)ResponseHelper.CreateResponse(false, 400, "No Leave Allocations for this ");
+      }
 
-    //  return Result.Ok(leaveAllocations);
-    //}
+      var leaveAllocations = await (from la in dataContext.LeaveAllocations
+                                    join u in dataContext.LeaveTypes on la.LeaveTypeId equals u.Id
+                                    join user in dataContext.Users on la.Username equals user.UserName
+                                    where (la.LeaveType.Name).Equals(LeaveName)
+                                    select new LeaveAllocationDto
+                                    {
+                                      Username = user.UserName,
+                                      FirstName = user.FirstName,
+                                      LastName = user.LastName,
+                                      NumberOfDays = la.NumberOfDays,
+                                      LeaveName = la.LeaveType.Name
+                                    }).ToListAsync();
 
-    //public async Task<Result<List<EmployeeLeaveAllocationDto>>> GetLeaveAllocationsByEmployee(int employeeId)
-    //{
-    //  var employee = await dataContext.Users.FirstOrDefaultAsync(x => x.Id == employeeId);
-    //  if (employee == null)
-    //  {
-    //    return Result.Fail(UserError.NonExistingEmployee);
-    //  }
+      return leaveAllocations;
+    }
 
-    //  var leaveAllocations = await dataContext.LeaveAllocations
-    //      .Include(x => x.Employee)
-    //      .Include(x => x.LeaveType) // Include related LeaveType
-    //      .Where(x => x.EmployeeId == employeeId) // Filter by employeeId
-    //      .ToListAsync();
-
-    //  // Map leave allocations to DTOs
-    //  var leaveAllocationDtos = leaveAllocations.Select(x => new EmployeeLeaveAllocationDto
-    //  {
-    //    FirstName = x.Employee.FirstName,
-    //    LastName = x.Employee.LastName,
-    //    LeaveName = x.LeaveType.Name,
-    //    NumberOfDays = x.NumberOfDays
-    //    // Add other properties as needed
-    //  }).ToList();
-
-    //  return Result.Ok(leaveAllocationDtos);
-    //}
-
-    //public async Task<Result<List<EmployeeLeaveAllocationDto>>> GetLeaveAllocationsByLeaveType(int leaveTypeId)
-    //{
-    //  var leaveAllocations = await dataContext.LeaveAllocations
-    //      .Where(x => x.LeaveTypeId == leaveTypeId).Include(x => x.Employee)
-    //      .Select(x => new EmployeeLeaveAllocationDto
-    //      {
-    //        FirstName = x.Employee.FirstName,
-    //        LastName = x.Employee.LastName,
-    //        LeaveName = x.LeaveType.Name,
-    //        NumberOfDays = x.NumberOfDays
-    //      })
-    //      .ToListAsync();
-
-    //  if (leaveAllocations.Count == 0)
-    //  {
-    //    return Result.Fail<List<EmployeeLeaveAllocationDto>>("No leave allocations found for the specified leave type");
-    //  }
-    //  return Result.Ok(leaveAllocations);
-    //}
-
-    //public async Task<Result<List<EmployeeLeaveAllocationDto>>> GetLeaveAllocations()
-    //{
-    //  var leaveAllocations = await dataContext.LeaveAllocations
-    //      .Include(la => la.Employee)
-    //      .Include(la => la.LeaveType)
-    //      .ToListAsync();
-
-    //  if (leaveAllocations == null)
-    //  {
-    //    return Result.Fail<List<EmployeeLeaveAllocationDto>>("Failed to retrieve leave allocations from the database.");
-    //  }
-
-    //  var leaveAllocationDtos = new List<EmployeeLeaveAllocationDto>();
-    //  foreach (var allocation in leaveAllocations)
-    //  {
-    //    var leaveAllocationDto = new EmployeeLeaveAllocationDto
-    //    {
-    //      FirstName = allocation.Employee.FirstName,
-    //      LastName = allocation.Employee.LastName,
-    //      NumberOfDays = allocation.NumberOfDays,
-    //      LeaveName = allocation.LeaveType.Name
-    //    };
-    //    leaveAllocationDtos.Add(leaveAllocationDto);
-    //  }
-
-    //  return Result.Ok(leaveAllocationDtos);
-    //}
   }
 }
