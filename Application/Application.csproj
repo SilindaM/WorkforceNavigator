@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\GenericInterfaces\" />
     <Folder Include="Services\GenericServices\" />
   </ItemGroup>
 

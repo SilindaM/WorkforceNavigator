@@ -1,5 +1,7 @@
+using Application.Interfaces;
 using Application.Interfaces.Auth;
 using Application.Mappings;
+using Application.Services;
 using Application.Services.Auth;
 using Domain.Account;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,6 +29,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddScoped<ILogService, LogService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ILeaveRequestService, LeaveRequestService>();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
