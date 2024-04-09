@@ -12,9 +12,12 @@
     public string LeaveName { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    public DateTime RequestedDate { get; set; }
     public Status Status { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    public string UserName { get; set; }
     public int NumberOfDays { get; set; }
+
   }
 }

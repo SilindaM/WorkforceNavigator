@@ -33,6 +33,32 @@
       this.dataContext = dataContext;
       this.logService = logService;
     }
+    public async Task<IEnumerable<LeaveRequestDto>> GetAllLeaveRequests()
+    {
+      var leaveRequests = await (from request in dataContext.LeaveRequests
+                                 join user in dataContext.Users on request.UserName equals user.UserName
+                                 join leaveType in dataContext.LeaveTypes on request.LeaveTypeId equals leaveType.Id
+                                 where !request.IsDeleted
+                                 select new LeaveRequestDto
+                                 {
+                                   FirstName = user.FirstName,
+                                   LastName = user.LastName,
+                                   NumberOfDays = request.NumberOfDays,
+                                   LeaveName = leaveType.Name,
+                                   StartDate = request.StartDate,
+                                   EndDate = request.EndDate,
+                                   Status = request.Status,
+                                   RequestedDate = request.DateRequested,
+                                 }).ToListAsync();
+
+      if (leaveRequests == null)
+      {
+        return (IEnumerable<LeaveRequestDto>)ResponseHelper.CreateResponse(false, 400, "LeaveRequest Empty");
+      }
+
+      return leaveRequests;
+    }
+
 
     public async Task<GeneralServiceResponseDto> CreateLeaveRequest(ClaimsPrincipal user, CreateLeaveRequestDto createLeaveRequestDto)
     {
@@ -341,6 +367,31 @@
       await dataContext.SaveChangesAsync();
 
       return Result.Ok();
+    }
+
+    public async Task<IEnumerable<LeaveRequestDto>> GetLeaveRequestsByUser(string username)
+    {
+      var employee = await dataContext.Users.FirstOrDefaultAsync(x => x.UserName == username);
+      if (employee == null)
+      {
+        return (IEnumerable<LeaveRequestDto>)ResponseHelper.CreateResponse(false, 400, "User not found");
+      }
+      var leaveAllocations = await dataContext.LeaveRequests
+          .Include(x => x.LeaveType) // Include related LeaveType entity
+          .Where(x => x.UserName == username) // Filter by username
+          .Select(x => new LeaveRequestDto
+          {
+            NumberOfDays = x.NumberOfDays,
+            LeaveName = x.LeaveType.Name,
+            UserName = x.UserName,
+            EndDate = x.EndDate,
+            RequestedDate= x.DateRequested,
+            StartDate = x.StartDate,
+            Status = x.Status,
+          })
+          .ToListAsync();
+
+      return leaveAllocations;
     }
     //    private async Task<Result<int>> AddLeaveDays(string UserName, int leaveTypeId, int days)
     //    {
