@@ -1,6 +1,7 @@
 ﻿select * from Users;
 select * from AspNetRoles
 select * from AspNetUserRoles
+select * from LeaveTypes
 
 UPDATE AspNetUserRoles
 SET RoleId = '47bdab0c-2297-4b9a-a786-43fbe7c338b9'

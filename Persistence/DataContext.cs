@@ -2,10 +2,13 @@
 namespace Persistence
 {
   using Domain.Account;
+  using Domain.Enties;
+  using Domain.Enties.Leaves;
   using Domain.Entities;
   using Microsoft.AspNetCore.Identity;
   using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
   using Microsoft.EntityFrameworkCore;
+  using Department = Domain.Enties.Department;
 
   public class DataContext : IdentityDbContext<ApplicationUser>
     {
@@ -14,6 +17,12 @@ namespace Persistence
         }
     public DbSet<Log> Logs { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<JobTitle> JobTitles { get; set; }
+    public DbSet<Department> Departments { get; set; }
+    public DbSet<LeaveRequest> LeaveRequests { get; set; }
+    public DbSet<LeaveType> LeaveTypes { get; set; }
+    public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);
