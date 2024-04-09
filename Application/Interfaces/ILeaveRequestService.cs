@@ -11,8 +11,8 @@
 
   public interface ILeaveRequestService
   {
-    //Task<IEnumerable<LeaveRequestDto>> GetAllLeaveRequests();
-    ////Task<IEnumerable<LeaveRequestDto>> GetLeaveRequestsByEmployee(int employeeId);
+    Task<IEnumerable<LeaveRequestDto>> GetAllLeaveRequests();
+    Task<IEnumerable<LeaveRequestDto>> GetLeaveRequestsByUser(string username);
     ////Task<IEnumerable<LeaveRequestDto>> GetLeaveRequestsById(int requestId);
     Task<GeneralServiceResponseDto> CreateLeaveRequest(ClaimsPrincipal User,CreateLeaveRequestDto createLeaveRequestDto);
     //Task<IEnumerable<GeneralServiceResponseDto>> UpdateLeaveRequest(ClaimsPrincipal User, int leaveRequestId, UpdateLeaveRequestDto updateLeaveRequestDto);
