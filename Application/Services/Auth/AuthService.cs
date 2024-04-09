@@ -1,6 +1,7 @@
 ﻿namespace Application.Services.Auth
 {
   using Application.Helpers;
+  using Application.Interfaces;
   using Application.Interfaces.Auth;
   using Domain.Account;
   using Domain.Constants;
@@ -26,13 +27,15 @@
     private readonly IConfiguration configuration;
     private readonly RoleManager<IdentityRole> roleManager;
     private readonly ILogService logService;
+    private readonly ILeaveAllocationService leaveAllocationService;
 
-    public AuthService(UserManager<ApplicationUser> userManager,IConfiguration configuration, RoleManager<IdentityRole> roleManager, ILogService logService)
+    public AuthService(UserManager<ApplicationUser> userManager,IConfiguration configuration, RoleManager<IdentityRole> roleManager, ILogService logService,ILeaveAllocationService leaveAllocationService)
     {
       this.userManager = userManager;
       this.configuration = configuration;
       this.roleManager = roleManager;
       this.logService = logService;
+      this.leaveAllocationService = leaveAllocationService;
     }
 
     public async Task<UserInfoResult> GetUserDetailsByUserNamesync(string userName)
@@ -137,6 +140,7 @@
       }
       await userManager.AddToRoleAsync(user,StaticUserRoles.USER);
       await logService.SaveNewLog(user.UserName, "Registed");
+      await leaveAllocationService.CreateLeaveAllocation(registerDto.Username);
       return ResponseHelper.CreateResponse(true, 201, "User Registed Successfully");
     }
 

@@ -1,5 +1,6 @@
 namespace Application.Interfaces
 {
+  using Domain.Dtos.General;
   using Domain.Dtos.LeaveAllocation;
   using Domain.Enties.Leaves;
   using FluentResults;
@@ -12,9 +13,9 @@ namespace Application.Interfaces
 
   public interface ILeaveAllocationService
   {
-    Task<Result<List<EmployeeLeaveAllocationDto>>> GetLeaveAllocationsByEmployee(int employeeId);
-    Task<Result<List<EmployeeLeaveAllocationDto>>> GetLeaveAllocations();
-    Task<Result<List<EmployeeLeaveAllocationDto>>> GetLeaveAllocationsByLeaveType(int leaveTypeId);
-    Task<Result<int>> CreateLeaveAllocation(int createLeaveAllocation);
+    //Task<Result<List<EmployeeLeaveAllocationDto>>> GetLeaveAllocationsByEmployee(int employeeId);
+    //Task<Result<List<EmployeeLeaveAllocationDto>>> GetLeaveAllocations();
+    //Task<Result<List<EmployeeLeaveAllocationDto>>> GetLeaveAllocationsByLeaveType(int leaveTypeId);
+    Task<GeneralServiceResponseDto> CreateLeaveAllocation(string username);
   }
 }
