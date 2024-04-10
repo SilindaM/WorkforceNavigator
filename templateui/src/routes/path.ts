@@ -19,4 +19,9 @@ export const PATH_PUBLIC = {
     admin: '/dashboard/admin',
     manager: '/dashboard/manager',
     user: '/dashboard/user',
+
+    allocationByusername: '/dashboard/allocations/username',
+    myAllocation: '/dashboard/my-allocations',
+    allLeaveAllocations: '/dashboard/all-leaveAllocations',
+    allocationByLeaveName: '/dashboard/allocation-leavename',
   };

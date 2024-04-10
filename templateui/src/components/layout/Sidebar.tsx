@@ -10,6 +10,8 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isLogDropdownVisible, setLogDropdownVisible] = useState(false);
+  const [isLeaveAllocationDropdownVisible, setLeaveAllocationDropdownVisible] =
+    useState(false);
 
   const handleClick = (url: string) => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -20,6 +22,9 @@ const Sidebar = () => {
   };
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
+  };
+  const toggleLeaveAllocationDropdown = () => {
+    setLeaveAllocationDropdownVisible(!isLeaveAllocationDropdownVisible);
   };
 
   return (
@@ -66,8 +71,7 @@ const Sidebar = () => {
         variant="secondary"
       />
       {isLogDropdownVisible && (
-       
-       <div className="dropdown-menu">
+        <div className="dropdown-menu">
           <Button
             label="My Logs"
             onClick={() => handleClick(PATH_DASHBOARD.myLogs)}
@@ -82,7 +86,28 @@ const Sidebar = () => {
           />
         </div>
       )}
-
+      <Button
+        label="LeaveAllocations"
+        onClick={toggleLeaveAllocationDropdown}
+        type="button"
+        variant="primary"
+      />
+      {isLeaveAllocationDropdownVisible && (
+        <div className="dropdown-menu">
+        <Button
+          label="All Leave Allocations"
+          onClick={() => handleClick(PATH_DASHBOARD.allLeaveAllocations)}
+          type="button"
+          variant="secondary"
+        />
+        <Button
+          label="All Leave Allocations"
+          onClick={() => handleClick(PATH_DASHBOARD.allLeaveAllocations)}
+          type="button"
+          variant="secondary"
+        />
+        </div>
+      )}
       <Button
         label="Owner Page"
         onClick={() => handleClick(PATH_DASHBOARD.owner)}
