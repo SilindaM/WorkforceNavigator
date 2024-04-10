@@ -95,7 +95,7 @@
     public async Task<ActionResult<UserInfoResult>> GetUserDetailsByUsername([FromRoute] string username)
     {
       var user = await authService.GetUserDetailsByUserNamesync(username);
-      if(user is null)
+      if(user is not null)
       {
         return Ok(user);
       }

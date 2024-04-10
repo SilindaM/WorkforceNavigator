@@ -13,11 +13,11 @@
   {
     Task<IEnumerable<LeaveRequestDto>> GetAllLeaveRequests();
     Task<IEnumerable<LeaveRequestDto>> GetLeaveRequestsByUser(string username);
-    ////Task<IEnumerable<LeaveRequestDto>> GetLeaveRequestsById(int requestId);
+    Task<LeaveRequestDto> GetLeaveRequestsById(int requestId);
     Task<GeneralServiceResponseDto> CreateLeaveRequest(ClaimsPrincipal User,CreateLeaveRequestDto createLeaveRequestDto);
-    //Task<IEnumerable<GeneralServiceResponseDto>> UpdateLeaveRequest(ClaimsPrincipal User, int leaveRequestId, UpdateLeaveRequestDto updateLeaveRequestDto);
-    //Task<IEnumerable<bool>> DeleteLeaveRequest(int leaveRequestId);
-    //Task<IEnumerable<bool>> ProcessLeaveRequest(int leaveRequestId, Status status);
+    Task<GeneralServiceResponseDto> UpdateLeaveRequest(ClaimsPrincipal User, int leaveRequestId, UpdateLeaveRequestDto updateLeaveRequestDto);
+    Task<GeneralServiceResponseDto> DeleteLeaveRequest(ClaimsPrincipal User,int leaveRequestId);
+    Task<GeneralServiceResponseDto> ProcessLeaveRequest(ClaimsPrincipal User, int leaveRequestId, Status status);
   }
 }
 //079 81 63 585
