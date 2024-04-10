@@ -28,8 +28,7 @@
     private readonly DataContext dataContext;
     private readonly ILogService logService;
 
-    public LeaveRequestService(DataContext dataContext,ILogService logService)
-    {
+    public LeaveRequestService(DataContext dataContext,ILogService logService) { 
       this.dataContext = dataContext;
       this.logService = logService;
     }
@@ -90,7 +89,7 @@
         return (GeneralServiceResponseDto)ResponseHelper.CreateResponse(false, 400, "You don't have enough days for the applied leave");
       }
       // Check for overlapping leave requests within the specified range
-      var overlappingLeave = await CheckForOverlappingLeaveRequest(user,createLeaveRequestDto);
+      var overlappingLeave = await CheckForOverlappingLeaveRequest(user,createLeaveRequestDto.StartDate,createLeaveRequestDto.EndDate);
 
       if (overlappingLeave != null)
       {
@@ -115,44 +114,40 @@
       await dataContext.SaveChangesAsync();
 
       dataContext.LeaveAllocations.Update(allocation);
-      await DeductLeaveDays(user, createLeaveRequestDto.LeaveTypeId, requestedDays);
+      await DeductLeaveDays(user.Identity.Name, createLeaveRequestDto.LeaveTypeId, requestedDays);
       await logService.SaveNewLog(user.Identity.Name, "Leave Request");
       await dataContext.SaveChangesAsync();
 
       return (GeneralServiceResponseDto)ResponseHelper.CreateResponse(true, 200, "LeaveRequestCreatedSuccessfully"); // Return the created leave request DTO
     }
-    //    public async Task<IEnumerable<bool>> DeleteLeaveRequest(ClaimsPrincipal User,int leaveRequestId)
-    //    {
-    //      try
-    //      {
-    //        // Attempt to find the leave request with the given ID
-    //        var leaveRequest = await dataContext.LeaveRequests
-    //            .Include(lr => lr.UserName) // Include related entities if needed
-    //            .Include(lr => lr.LeaveType) // Include related entities if needed
-    //            .FirstOrDefaultAsync(lr => lr.Id == leaveRequestId);
+    public async Task<GeneralServiceResponseDto> DeleteLeaveRequest(ClaimsPrincipal User, int leaveRequestId)
+    {
+      try
+      {
+        
+        var leaveRequest = await dataContext.LeaveRequests
+            .FirstOrDefaultAsync(lr => lr.Id == leaveRequestId);
 
-    //        if (leaveRequest == null)
-    //        {
-    //          // Leave request not found
-    //          return (IEnumerable<bool>)ResponseHelper.CreateResponse(false, 400, "Leave request not found.");
-    //        }
+        if (leaveRequest == null)
+        {
+          // Leave request not found
+          return ResponseHelper.CreateResponse(false, 400, "Leave request not found.");
+        }
 
-    //        // Mark the leave request as deleted
-    //        leaveRequest.IsDeleted = true;
-    //        await AddLeaveDays(User.Identity.Name, leaveRequest.LeaveType.Id, leaveRequest.NumberOfDays);
-
-    //        // Save changes to the database
-    //        await dataContext.SaveChangesAsync();
-
-    //        // Return success result
-    //        return (IEnumerable<bool>)ResponseHelper.CreateResponse(false, 400, "Delete Successfully");
-    //      }
-    //      catch (Exception ex)
-    //      {
-    //        // Log the exception or handle it as needed
-    //        return (IEnumerable<bool>)ResponseHelper.CreateResponse(false, 400,ex.Message);
-    //      }
-    //    }
+        // delete the leave request
+        dataContext.LeaveRequests.Remove(leaveRequest);
+        // Save changes to the database
+        await dataContext.SaveChangesAsync();
+        await AddLeaveDays(leaveRequest.UserName, leaveRequest.LeaveTypeId, leaveRequest.NumberOfDays);
+        // Return success result
+        return ResponseHelper.CreateResponse(false, 400, "Delete Successfully");
+      }
+      catch (Exception ex)
+      {
+        // Log the exception or handle it as needed
+        return ResponseHelper.CreateResponse(false, 400, ex.Message);
+      }
+    }
 
     //    public async Task<IEnumerable<LeaveRequestDto>> GetAllLeaveRequests()
     //    {
@@ -209,152 +204,141 @@
     //    return leaveRequestDtos;
     //}
 
-    //    public async Task<IEnumerable<LeaveRequestDto>> GetLeaveRequestsById(int requestId)
-    //    {
-    //      var requests = await dataContext.LeaveRequests
-    //        .Where(z => z.Id == requestId)
-    //        .FirstOrDefaultAsync();
+    public async Task<LeaveRequestDto> GetLeaveRequestsById(int requestId)
+    {
+      var leaveRequests = await (from request in dataContext.LeaveRequests
+                                 join user in dataContext.Users on request.UserName equals user.UserName
+                                 join leaveType in dataContext.LeaveTypes on request.LeaveTypeId equals leaveType.Id
+                                 where request.Id == requestId // Filter by requestId
+                                 select new LeaveRequestDto
+                                 {
+                                   FirstName = user.FirstName,
+                                   LastName = user.LastName,
+                                   LeaveName = leaveType.Name,
+                                   NumberOfDays = request.NumberOfDays,
+                                   UserName = user.UserName,
+                                   EndDate = request.EndDate,
+                                   RequestedDate = request.StartDate,
+                                   StartDate = request.StartDate,
+                                   Status = request.Status
+                                 }).FirstOrDefaultAsync();
 
-    //      if (requests is null)
-    //      {
-    //        return (IEnumerable<LeaveRequestDto>)ResponseHelper.CreateResponse(false, 400, "No leaves for the requestId");
-    //      }
-    //      var leaveRequests = dataContext.LeaveRequests
-    //          .Include(la => la.ApplicationUser)
-    //          .Include(la => la.LeaveType)
-    //          .Where(la => la.Id == requestId)
-    //          .Select(la => new LeaveRequestDto
-    //          {
-    //            FirstName = la.ApplicationUser.FirstName,
-    //            LastName = la.ApplicationUser.LastName,
-    //            LeaveName = la.LeaveType.Name,
-    //            NumberOfDays = la.NumberOfDays
-    //          })
-    //      .ToList();
+      return leaveRequests;
+    }
 
-    //      return mapper.Map<IEnumerable<LeaveRequestDto>>(leaveRequests);
-    //    }
-    //    public async Task<IEnumerable<bool>> ProcessLeaveRequest(int leaveRequestId, Status status)
-    //    {
-    //      // Fetch the actual entity from the database
-    //      var leaveRequestEntity = await dataContext.LeaveRequests.FindAsync(leaveRequestId);
-    //      if (leaveRequestEntity == null )
-    //      {
-    //        // If the entity is null or IsDeleted is true, return an appropriate error message
-    //        return (IEnumerable<bool>)ResponseHelper.CreateResponse(false, 400, "Leave request not found.");
-    //      }
-    //      if (leaveRequestEntity.IsDeleted == true)
-    //      {
-    //        // If the entity is null or IsDeleted is true, return an appropriate error message
-    //        return (IEnumerable<bool>)ResponseHelper.CreateResponse(false, 400, "The leave request has been deleted and cannot be processed.");
-    //      }
+    public async Task<GeneralServiceResponseDto> ProcessLeaveRequest(ClaimsPrincipal User,int leaveRequestId, Status status)
+    {
+      // Fetch the actual entity from the database
+      var leaveRequestEntity = await dataContext.LeaveRequests.FindAsync(leaveRequestId);
 
-    //      // Update the status of the entity
-    //      leaveRequestEntity.Status = status;
-    //      //get the employeeId
-    //      var leaveRequestDetails = await dataContext.LeaveRequests
-    //     .Include(la => la.ApplicationUser)
-    //     .Where(lr => lr.Id == leaveRequestId) // Correctly filter by leaveRequestId
-    //     .Select(x => new { x.UserName, x.LeaveType.Id, x.NumberOfDays })
-    //     .SingleOrDefaultAsync();
+      //user cannot approve their own leave 
+      if (leaveRequestEntity.UserName == User.Identity.Name)
+      {
+        return ResponseHelper.CreateResponse(false, 400, "You cannot process your own leave request");
+      }
+      if (leaveRequestEntity == null)
+      {
+        // If the entity is null or IsDeleted is true, return an appropriate error message
+        return ResponseHelper.CreateResponse(false, 400, "Leave request not found.");
+      }
+      if (leaveRequestEntity.IsDeleted == true)
+      {
+        // If the entity is null or IsDeleted is true, return an appropriate error message
+        return (GeneralServiceResponseDto)ResponseHelper.CreateResponse(false, 400, "The leave request has been deleted and cannot be processed.");
+      }
 
+      // Update the status of the entity
+      leaveRequestEntity.Status = status;
+      //get the employeeId
+      var leaveRequestDetails = await dataContext.LeaveRequests.Where(x => x.Id == leaveRequestId).FirstOrDefaultAsync();
+    
 
-    //      if (status == Status.Declined)
-    //      {
-    //        await AddLeaveDays(leaveRequestDetails.UserName, leaveRequestDetails.Id, leaveRequestEntity.NumberOfDays);
-    //      }
-    //      else if (status == Status.Approved)
-    //      {
-    //        await DeductLeaveDays(leaveRequestDetails.ApplicationUserId, leaveRequestDetails.Id, leaveRequestEntity.NumberOfDays);
-    //      }
-    //      // Save the updated entity to the database
-    //      await dataContext.SaveChangesAsync();
+      if (status == Status.Declined)
+      {
+        await AddLeaveDays(leaveRequestDetails.UserName, leaveRequestDetails.Id, leaveRequestEntity.NumberOfDays);
+      }
+      else if (status == Status.Approved)
+      {
+        await DeductLeaveDays(leaveRequestDetails.UserName, leaveRequestDetails.Id, leaveRequestEntity.NumberOfDays);
+      }
+      // Save the updated entity to the database
+      await dataContext.SaveChangesAsync();
 
-    //      return (IEnumerable<bool>)ResponseHelper.CreateResponse(true, 200, "Leave Processes Succesasfully");
-    //    }
+      return (GeneralServiceResponseDto)ResponseHelper.CreateResponse(true, 200, "Leave Processed Succesasfully");
+    }
 
+    public async Task<GeneralServiceResponseDto> UpdateLeaveRequest(ClaimsPrincipal user, int leaveRequestId, UpdateLeaveRequestDto updateLeaveRequestDto)
+    {
+      // Get the original leave request
+      var leaveRequest = await dataContext.LeaveRequests.FindAsync(leaveRequestId);
+      if (leaveRequest == null)
+      {
+        return (GeneralServiceResponseDto)ResponseHelper.CreateResponse(true, 200, "Leave request not found");
+      }
 
-    //    public async Task<IEnumerable<GeneralServiceResponseDto>> UpdateLeaveRequest(ClaimsPrincipal user, int leaveRequestId, UpdateLeaveRequestDto updateLeaveRequestDto)
-    //    {
-    //      // Get the original leave request
-    //      var leaveRequest = await dataContext.LeaveRequests.FindAsync(leaveRequestId);
-    //      if (leaveRequest == null)
-    //      {
-    //        return (IEnumerable<GeneralServiceResponseDto>)ResponseHelper.CreateResponse(true, 200, "Leave request not found");
-    //      }
+      // Check if available days are sufficient
+      var result = await CheckAvailableDays(user, updateLeaveRequestDto.StartDate, updateLeaveRequestDto.EndDate);
+      if (!result.IsSuccess)
+      {
+        return (GeneralServiceResponseDto)ResponseHelper.CreateResponse(true, 200, result.Errors.First().Message);
+      }
 
-    //      // Check if available days are sufficient
-    //      var result = await CheckAvailableDays(leaveRequest.ApplicationUserId, updateLeaveRequestDto.StartDate, updateLeaveRequestDto.EndDate);
-    //      if (!result.IsSuccess)
-    //      {
-    //        return (IEnumerable<GeneralServiceResponseDto>)ResponseHelper.CreateResponse(true, 200, result.Errors.First().Message);
-    //      }
-    //      // Check for overlapping leave requests within the specified range
-    //      CreateLeaveRequestDto requestDto = new CreateLeaveRequestDto
-    //      {
-    //        ApplicationUserId = dataContext.Users
-    //    .Where(user => user.UserName.Equals(user.UserName))
-    //    .Select(user => user.Id)
-    //    .FirstOrDefault(),
-    //      StartDate = updateLeaveRequestDto.StartDate,
-    //        EndDate = updateLeaveRequestDto.EndDate,
-    //        LeaveTypeId = leaveRequest.LeaveType.Id,
-    //        NumberOfDays = leaveRequest.NumberOfDays,
-    //      };
-    //      var overlappingLeave = await CheckForOverlappingLeaveRequest(requestDto);
+      // Assuming 'User' is a ClaimsPrincipal object
+      string specificUsername = user.FindFirstValue(ClaimTypes.Name);
 
-    //      if (overlappingLeave != null)
-    //      {
-    //        return (IEnumerable<GeneralServiceResponseDto>)ResponseHelper.CreateResponse(true, 200, "Leave Overlaps With Existing Leave Application");
-    //      }
+      var overlappingLeave = await CheckForOverlappingLeaveRequest(user, updateLeaveRequestDto.StartDate, updateLeaveRequestDto.EndDate);
 
-    //      // Subtract number of days from allocation
-    //      await AddLeaveDays(leaveRequest.ApplicationUserId, leaveRequest.LeaveType.Id, leaveRequest.NumberOfDays);
-    //      // Update the leave request
-    //      leaveRequest.StartDate = updateLeaveRequestDto.StartDate;
-    //      leaveRequest.EndDate = updateLeaveRequestDto.EndDate;
-    //      leaveRequest.Status = Status.Pending;
+      if (overlappingLeave != null)
+      {
+        return (GeneralServiceResponseDto)ResponseHelper.CreateResponse(true, 200, "Leave Overlaps With Existing Leave Application");
+      }
 
-    //      dataContext.LeaveRequests.Update(leaveRequest);
-    //      await dataContext.SaveChangesAsync();
+      // Subtract number of days from allocation
+      await AddLeaveDays(leaveRequest.UserName, leaveRequest.LeaveTypeId, leaveRequest.NumberOfDays);
+      // Update the leave request
+      leaveRequest.StartDate = updateLeaveRequestDto.StartDate;
+      leaveRequest.EndDate = updateLeaveRequestDto.EndDate;
+      leaveRequest.Status = Status.Pending;
 
-    //      return (IEnumerable<GeneralServiceResponseDto>)ResponseHelper.CreateResponse(true, 200, "Leave updated successfully");
-    //    }
-    //    private async Task<Result> CheckAvailableDays(int employeeId, DateTime startDate, DateTime endDate)
-    //    {
-    //      var allocation = await dataContext.LeaveAllocations
-    //          .Where(x => x.ApplicationUserId == employeeId)
-    //          .FirstOrDefaultAsync();
+      dataContext.LeaveRequests.Update(leaveRequest);
+      await dataContext.SaveChangesAsync();
 
-    //      if (allocation == null)
-    //      {
-    //        return Result.Fail("Leave Type not allocated for the user");
-    //      }
+      return (GeneralServiceResponseDto)ResponseHelper.CreateResponse(true, 200, "Leave updated successfully");
+    }
+    private async Task<Result> CheckAvailableDays(ClaimsPrincipal User, DateTime startDate, DateTime endDate)
+    {
+      var allocation = await dataContext.LeaveAllocations
+          .Where(x => x.Username == User.Identity.Name)
+          .FirstOrDefaultAsync();
 
-    //      int requestedDays = (int)(endDate - startDate).TotalDays;
+      if (allocation == null)
+      {
+        return Result.Fail("Leave Type not allocated for the user");
+      }
 
-    //      if (requestedDays > allocation.NumberOfDays)
-    //      {
-    //        return Result.Fail("You don't have enough days for the applied leave");
-    //      }
+      int requestedDays = (int)(endDate - startDate).TotalDays;
 
-    //      return Result.Ok();
-    //    }
-    private async Task<LeaveRequest> CheckForOverlappingLeaveRequest(ClaimsPrincipal user,CreateLeaveRequestDto createLeaveRequestDto)
+      if (requestedDays > allocation.NumberOfDays)
+      {
+        return Result.Fail("You don't have enough days for the applied leave");
+      }
+
+      return Result.Ok();
+    }
+    private async Task<LeaveRequest> CheckForOverlappingLeaveRequest(ClaimsPrincipal user, DateTime StartDate,DateTime EndDate)
     {
       // Check for overlapping leave requests within the specified range
       var overlaps = await this.dataContext.LeaveRequests
-          .Where(x => x.UserName.Equals(user.Identity.Name) &&
-                      x.LeaveType.Id == createLeaveRequestDto.LeaveTypeId &&
-                      ((x.StartDate <= createLeaveRequestDto.StartDate && x.EndDate >= createLeaveRequestDto.StartDate) ||
-                       (x.StartDate <= createLeaveRequestDto.EndDate && x.EndDate >= createLeaveRequestDto.EndDate)))
+          .Where(x => x.UserName.Equals(user.Identity.Name)  &&
+                      ((x.StartDate <= StartDate && x.EndDate >= StartDate) ||
+                       (x.StartDate <=  EndDate && x.EndDate >= EndDate)))
           .FirstOrDefaultAsync();
       return overlaps;
     }
-    private async Task<Result> DeductLeaveDays(ClaimsPrincipal user, int leaveTypeId, int days)
+    private async Task<Result> DeductLeaveDays(string username, int leaveTypeId, int days)
     {
       var allocation = await dataContext.LeaveAllocations
-          .Where(x => x.Username == user.Identity.Name && x.LeaveType.Id == leaveTypeId)
+          .Where(x => x.Username == username && x.LeaveType.Id == leaveTypeId)
           .FirstOrDefaultAsync();
 
       if (allocation == null)
@@ -393,22 +377,22 @@
 
       return leaveAllocations;
     }
-    //    private async Task<Result<int>> AddLeaveDays(string UserName, int leaveTypeId, int days)
-    //    {
-    //      var allocation = await dataContext.LeaveAllocations
-    //          .Where(x => x.ApplicationUserId == employeeId && x.LeaveType.Id == leaveTypeId)
-    //          .FirstOrDefaultAsync();
+    private async Task<Result<int>> AddLeaveDays(string username, int leaveTypeId, int days)
+    {
+      var allocation = await dataContext.LeaveAllocations
+          .Where(x => x.Username == username && x.LeaveType.Id == leaveTypeId)
+          .FirstOrDefaultAsync();
 
-    //      if (allocation == null)
-    //      {
-    //        return Result.Fail<int>("Leave Type not allocated for the user");
-    //      }
+      if (allocation == null)
+      {
+        return Result.Fail<int>("Leave Type not allocated for the user");
+      }
 
-    //      allocation.NumberOfDays += days; // Add days back to the allocation
-    //      dataContext.LeaveAllocations.Update(allocation);
-    //      await dataContext.SaveChangesAsync();
+      allocation.NumberOfDays += days; // Add days back to the allocation
+      dataContext.LeaveAllocations.Update(allocation);
+      await dataContext.SaveChangesAsync();
 
-    //      return Result.Ok(allocation.NumberOfDays); // Return the updated number of days
-    //    }
+      return Result.Ok(allocation.NumberOfDays); // Return the updated number of days
+    }
   }
 }
