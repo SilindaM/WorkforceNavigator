@@ -20,6 +20,10 @@ import UpdateRolePage from '../pages/dashboard/UpdateRolePage';
 import UserManagementPage from '../pages/dashboard/UserManagementPage';
 import OwnerPage from '../pages/dashboard/OwnerPage';
 import NotFoundPage from '../pages/public/NotFoundPage';
+import MyLeaveAllocationsPage from '../pages/dashboard/LeaveAllocations/MyLeaveAllocationsPage';
+import LeaveAllocationByUserNamePage from '../pages/dashboard/LeaveAllocations/LeaveAllocationByUserNamePage';
+import AllocationByLeaveNamePage from '../pages/dashboard/LeaveAllocations/AllocationByLeaveNamePage';
+import AllAllocationPage from '../pages/dashboard/LeaveAllocations/AllAllocationPage';
 
 const GlobalRouter = () => {
     return (
@@ -42,10 +46,10 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.user} element={<UserPage />} />
 
             
-            <Route path={PATH_DASHBOARD.allLeaveAllocations} element={<UserPage />} />
-            <Route path={PATH_DASHBOARD.allocationByLeaveName} element={<UserPage />} />
-            <Route path={PATH_DASHBOARD.myAllocation} element={<UserPage />} />
-            <Route path={PATH_DASHBOARD.allocationByusername} element={<UserPage />} />
+            <Route path={PATH_DASHBOARD.allLeaveAllocations} element={<AllAllocationPage />} />
+            <Route path={PATH_DASHBOARD.allocationByLeaveName} element={<AllocationByLeaveNamePage/>} />
+            <Route path={PATH_DASHBOARD.myAllocation} element={<MyLeaveAllocationsPage/>} />
+            <Route path={PATH_DASHBOARD.allocationByusername} element={<LeaveAllocationByUserNamePage />} />
           </Route>
 
           {/* Manager access roles */}
