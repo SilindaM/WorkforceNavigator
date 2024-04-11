@@ -10,8 +10,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isLogDropdownVisible, setLogDropdownVisible] = useState(false);
-  const [isLeaveAllocationDropdownVisible, setLeaveAllocationDropdownVisible] =
-    useState(false);
+  const [isLeaveAllocationDropdownVisible, setLeaveAllocationDropdownVisible] =useState(false);
 
   const handleClick = (url: string) => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -86,26 +85,38 @@ const Sidebar = () => {
           />
         </div>
       )}
-      <Button
-        label="LeaveAllocations"
+     <Button
+        label="Leave Allocations"
         onClick={toggleLeaveAllocationDropdown}
         type="button"
         variant="primary"
       />
       {isLeaveAllocationDropdownVisible && (
         <div className="dropdown-menu">
-        <Button
-          label="All Leave Allocations"
-          onClick={() => handleClick(PATH_DASHBOARD.allLeaveAllocations)}
-          type="button"
-          variant="secondary"
-        />
-        <Button
-          label="All Leave Allocations"
-          onClick={() => handleClick(PATH_DASHBOARD.allLeaveAllocations)}
-          type="button"
-          variant="secondary"
-        />
+          <Button
+            label="Allocations"
+            onClick={() => handleClick(PATH_DASHBOARD.allLeaveAllocations)}
+            type="button"
+            variant="secondary"
+          />
+          <Button
+            label="ByLeaveName"
+            onClick={() => handleClick(PATH_DASHBOARD.allocationByLeaveName)}
+            type="button"
+            variant="secondary"
+          />
+          <Button
+            label="ByUserName"
+            onClick={() => handleClick(PATH_DASHBOARD.allocationByusername)}
+            type="button"
+            variant="secondary"
+          />
+          <Button
+            label="My Allocation"
+            onClick={() => handleClick(PATH_DASHBOARD.myAllocation)}
+            type="button"
+            variant="secondary"
+          />
         </div>
       )}
       <Button
