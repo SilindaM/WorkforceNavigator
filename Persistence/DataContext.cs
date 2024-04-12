@@ -25,7 +25,14 @@ namespace Persistence
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+
       base.OnModelCreating(builder);
+
+      builder.Entity<JobTitle>()
+        .HasOne(x=>x.Department)
+        .WithMany(c=> c.JobTitles)
+        .HasForeignKey(x=>x.DepartmentId)
+        .OnDelete(DeleteBehavior.Restrict);
 
       builder.Entity<ApplicationUser>(e =>
       {

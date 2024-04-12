@@ -1,20 +1,16 @@
-﻿using FluentResults;
-using System;
-using System.Collections.Generic;
-
-namespace Application.Services.GenericInterfaces
+﻿namespace Application.Interfaces.GenericInterfaces
 {
+  using Domain.Dtos.General;
 
   public interface IGenericService<TEntity, TDto>
      where TEntity : class
      where TDto : class
   {
-    Task <Result<TDto>> CreateAsync(TDto entityDto);
-    Task<Result<List<TDto>>> GetAllAsync();
-    Task <Result<TDto>>UpdateAsync(int id, TDto updatedEntityDto);
-    Task<Result<bool>> SoftDelete(int id);
-    Task<Result<TDto>> GetByIdAsync(int id);
-    // Task<string> GetUserIdAsync(int id);
+    Task <GeneralServiceResponseDto> CreateAsync(TDto entityDto);
+    Task<IEnumerable<TDto>> GetAllAsync();
+    Task <GeneralServiceResponseDto>UpdateAsync(int id, TDto updatedEntityDto);
+    Task<GeneralServiceResponseDto> SoftDelete(int id);
+    Task<TDto> GetByIdAsync(int id);
+    Task<GeneralServiceResponseDto> UndoSoftDeleteAsync(int id); // New method
   }
-
 }

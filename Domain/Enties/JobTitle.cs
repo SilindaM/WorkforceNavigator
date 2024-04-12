@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Account;
+using Domain.Entities;
 using Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,11 @@ namespace Domain.Enties
     {
         public string Title { get; set; }
         public string Description { get; set; }
+    public Seniority Seniority { get; set; }
 
-        public int DepartmentId { get; set; }
-        }
-
+    public int DepartmentId { get; set; }
+        public Department Department { get; set; }
+    // Navigation property to Employee
+    public ICollection<ApplicationUser> Users { get; set; }
+  }
 }

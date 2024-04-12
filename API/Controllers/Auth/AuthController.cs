@@ -1,8 +1,11 @@
 ﻿namespace API.Controllers.Auth
 {
+  using Application.Interfaces;
   using Application.Interfaces.Auth;
+  using Application.Services.Auth;
   using Domain.Constants;
   using Domain.Dtos.Account;
+  using Domain.Dtos.JobTitles;
   using Microsoft.AspNetCore.Authorization;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
@@ -12,10 +15,38 @@
   public class AuthController : ControllerBase
   {
     private readonly IAuthService authService;
+    private readonly IUserJobTitleService userJobTitleService;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService,IUserJobTitleService userJobTitleService)
     {
       this.authService = authService;
+      this.userJobTitleService = userJobTitleService;
+    }
+    [HttpPost]
+    [Authorize]
+    [Route("AssignJobTitle")]
+    public async Task<IActionResult> AssignJobTitle(string username,int jobTitleId)
+    {
+      var result = await userJobTitleService.AssignJobTitleToUser(User,username, jobTitleId);
+      if (result.IsSucceed)
+      {
+        return Ok(result.Message);
+      }
+      return StatusCode(result.StatusCode, result.Message);
+    }
+    [HttpGet]
+    [Route("jobtitle/{username}")]
+    public async Task<ActionResult<JobTitleDto>> GetJobTitleByUsername([FromRoute] string username)
+    {
+      var user = await userJobTitleService.GetJobTitleForUser(username);
+      if (user is not null)
+      {
+        return Ok(user);
+      }
+      else
+      {
+        return NotFound("Username not found");
+      }
     }
 
     [HttpPost]
