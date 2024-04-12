@@ -11,5 +11,7 @@ namespace Domain.Enties
     {
         public string DepartmentName { get; set; }
         public string Description { get; set; }
-    }
+    // Navigation property to access the associated job titles
+    public ICollection<JobTitle> JobTitles { get; set; }
+  }
 }

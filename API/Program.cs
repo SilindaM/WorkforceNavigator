@@ -1,8 +1,10 @@
 using Application.Interfaces;
 using Application.Interfaces.Auth;
+using Application.Interfaces.GenericInterfaces;
 using Application.Mappings;
 using Application.Services;
 using Application.Services.Auth;
+using Application.Services.GenericServices;
 using Domain.Account;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -31,6 +33,8 @@ builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ILeaveRequestService, LeaveRequestService>();
 builder.Services.AddScoped<ILeaveAllocationService, LeaveAllocationService>();
+builder.Services.AddScoped<IUserJobTitleService, UserJobTitleService>();
+builder.Services.AddScoped(typeof(IGenericService<,>), typeof(GenericService<,>));
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {

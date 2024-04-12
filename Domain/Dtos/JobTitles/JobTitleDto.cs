@@ -11,5 +11,6 @@ namespace Domain.Dtos.JobTitles
   {
     public string Title { get; set; }
     public string DepartmentName { get; set; }
+    public string Seniority { get; set; }
   }
 }

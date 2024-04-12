@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Enties;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Account
@@ -10,5 +11,8 @@ namespace Domain.Account
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     [NotMapped]
     public IList<string> Roles { get; set; }
+
+    public int? JobTitleId { get; set; }
+    public JobTitle JobTitle { get; set; }
   }
 }

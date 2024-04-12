@@ -1,7 +1,6 @@
 ﻿namespace API.Controllers.Maintanance
 {
   using Application.Services;
-  using Application.Services.GenericInterfaces;
   using Domain.Dtos.LeaveAllocation;
   using Domain.Enties.Leaves;
   using Microsoft.AspNetCore.Mvc;
@@ -71,6 +70,5 @@
      
       return Ok(result);
     }
-
   }
 }
