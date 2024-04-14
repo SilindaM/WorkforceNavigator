@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react"
-import { IMessageDto, ISendMessageDto } from "../../types/message.type"
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { useEffect, useState } from "react";
+import { IMessageDto, ISendMessageDto } from "../../../types/message.type";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 import { useForm } from "react-hook-form";
-import axiosInstance from "../../utils/axiosInstance";
-import { CREATE_MESSAGE_URL, USERNAMES_LIST_URL } from "../../utils/globalConfig";
+import axiosInstance from "../../../utils/axiosInstance";
+import {
+  CREATE_MESSAGE_URL,
+  USERNAMES_LIST_URL,
+} from "../../../utils/globalConfig";
 import toast from "react-hot-toast";
-import { PATH_DASHBOARD } from "../../routes/path";
-import Spinner from "../../components/general/Spinner";
-import UsernamesComboBox from "../../components/dashboard/sendmessage/UsernameComboBox";
+import { PATH_DASHBOARD } from "../../../routes/path";
+import Spinner from "../../../components/general/Spinner";
+import UsernamesComboBox from "../../../components/dashboard/sendmessage/UsernameComboBox";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/general/Button";
-import InputField from "../../components/general/InputField";
-
+import Button from "../../../components/general/Button";
+import InputField from "../../../components/general/InputField";
 
 const SendMessagePage = () => {
   const [usernames, setUsernames] = useState<string[]>([]);
@@ -20,8 +22,10 @@ const SendMessagePage = () => {
   const navigate = useNavigate();
 
   const sendMessageSchema = Yup.object().shape({
-    receiverUserName: Yup.string().required('User Name is required').oneOf(usernames, 'Invalid username'),
-    text: Yup.string().required('Message Text is required'),
+    receiverUserName: Yup.string()
+      .required("User Name is required")
+      .oneOf(usernames, "Invalid username"),
+    text: Yup.string().required("Message Text is required"),
   });
 
   const {
@@ -32,8 +36,8 @@ const SendMessagePage = () => {
   } = useForm<ISendMessageDto>({
     resolver: yupResolver(sendMessageSchema),
     defaultValues: {
-      receiverUserName: '',
-      text: '',
+      receiverUserName: "",
+      text: "",
     },
   });
 
@@ -45,7 +49,7 @@ const SendMessagePage = () => {
       setUsernames(data);
       setLoading(false);
     } catch (error) {
-      toast.error('An Error happened. Please Contact admins');
+      toast.error("An Error happened. Please Contact admins");
       setLoading(false);
     }
   };
@@ -63,7 +67,7 @@ const SendMessagePage = () => {
       };
       await axiosInstance.post(CREATE_MESSAGE_URL, newMessage);
       setLoading(false);
-      toast.success('Your message Sent successfully.');
+      toast.success("Your message Sent successfully.");
       navigate(PATH_DASHBOARD.inbox);
     } catch (error) {
       setLoading(false);
@@ -72,38 +76,53 @@ const SendMessagePage = () => {
       if (err.status === 400) {
         toast.error(err.data);
       } else {
-        toast.error('An Error occurred. Please contact admins');
+        toast.error("An Error occurred. Please contact admins");
       }
     }
   };
 
   if (loading) {
     return (
-      <div className='w-full'>
+      <div className="w-full">
         <Spinner />
       </div>
     );
   }
 
   return (
-    <div className='pageTemplate2'>
-      <h1 className='text-2xl font-bold'>Send Message</h1>
-      <div className='pageTemplate3 items-stretch'>
+    <>
+      <div className="pageTemplate3 items-stretch">
         <form onSubmit={handleSubmit(onSubmitSendMessageForm)}>
           <UsernamesComboBox
             usernames={usernames}
             control={control}
-            name='receiverUserName'
+            name="receiverUserName"
             error={errors.receiverUserName?.message}
           />
-          <InputField control={control} label='Text' inputName='text' error={errors.text?.message} />
-          <div className='flex justify-center items-center gap-4 mt-6'>
-            <Button variant='secondary' type='button' label='Discard' onClick={() => navigate(PATH_DASHBOARD.inbox)} />
-            <Button variant='primary' type='submit' label='Send' onClick={() => {}} loading={loading} />
+          <InputField
+            control={control}
+            label="Text"
+            inputName="text"
+            error={errors.text?.message}
+          />
+          <div className="flex justify-center items-center gap-4 mt-6">
+            <Button
+              variant="secondary"
+              type="button"
+              label="Discard"
+              onClick={() => navigate(PATH_DASHBOARD.inbox)}
+            />
+            <Button
+              variant="primary"
+              type="submit"
+              label="Send"
+              onClick={() => {}}
+              loading={loading}
+            />
           </div>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 

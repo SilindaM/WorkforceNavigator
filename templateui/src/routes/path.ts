@@ -11,6 +11,7 @@ export const PATH_PUBLIC = {
     usersManagement: '/dashboard/users-management',
     updateRole: '/dashboard/update-role/:userName',
     sendMessage: '/dashboard/send-message',
+    manageMessage: '/dashboard/managem-essages',
     inbox: '/dashboard/inbox',
     allMessages: '/dashboard/all-messages',
     systemLogs: '/dashboard/system-logs',

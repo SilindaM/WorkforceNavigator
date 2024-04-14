@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { IconType } from 'react-icons';
+import { Container } from 'semantic-ui-react';
 
 interface IProps {
   role: string;
@@ -10,7 +11,7 @@ interface IProps {
 
 const PageAccessTemplate = ({ role, icon: Icon, color, children }: IProps) => {
   return (
-    <div className='pageTemplate3' style={{ borderColor: color }}>
+    <Container fluid>
       <section className='w-full flex justify-center items-center gap-8'>
         <div>{<Icon className='text-6xl' style={{ color: color }} />}</div>
 
@@ -20,7 +21,7 @@ const PageAccessTemplate = ({ role, icon: Icon, color, children }: IProps) => {
         </div>
       </section>
       <section>{children}</section>
-    </div>
+    </Container>
   );
 };
 

@@ -9,13 +9,13 @@ import AuthGuard from '../auth/AuthGuard';
 import { adminAccessRoles, allAccessRoles, managerAccessRoles, ownerAccessRoles } from '../auth/auth.utils';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import UserPage from '../pages/dashboard/UserPage';
-import InboxPage from '../pages/dashboard/InboxPage';
+import InboxPage from '../pages/dashboard/Messages/InboxPage';
 import MyLogsPage from '../pages/dashboard/MyLogsPage';
-import SendMessagePage from '../pages/dashboard/SendMessagePage';
+import SendMessagePage from '../pages/dashboard/Messages/SendMessagePage';
 import ManagerPage from '../pages/dashboard/ManagerPage';
 import AdminPage from '../pages/dashboard/AdminPage';
 import SystemLogsPage from '../pages/dashboard/SystemLogsPage';
-import AllMessagesPage from '../pages/dashboard/AllMessagesPage';
+import AllMessagesPage from '../pages/dashboard/Messages/AllMessagesPage';
 import UpdateRolePage from '../pages/dashboard/UpdateRolePage';
 import UserManagementPage from '../pages/dashboard/UserManagementPage';
 import OwnerPage from '../pages/dashboard/OwnerPage';
@@ -24,6 +24,7 @@ import MyLeaveAllocationsPage from '../pages/dashboard/LeaveAllocations/MyLeaveA
 import LeaveAllocationByUserNamePage from '../pages/dashboard/LeaveAllocations/LeaveAllocationByUserNamePage';
 import AllocationByLeaveNamePage from '../pages/dashboard/LeaveAllocations/AllocationByLeaveNamePage';
 import AllAllocationPage from '../pages/dashboard/LeaveAllocations/AllAllocationPage';
+import ManageMessagesPage from '../pages/dashboard/Messages/ManageMessagesPage';
 
 const GlobalRouter = () => {
     return (
@@ -41,6 +42,7 @@ const GlobalRouter = () => {
           <Route element={<AuthGuard roles={allAccessRoles} />}>
             <Route path={PATH_DASHBOARD.dashboard} element={<DashboardPage />} />
             <Route path={PATH_DASHBOARD.sendMessage} element={<SendMessagePage />} />
+            <Route path={PATH_DASHBOARD.manageMessage} element={<ManageMessagesPage />} />
             <Route path={PATH_DASHBOARD.inbox} element={<InboxPage />} />
             <Route path={PATH_DASHBOARD.myLogs} element={<MyLogsPage />} />
             <Route path={PATH_DASHBOARD.user} element={<UserPage />} />
