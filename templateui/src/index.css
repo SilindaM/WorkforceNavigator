@@ -1,5 +1,4 @@
 @tailwind base;
-@import '~bootstrap/scss/bootstrap';
 @layer base {
   body {
     @apply min-h-screen bg-gray-100;
@@ -21,5 +20,28 @@
   }
 }
 /* The following line can be included in a src/App.scss */
-
+.dropdown {
+  position: relative;
+  display: inline-block;
+ }
+ 
+ .dropdown-menu {
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+ }
+ 
+ .dropdown-menu a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+ }
+ 
+ .dropdown-menu a:hover {background-color: #f1f1f1}
+ 
 @tailwind utilities;

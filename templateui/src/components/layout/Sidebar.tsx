@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useAuth from "../../hooks/useAuth.hook";
 import { useNavigate } from "react-router-dom";
 import { CiUser } from "react-icons/ci";
@@ -8,22 +8,10 @@ import { PATH_DASHBOARD } from "../../routes/path";
 const Sidebar = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [isLogDropdownVisible, setLogDropdownVisible] = useState(false);
-  const [isLeaveAllocationDropdownVisible, setLeaveAllocationDropdownVisible] =useState(false);
 
-  const handleClick = (url: string) => {
+  const handleClick = (url:string) => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     navigate(url);
-  };
-  const toggleLogDropdown = () => {
-    setLogDropdownVisible(!isLogDropdownVisible);
-  };
-  const toggleDropdown = () => {
-    setIsDropdownVisible(!isDropdownVisible);
-  };
-  const toggleLeaveAllocationDropdown = () => {
-    setLeaveAllocationDropdownVisible(!isLeaveAllocationDropdownVisible);
   };
 
   return (
@@ -35,90 +23,49 @@ const Sidebar = () => {
           {user?.lastName}
         </h4>
       </div>
+
       <Button
-        label="Message"
-        onClick={toggleDropdown}
+        label="Manage Message"
+        onClick={() => handleClick(PATH_DASHBOARD.manageMessage)}
         type="button"
         variant="secondary"
       />
-      {isDropdownVisible && (
-        <div className="dropdown-menu">
-          <Button
-            label="Send Message"
-            onClick={() => handleClick(PATH_DASHBOARD.sendMessage)}
-            type="button"
-            variant="secondary"
-          />
-          <Button
-            label="All Messages"
-            onClick={() => handleClick(PATH_DASHBOARD.allMessages)}
-            type="button"
-            variant="secondary"
-          />
-          <Button
-            label="Inbox"
-            onClick={() => handleClick(PATH_DASHBOARD.inbox)}
-            type="button"
-            variant="secondary"
-          />
-        </div>
-      )}
       <Button
-        label="Logs"
-        onClick={toggleLogDropdown}
+        label="My Logs"
+        onClick={() => handleClick(PATH_DASHBOARD.myLogs)}
         type="button"
         variant="secondary"
       />
-      {isLogDropdownVisible && (
-        <div className="dropdown-menu">
-          <Button
-            label="My Logs"
-            onClick={() => handleClick(PATH_DASHBOARD.myLogs)}
-            type="button"
-            variant="secondary"
-          />
-          <Button
-            label="All Logs"
-            onClick={() => handleClick(PATH_DASHBOARD.systemLogs)}
-            type="button"
-            variant="secondary"
-          />
-        </div>
-      )}
-     <Button
+      <Button
+        label="All Logs"
+        onClick={() => handleClick(PATH_DASHBOARD.systemLogs)}
+        type="button"
+        variant="secondary"
+      />
+      <Button
         label="Leave Allocations"
-        onClick={toggleLeaveAllocationDropdown}
+        onClick={() => handleClick(PATH_DASHBOARD.allLeaveAllocations)}
         type="button"
         variant="primary"
       />
-      {isLeaveAllocationDropdownVisible && (
-        <div className="dropdown-menu">
-          <Button
-            label="Allocations"
-            onClick={() => handleClick(PATH_DASHBOARD.allLeaveAllocations)}
-            type="button"
-            variant="secondary"
-          />
-          <Button
-            label="ByLeaveName"
-            onClick={() => handleClick(PATH_DASHBOARD.allocationByLeaveName)}
-            type="button"
-            variant="secondary"
-          />
-          <Button
-            label="ByUserName"
-            onClick={() => handleClick(PATH_DASHBOARD.allocationByusername)}
-            type="button"
-            variant="secondary"
-          />
-          <Button
-            label="My Allocation"
-            onClick={() => handleClick(PATH_DASHBOARD.myAllocation)}
-            type="button"
-            variant="secondary"
-          />
-        </div>
-      )}
+      <Button
+        label="By Leave Name"
+        onClick={() => handleClick(PATH_DASHBOARD.allocationByLeaveName)}
+        type="button"
+        variant="secondary"
+      />
+      <Button
+        label="By User Name"
+        onClick={() => handleClick(PATH_DASHBOARD.allocationByusername)}
+        type="button"
+        variant="secondary"
+      />
+      <Button
+        label="My Allocation"
+        onClick={() => handleClick(PATH_DASHBOARD.myAllocation)}
+        type="button"
+        variant="secondary"
+      />
       <Button
         label="Owner Page"
         onClick={() => handleClick(PATH_DASHBOARD.owner)}

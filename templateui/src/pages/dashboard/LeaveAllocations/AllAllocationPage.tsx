@@ -4,8 +4,9 @@ import axiosInstance from '../../../utils/axiosInstance';
 import { ALL_LEAVE_ALLOCATIONS } from '../../../utils/globalConfig';
 import toast from 'react-hot-toast';
 import Spinner from '../../../components/general/Spinner';
-import { Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Table } from 'semantic-ui-react';
+import { MdInput, MdOutput } from 'react-icons/md';
 const AllAllocationPage = () => {
 
   const [leaveAllocation,setLeaveAllocations] = useState<ILeaveAllocationDto[]>([]);
@@ -34,37 +35,28 @@ const AllAllocationPage = () => {
     )
   }
   return (
-    <div className="pageTemplate2">
-    <Table striped="columns">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
+    <div>
+      <div className='pageTemplate3 items-stretch'>
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>No Of Days</Table.HeaderCell>
+              <Table.HeaderCell>Leave Name</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <tbody>
+            {leaveAllocation.map((item) => (
+              <tr key={item.Id}>
+               
+                <Table.Cell>{item.NumberOfDays}</Table.Cell>
+                <Table.Cell>{item.LeaveName}</Table.Cell>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
     </div>
   );
-}
+};
+
 export default AllAllocationPage
