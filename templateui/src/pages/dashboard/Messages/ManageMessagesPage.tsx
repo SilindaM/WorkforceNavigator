@@ -11,10 +11,11 @@ import {
 } from "semantic-ui-react";
 import InboxPage from "./InboxPage";
 import SendMessagePage from "./SendMessagePage";
+import UserDetails from "../User/UserDetails";
 
 const ManageMessagesPage = () => {
  return (
-    <Container fluid className="mt-4">
+    <Container fluid className="pageTemplate3">
       <Grid columns={2}>
         <GridColumn>
           <Segment raised>
@@ -29,9 +30,8 @@ const ManageMessagesPage = () => {
             <SendMessagePage/>
           </Segment>
           <Segment raised>
-            <Header as='h2' textAlign='center'>Send Message</Header>
-            <SendMessagePage/>
-            <SendMessagePage/>
+            <Header as='h2' textAlign='center'>User Details</Header>
+            <UserDetails/>
           </Segment>
         </GridColumn>
       </Grid>

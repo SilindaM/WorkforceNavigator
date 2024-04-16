@@ -27,6 +27,7 @@ import AllAllocationPage from '../pages/dashboard/LeaveAllocations/AllAllocation
 import ManageMessagesPage from '../pages/dashboard/Messages/ManageMessagesPage';
 import SignUpPage from '../pages/public/SignUpPage';
 import { AppBar } from '@mui/material';
+import ManageLeavesPage from '../pages/dashboard/LeaveAllocations/ManageLeavesPage';
 
 const GlobalRouter = () => {
     return (
@@ -45,6 +46,7 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.dashboard} element={<DashboardPage />} />
             <Route path={PATH_DASHBOARD.sendMessage} element={<SendMessagePage />} />
             <Route path={PATH_DASHBOARD.manageMessage} element={<ManageMessagesPage />} />
+            <Route path={PATH_DASHBOARD.manageLeaves} element={<ManageLeavesPage />} />
             <Route path={PATH_DASHBOARD.inbox} element={<InboxPage />} />
             <Route path={PATH_DASHBOARD.myLogs} element={<MyLogsPage />} />
             <Route path={PATH_DASHBOARD.user} element={<UserPage />} />

@@ -92,7 +92,7 @@ const SendMessagePage = () => {
 
   return (
     <>
-      <div className="pageTemplate2">
+      <div className=" ">
         <form onSubmit={handleSubmit(onSubmitSendMessageForm)}>
           <UsernamesComboBox
             usernames={usernames}

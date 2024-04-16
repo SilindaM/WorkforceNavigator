@@ -14,6 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import FamilyRestroomIcon from '@mui/icons-material/FamilyRestroom';
 import SendIcon from '@mui/icons-material/Send';
 import { PATH_DASHBOARD } from '../../routes/path';
 import { useNavigate } from 'react-router-dom';
@@ -136,26 +137,26 @@ export default function NavSideBar() {
               startIcon={<InboxIcon />}
               onClick={() => {
                 window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                navigate(PATH_DASHBOARD.inbox);
+                navigate(PATH_DASHBOARD.manageMessage);
               }}
             >
-              Inbox
+              Manage Messages
             </Button>
+          </Box>
+          <Box sx={{ p: 2 }}>
             {/* Button with icon */}
-            <Box sx={{ mt: 2 }}>
-              <Button
-                variant="outlined"
-                fullWidth
-                sx={{ height: '60px' }} // Adjust the height as needed
-                startIcon={<SendIcon />}
-                onClick={() => {
-                  window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                  navigate(PATH_DASHBOARD.sendMessage);
-                }}
-              >
-                Send Message
-              </Button>
-            </Box>
+            <Button
+              variant="outlined"
+              fullWidth
+              sx={{ height: '60px' }} // Adjust the height as needed
+              startIcon={<FamilyRestroomIcon />}
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                navigate(PATH_DASHBOARD.manageLeaves);
+              }}
+            >
+              Leave Management
+            </Button>
           </Box>
         </Drawer>
       </Box>
