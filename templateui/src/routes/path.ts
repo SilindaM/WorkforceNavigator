@@ -1,5 +1,5 @@
 export const PATH_PUBLIC = {
-    home: '/',
+    home: '/login',
     register: 'register',
     login: 'login',
     unauthorized: '/unauthorized',
@@ -11,7 +11,8 @@ export const PATH_PUBLIC = {
     usersManagement: '/dashboard/users-management',
     updateRole: '/dashboard/update-role/:userName',
     sendMessage: '/dashboard/send-message',
-    manageMessage: '/dashboard/managem-essages',
+    manageMessage: '/dashboard/manageMessages',
+    manageLeaves: '/dashboard/manageLeaves',
     inbox: '/dashboard/inbox',
     allMessages: '/dashboard/all-messages',
     systemLogs: '/dashboard/system-logs',

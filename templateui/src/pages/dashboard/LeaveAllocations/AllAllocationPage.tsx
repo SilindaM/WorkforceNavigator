@@ -46,10 +46,12 @@ const AllAllocationPage = () => {
           </Table.Header>
           <tbody>
             {leaveAllocation.map((item) => (
-              <tr key={item.Id}>
-               
+              <tr key={item.Username}>
+                 <Table.Cell>{item.NumberOfDays}</Table.Cell>
+               <Table.Cell>{item.LeaveName}</Table.Cell>
                 <Table.Cell>{item.NumberOfDays}</Table.Cell>
                 <Table.Cell>{item.LeaveName}</Table.Cell>
+                <Table.Cell>{item.Username}</Table.Cell>
               </tr>
             ))}
           </tbody>

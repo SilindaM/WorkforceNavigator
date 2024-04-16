@@ -1,7 +1,7 @@
 import useAuth from '../../hooks/useAuth.hook';
 import { Outlet, useLocation } from 'react-router-dom';
-import Sidebar from './Sidebar';
 import Header from './header';
+import NavSideBar from '../../pages/dashboard/NavSideBar';
 
 const Layout = () => {
     const {isAuthenticated}=useAuth();
@@ -11,14 +11,13 @@ const Layout = () => {
     
     const sideBarRender=()=>{
         if(isAuthenticated && pathname.toLocaleLowerCase().startsWith('/dashboard')){
-            return <Sidebar/>
+            return <NavSideBar/>
         }
         return null;
     }
   return (
     <div>
         <div>
-            <Header/>
             <div className='flex'>
                 {sideBarRender()}
                 <Outlet/>

@@ -15,6 +15,7 @@ import UsernamesComboBox from "../../../components/dashboard/sendmessage/Usernam
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/general/Button";
 import InputField from "../../../components/general/InputField";
+import '../../../style.css'
 
 const SendMessagePage = () => {
   const [usernames, setUsernames] = useState<string[]>([]);
@@ -91,7 +92,7 @@ const SendMessagePage = () => {
 
   return (
     <>
-      <div className="pageTemplate3 items-stretch">
+      <div className=" ">
         <form onSubmit={handleSubmit(onSubmitSendMessageForm)}>
           <UsernamesComboBox
             usernames={usernames}

@@ -9,4 +9,7 @@
     align-items: stretch; /* Equivalent to items-stretch */
     gap: 8px; /* Equivalent to gap-8 */
   }
-  
+  .templateElement {
+    margin: 30%;
+    background-color: black;
+  }

@@ -7,7 +7,9 @@ import moment from 'moment';
 import { MdInput, MdOutput } from 'react-icons/md';
 import useAuth from '../../../hooks/useAuth.hook';
 import { IMessageDto } from '../../../types/message.type';
-import { Table } from 'semantic-ui-react';
+import { TableContainer, Paper, TableHead, Link } from '@mui/material';
+import { Table, TableRow, TableCell, TableBody } from 'semantic-ui-react';
+import { Title } from 'chart.js';
 
 const InboxPage = () => {
   const { user } = useAuth();
@@ -40,38 +42,30 @@ const InboxPage = () => {
   }
 
   return (
-    <div>
-      <div className='pageTemplate3 items-stretch'>
-        <Table celled>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Date</Table.HeaderCell>
-              <Table.HeaderCell>Type</Table.HeaderCell>
-              <Table.HeaderCell>Text</Table.HeaderCell>
-              <Table.HeaderCell>Sender</Table.HeaderCell>
-              <Table.HeaderCell>Receiver</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <tbody>
-            {messages.map((item) => (
-              <tr key={item.id}>
-                <Table.Cell>{moment(item.createdAt).fromNow()}</Table.Cell>
-                <Table.Cell>
-                  {item.senderUserName === user?.userName ? (
-                    <MdOutput className='text-2xl text-purple-500' />
-                  ) : (
-                    <MdInput className='text-2xl text-green-500' />
-                  )}
-                </Table.Cell>
-                <Table.Cell>{item.text}</Table.Cell>
-                <Table.Cell>{item.senderUserName}</Table.Cell>
-                <Table.Cell>{item.receiverUserName}</Table.Cell>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
-    </div>
+    <React.Fragment>
+    <Table size="small">
+      <TableHead>
+        <TableRow>
+          <TableCell>Id</TableCell>
+          <TableCell>Receiver Name</TableCell>
+          <TableCell>Sender Name</TableCell>
+          <TableCell align="right">Message</TableCell>
+          <TableCell>Date Sent</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {messages.map((row) => (
+          <TableRow key={row.id}>
+            <TableCell>{row.id}</TableCell>
+            <TableCell>{row.receiverUserName}</TableCell>
+            <TableCell>{row.senderUserName}</TableCell>
+            <TableCell>{row.text}</TableCell>
+            <TableCell>{row.createdAt}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  </React.Fragment>
   );
 };
 
