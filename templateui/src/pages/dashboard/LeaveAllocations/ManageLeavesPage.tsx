@@ -3,6 +3,7 @@ import { Container, Grid, GridColumn, Segment, Header } from 'semantic-ui-react'
 import InboxPage from '../Messages/InboxPage'
 import SendMessagePage from '../Messages/SendMessagePage'
 import UserDetails from '../User/UserDetails'
+import MyLeaveAllocationsPage from './MyLeaveAllocationsPage'
 
 const ManageLeavesPage = () => {
   return (    <Container fluid className="pageTemplate3">
@@ -10,7 +11,7 @@ const ManageLeavesPage = () => {
     <GridColumn>
       <Segment raised>
         <Header as='h2' textAlign='center'>My Allocated Leave</Header>
-        <InboxPage />
+        <MyLeaveAllocationsPage />
       </Segment>
     </GridColumn>
 
