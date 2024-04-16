@@ -1,5 +1,5 @@
 export const PATH_PUBLIC = {
-    home: '/',
+    home: '/login',
     register: 'register',
     login: 'login',
     unauthorized: '/unauthorized',

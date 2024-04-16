@@ -25,6 +25,8 @@ import LeaveAllocationByUserNamePage from '../pages/dashboard/LeaveAllocations/L
 import AllocationByLeaveNamePage from '../pages/dashboard/LeaveAllocations/AllocationByLeaveNamePage';
 import AllAllocationPage from '../pages/dashboard/LeaveAllocations/AllAllocationPage';
 import ManageMessagesPage from '../pages/dashboard/Messages/ManageMessagesPage';
+import SignUpPage from '../pages/public/SignUpPage';
+import { AppBar } from '@mui/material';
 
 const GlobalRouter = () => {
     return (
@@ -34,7 +36,7 @@ const GlobalRouter = () => {
           {/* Public routes */}
           <Route index element={<HomePage />} />
           <Route path={PATH_PUBLIC.login} element={<LoginPage />} />
-          <Route path={PATH_PUBLIC.register} element={<RegisterPage />} />
+          <Route path={PATH_PUBLIC.register} element={<SignUpPage />} />
           <Route path={PATH_PUBLIC.unauthorized} element={<UnauthorizedPage />} />
 
           {/* Protected routes */}
@@ -74,7 +76,8 @@ const GlobalRouter = () => {
           </Route>
 
           {/* Catch all (404) */}
-          <Route path={PATH_PUBLIC.notFound} element={<NotFoundPage />} />
+       {/*   <Route path={PATH_PUBLIC.notFound} element={<LoginPage />} />*/}
+          <Route path={PATH_PUBLIC.login} element={<LoginPage />} />
           <Route path='*' element={<Navigate to={PATH_PUBLIC.notFound} replace />} />
         </Route>
       </Routes>

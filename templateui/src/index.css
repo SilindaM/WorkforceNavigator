@@ -2,6 +2,7 @@
 @layer base {
   body {
     @apply min-h-screen bg-gray-100;
+
   }
 }
 @tailwind components;
@@ -19,6 +20,12 @@
     @apply w-full h-full p-4 flex flex-col justify-start items-center gap-2 bg-white border-2 rounded-lg;
   }
 }
+
+.templateElement {
+  margin: 30%;
+  background-color: black;
+}
+
 /* The following line can be included in a src/App.scss */
 .dropdown {
   position: relative;
