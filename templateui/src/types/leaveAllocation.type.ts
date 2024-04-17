@@ -5,3 +5,8 @@
         FirstName:string;
         LastName:string;
     }
+    export interface IMyLeaveAllocationDto{
+      id:number;
+      numberOfDays: number;
+      leaveName: string;
+    }
