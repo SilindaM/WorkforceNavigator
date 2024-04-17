@@ -10,6 +10,7 @@
 
   public class EmployeeLeaveAllocationDto
   {
+    public int Id { get; set; }
     public int NumberOfDays { get; set; }
     public string LeaveName { get; set; }
 
