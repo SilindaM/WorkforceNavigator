@@ -149,61 +149,6 @@
       }
     }
 
-    //    public async Task<IEnumerable<LeaveRequestDto>> GetAllLeaveRequests()
-    //    {
-    //      var leaveRequests = await dataContext.LeaveRequests
-    //         .Include(la => la.ApplicationUser)
-    //         .Include(la => la.LeaveType)
-    //         .Where(la => la.IsDeleted == false)
-    //         .ToListAsync();
-
-    //      if (leaveRequests == null)
-    //      {
-    //        return (IEnumerable<LeaveRequestDto>)ResponseHelper.CreateResponse(false, 400, "Failed to retrieve leave allocations from the database.");
-    //      }
-
-    //      var leaveRequestDtos = new List<LeaveRequestDto>();
-
-    //      foreach (var request in leaveRequests)
-    //      {
-    //        var leaveRequestDto = new LeaveRequestDto
-    //        {
-    //          FirstName = request.ApplicationUser.FirstName,
-    //          LastName = request.ApplicationUser.LastName,
-    //          NumberOfDays = request.NumberOfDays,
-    //          LeaveName = request.LeaveType.Name,
-    //          StartDate = request.StartDate,
-    //          EndDate = request.EndDate,
-    //          Status = request.Status
-    //        };
-    //        leaveRequestDtos.Add(leaveRequestDto);
-    //      }
-    //      return mapper.Map<IEnumerable<LeaveRequestDto>>(leaveRequests);
-
-    //    }
-
-    //    public async Task<IEnumerable<LeaveRequestDto>> GetLeaveRequestsByEmployee(int employeeId)
-    //{
-    //    var leaveRequests = await dataContext.LeaveRequests
-    //        .Include(la => la.ApplicationUser)
-    //        .Include(la => la.LeaveType)
-    //        .Where(la => la.ApplicationUserId == employeeId && la.IsDeleted == false)
-    //        .ToListAsync();
-
-    //    var leaveRequestDtos = leaveRequests.Select(lr => new LeaveRequestDto
-    //    {
-    //        FirstName = lr.ApplicationUser.FirstName,
-    //        LastName = lr.ApplicationUser.LastName,
-    //        NumberOfDays = lr.NumberOfDays,
-    //        LeaveName = lr.LeaveType.Name,
-    //        StartDate = lr.StartDate,
-    //        EndDate = lr.EndDate,
-    //        Status = lr.Status
-    //    });
-
-    //    return leaveRequestDtos;
-    //}
-
     public async Task<LeaveRequestDto> GetLeaveRequestsById(int requestId)
     {
       var leaveRequests = await (from request in dataContext.LeaveRequests
@@ -365,6 +310,7 @@
           .Where(x => x.UserName == username) // Filter by username
           .Select(x => new LeaveRequestDto
           {
+            Id = x.Id,
             NumberOfDays = x.NumberOfDays,
             LeaveName = x.LeaveType.Name,
             UserName = x.UserName,
@@ -374,7 +320,6 @@
             Status = x.Status,
           })
           .ToListAsync();
-
       return leaveAllocations;
     }
     private async Task<Result<int>> AddLeaveDays(string username, int leaveTypeId, int days)
@@ -394,5 +339,7 @@
 
       return Result.Ok(allocation.NumberOfDays); // Return the updated number of days
     }
+
+  
   }
 }

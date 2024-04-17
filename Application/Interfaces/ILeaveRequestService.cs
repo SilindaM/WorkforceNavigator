@@ -4,6 +4,7 @@
   using System.Collections.Generic;
   using System.Security.Claims;
   using System.Threading.Tasks;
+  using Domain.Dtos.Account;
   using Domain.Dtos.General;
   using Domain.Dtos.LeaveRequest;
   using Domain.Enums;
@@ -18,6 +19,7 @@
     Task<GeneralServiceResponseDto> UpdateLeaveRequest(ClaimsPrincipal User, int leaveRequestId, UpdateLeaveRequestDto updateLeaveRequestDto);
     Task<GeneralServiceResponseDto> DeleteLeaveRequest(ClaimsPrincipal User,int leaveRequestId);
     Task<GeneralServiceResponseDto> ProcessLeaveRequest(ClaimsPrincipal User, int leaveRequestId, Status status);
+
   }
 }
 //079 81 63 585

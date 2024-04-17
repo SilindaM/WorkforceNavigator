@@ -21,6 +21,7 @@
       CreateMap<JobTitle, JobTitleDto>().ReverseMap();
       CreateMap<JobTitle, UpdateCreateJobTitleDto>().ReverseMap();
       CreateMap<LeaveRequest, CreateLeaveRequestDto>().ReverseMap();
+      CreateMap<LeaveRequestDto, MyLeaveRequestDto>().ReverseMap();
       CreateMap<LeaveAllocation, EmployeeLeaveAllocationDto>().ReverseMap();
       CreateMap<ApplicationUser, UserInfoResult>().ReverseMap();
 
