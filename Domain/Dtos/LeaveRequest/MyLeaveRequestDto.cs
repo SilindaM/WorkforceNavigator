@@ -16,5 +16,6 @@
     public string  LeaveName { get; set; }
     public string? Comments { get; set; }
     public Status  Status { get; set; }
+    public int NumberOfDays { get; set; }
   }
 }
