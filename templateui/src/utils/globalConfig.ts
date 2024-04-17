@@ -29,6 +29,11 @@ export const MY_LEAVE_ALLOCATIONS = '/LeaveAllocation/MyLeaveAllocations'
 export const USERNAME_LEAVE_ALLOCATIONS = '/LeaveAllocations/username'
 export const LEAVE_ALLOCATION_BYTYPE = '/LeaveAllocation/type'
 
+//LEAVE REQUEST
+export const MY_LEAVE_REQUESTS = '/LeaveRequest/MyLeaveRequests'
+
+
+
 // Auth Routes
 export const PATH_AFTER_REGISTER = PATH_PUBLIC.login;
 export const PATH_AFTER_LOGIN = PATH_DASHBOARD.dashboard;

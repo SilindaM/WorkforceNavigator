@@ -12,7 +12,7 @@
     public int Id { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public DateTime Requested { get; set; }
+    public DateTime RequestedDate { get; set; }
     public string  LeaveName { get; set; }
     public string? Comments { get; set; }
     public Status  Status { get; set; }
