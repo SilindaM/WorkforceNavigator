@@ -36,7 +36,7 @@ const LeaveRequestModal = ({ isOpen, closeModal, selectedRequest }: IProps) => {
   };
   return (
     <>
-      <Modal show={isOpen} onHide={handleClose}>
+      <Modal show={isOpen} onHide={handleClose} className="custom-modal">
         <Modal.Header closeButton>
           <Modal.Title>Edit Leave Request</Modal.Title>
         </Modal.Header>

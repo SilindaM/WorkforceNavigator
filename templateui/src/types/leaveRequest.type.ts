@@ -8,6 +8,7 @@ export interface IMyLeaveRequestDto{
     endDate: Date;
     requestedDate:Date;
     status : Status;
+    isEditing?:boolean;
 }
 export enum Status {
     Approved = 'Approved',
