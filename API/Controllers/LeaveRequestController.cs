@@ -12,16 +12,20 @@ namespace API.Controllers
   using Domain.Dtos.LeaveAllocation;
   using Application.Interfaces.Auth;
   using Domain.Enums;
+  using AutoMapper;
+  using Domain.Entities;
 
   [ApiController]
   [Route("api/[controller]")]
   public class LeaveRequestController : ControllerBase
   {
     private readonly ILeaveRequestService leaveRequestService;
+    private readonly IMapper mapper;
 
-    public LeaveRequestController(ILeaveRequestService leaveRequestService)
+    public LeaveRequestController(ILeaveRequestService leaveRequestService,IMapper mapper)
     {
       this.leaveRequestService = leaveRequestService;
+      this.mapper = mapper;
     }
 
     //[HttpGet]
@@ -61,6 +65,20 @@ namespace API.Controllers
       }
 
       return Ok(leaveRequests); // Return HTTP 200 OK with the allocations
+    }
+    [HttpGet]
+    [Route("MyLeaveRequests")]
+    public async Task<ActionResult<IEnumerable<LeaveRequestDto>>> GetMyLeaveRequests()
+    {
+      var leaveRequests = await leaveRequestService.GetLeaveRequestsByUser(User.Identity.Name);
+      var mappr = mapper.Map<IEnumerable<MyLeaveRequestDto>>(leaveRequests);
+
+      if (mappr == null)
+      {
+        return NotFound(); // Return HTTP 404 Not Found if user not found
+      }
+
+      return Ok(mappr); // Return HTTP 200 OK with the allocations
     }
     [HttpGet]
     [Route("LeaveRequest/{requestId}")]

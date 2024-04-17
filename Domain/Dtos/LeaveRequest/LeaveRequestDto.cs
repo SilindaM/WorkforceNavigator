@@ -9,6 +9,7 @@
 
   public class LeaveRequestDto
   {
+    public int Id { get; set; }
     public string LeaveName { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
