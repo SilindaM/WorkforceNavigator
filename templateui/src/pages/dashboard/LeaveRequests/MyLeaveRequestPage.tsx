@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth.hook";
-import { IMyLeaveRequestDto } from "../../../types/leaveRequest.type";
+import { IMyLeaveRequestDto, IUpdateLeaveRequestDto } from "../../../types/leaveRequest.type";
 import axiosInstance from "../../../utils/axiosInstance";
-import { MY_LEAVE_REQUESTS } from "../../../utils/globalConfig";
 import toast from "react-hot-toast";
 import Spinner from "../../../components/general/Spinner";
 import { Button, TableHead } from "@mui/material";
@@ -10,6 +9,7 @@ import { Table, TableRow, TableCell, TableBody, ButtonGroup } from "semantic-ui-
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import LeaveRequestModal from "./LeaveRequestModal";
+import { MY_LEAVE_REQUESTS, UPDATE_LEAVE_REQUEST_URL } from "../../../utils/globalConfig";
 
 const MyLeaveRequestPage = () => {
   const { user } = useAuth();
@@ -21,9 +21,7 @@ const MyLeaveRequestPage = () => {
   const getMyLeaveRequests = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get<IMyLeaveRequestDto[]>(
-        MY_LEAVE_REQUESTS
-      );
+      const response = await axiosInstance.get<IMyLeaveRequestDto[]>(MY_LEAVE_REQUESTS);
       const { data } = response;
       setLeaveRequests(data);
       setLoading(false);
@@ -32,6 +30,28 @@ const MyLeaveRequestPage = () => {
       setLoading(false);
     }
   };
+
+  const UpdateMyLeaveRequest = async (id: number, updatedData: IUpdateLeaveRequestDto) => {
+    try {
+      setLoading(true);
+    const response = await axiosInstance.post(`${UPDATE_LEAVE_REQUEST_URL}?leaveRequestId=${id}`, updatedData);
+      const {data} =response;
+      setLeaveRequests(data);
+      setLeaveRequests(prevRequests => 
+        prevRequests.map(request => 
+          request.id === id ? { ...request, startDate: updatedData.startDate, endDate: updatedData.endDate } : request
+        )
+      );
+      toast.success("Leave Request Updated Successfully");
+      setLoading(false);
+    } catch (error) {
+      console.error("Error updating leave request:", error);
+      toast.error("Failed To Update Leave");
+      setLoading(false);
+    }
+  }
+  
+  
 
   useEffect(() => {
     getMyLeaveRequests();
@@ -114,8 +134,8 @@ const MyLeaveRequestPage = () => {
         <LeaveRequestModal
           isOpen={isModalOpen}
           closeModal={handleCloseModal}
-          selectedRequest={selectedRequest}
-        />
+          selectedRequest={selectedRequest} 
+          updateLeaveRequest={UpdateMyLeaveRequest}        />
       )}
     </React.Fragment>
   );

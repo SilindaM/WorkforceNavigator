@@ -31,7 +31,7 @@ export const LEAVE_ALLOCATION_BYTYPE = '/LeaveAllocation/type'
 
 //LEAVE REQUEST
 export const MY_LEAVE_REQUESTS = '/LeaveRequest/MyLeaveRequests'
-
+export const UPDATE_LEAVE_REQUEST_URL = '/LeaveRequest/UpdateLeaveRequest';
 
 
 // Auth Routes
