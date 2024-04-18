@@ -102,7 +102,6 @@ const AuthContextProvider = ({ children }: IProps) => {
         email,
         password,
       });
-      console.log('Register Result:', response);
       toast.success('Register Was Successfull. Please Login.');
       navigate(PATH_AFTER_REGISTER);
     },

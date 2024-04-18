@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import useAuth from '../hooks/useAuth.hook';
-import AuthSpinner from '../components/general/AuthSpinner';
 import { PATH_PUBLIC } from '../routes/path';
+import Spinner from '../components/general/Spinner';
 
 // We need an interface for our props.
 // We receive a roles array and we will decide the next step based on this array
@@ -14,7 +14,7 @@ const AuthGuard = ({ roles }: IProps) => {
   // Do we have access to the requested page(the page will be rendered in <Outlet />)
   const hasAccess = isAuthenticated && user?.roles?.find((q) => roles.includes(q));
   if (isAuthLoading) {
-    return <AuthSpinner />;
+    return <Spinner />;
   }
   return hasAccess ? <Outlet /> : <Navigate to={PATH_PUBLIC.unauthorized} />;
 };

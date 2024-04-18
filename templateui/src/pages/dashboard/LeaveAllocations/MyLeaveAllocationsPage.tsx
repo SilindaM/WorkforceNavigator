@@ -18,7 +18,6 @@ const MyLeaveAllocationsPage = () => {
       setLoading(true);
       const response = await axiosInstance.get<IMyLeaveAllocationDto[]>(MY_LEAVE_ALLOCATIONS);
       const {data} = response;
-      console.log(data);
       setLeaves(data);
       setLoading(false);
     } catch (error) {
