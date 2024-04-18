@@ -15,3 +15,10 @@ export enum Status {
     Declined = 'Declined',
     Pending = 'Pending',
   }
+
+  export interface IUpdateLeaveRequestDto{
+    startDate:Date;
+    endDate:Date;
+    comments?:string;
+    numberOfDays: number;
+  }

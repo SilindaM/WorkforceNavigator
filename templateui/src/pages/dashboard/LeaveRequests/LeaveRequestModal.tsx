@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import { IMyLeaveRequestDto } from "../../../types/leaveRequest.type";
+import { IMyLeaveRequestDto, IUpdateLeaveRequestDto } from "../../../types/leaveRequest.type";
 import axiosInstance from "../../../utils/axiosInstance";
 import { MY_LEAVE_ALLOCATIONS } from "../../../utils/globalConfig";
 import toast from "react-hot-toast";
@@ -13,23 +13,17 @@ interface IProps {
   isOpen: boolean;
   closeModal: () => void;
   selectedRequest: IMyLeaveRequestDto;
+  updateLeaveRequest: (id: number, updatedData: IUpdateLeaveRequestDto) => Promise<void>; 
 }
-const LeaveRequestModal = ({ isOpen, closeModal, selectedRequest }: IProps) => {
+const LeaveRequestModal = ({ isOpen, closeModal, selectedRequest,updateLeaveRequest  }: IProps) => {
+  
   const [loading, setLoading] = useState<boolean>(false);
-  const [leaveAllocations, setLeaveAllocations] = useState<
-    IMyLeaveRequestDto[]
-  >([]);
-  const [startDate, setStartDate] = useState<Date>(
-    new Date(selectedRequest.startDate)
-  );
-  const [endDate, setEndDate] = useState<Date>(
-    new Date(selectedRequest.endDate)
-  );
+  const [leaveAllocations, setLeaveAllocations] = useState< IMyLeaveRequestDto[]>([]);
+  const [startDate, setStartDate] = useState<Date>( new Date(selectedRequest.startDate));
+  const [endDate, setEndDate] = useState<Date>( new Date(selectedRequest.endDate));
   const [leaveName, setLeaveName] = useState<string>(selectedRequest.leaveName);
   const [comments, setComments] = useState<string>(selectedRequest.comments);
-  const [numberOfDays, setNumberOfDays] = useState<number>(
-    selectedRequest.numberOfDays
-  );
+  const [numberOfDays, setNumberOfDays] = useState<number>( selectedRequest.numberOfDays);
   const [status, setStatus] = useState<string>(selectedRequest.status);
 
   const myLeaveAllocations = async () => {
@@ -48,10 +42,26 @@ const LeaveRequestModal = ({ isOpen, closeModal, selectedRequest }: IProps) => {
     }
   };
 
-  const leaveNames = leaveAllocations;
   const handleClose = () => {
     closeModal();
   };
+
+  const handleSave = () => {
+    const timeDifference = new Date(endDate).getTime() - new Date(startDate).getTime();
+  
+    const numberOfDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+  
+    const updateData = {
+      id: selectedRequest.id,
+      startDate,
+      endDate,
+      comments: selectedRequest.comments,
+      numberOfDays: numberOfDays // Assign the calculated numberOfDays
+    };
+    updateLeaveRequest(selectedRequest.id, updateData);
+  };
+  
+  
   useEffect(() => {
     myLeaveAllocations();
   }, []);
@@ -116,7 +126,7 @@ const LeaveRequestModal = ({ isOpen, closeModal, selectedRequest }: IProps) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSave}>
             Save Changes
           </Button>
         </Modal.Footer>

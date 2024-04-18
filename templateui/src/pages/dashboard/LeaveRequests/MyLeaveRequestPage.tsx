@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth.hook";
-import { IMyLeaveRequestDto } from "../../../types/leaveRequest.type";
+import { IMyLeaveRequestDto, IUpdateLeaveRequestDto } from "../../../types/leaveRequest.type";
 import axiosInstance from "../../../utils/axiosInstance";
-import { MY_LEAVE_REQUESTS } from "../../../utils/globalConfig";
+import { MY_LEAVE_REQUESTS, UPDATE_MYLEAVE_REQUEST_URL } from "../../../utils/globalConfig";
 import toast from "react-hot-toast";
 import Spinner from "../../../components/general/Spinner";
 import { Button, TableHead } from "@mui/material";
@@ -32,6 +32,26 @@ const MyLeaveRequestPage = () => {
       setLoading(false);
     }
   };
+
+  const UpdateMyLeaveRequest = async (id: number, updatedData: IUpdateLeaveRequestDto) => {
+    try {
+      setLoading(true);
+      await axiosInstance.put(`${UPDATE_MYLEAVE_REQUEST_URL}?leaveRequestId=${id}`, updatedData);
+      setLeaveRequests(prevRequests => 
+        prevRequests.map(request => 
+          request.id === id ? { ...request, startDate: updatedData.startDate, endDate: updatedData.endDate } : request
+        )
+      );
+      toast.success("Leave Request Updated Successfully");
+      setLoading(false);
+    } catch (error) {
+      console.error("Error updating leave request:", error);
+      toast.error("Failed To Update Leave");
+      setLoading(false);
+    }
+  }
+  
+  
 
   useEffect(() => {
     getMyLeaveRequests();
@@ -114,8 +134,8 @@ const MyLeaveRequestPage = () => {
         <LeaveRequestModal
           isOpen={isModalOpen}
           closeModal={handleCloseModal}
-          selectedRequest={selectedRequest}
-        />
+          selectedRequest={selectedRequest} 
+          updateLeaveRequest={UpdateMyLeaveRequest}        />
       )}
     </React.Fragment>
   );
