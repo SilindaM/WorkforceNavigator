@@ -55,8 +55,7 @@ const LeaveRequestModal = ({ isOpen, closeModal, selectedRequest,updateLeaveRequ
       id: selectedRequest.id,
       startDate,
       endDate,
-      comments: selectedRequest.comments,
-      numberOfDays: numberOfDays // Assign the calculated numberOfDays
+      comments: selectedRequest.comments
     };
     updateLeaveRequest(selectedRequest.id, updateData);
   };

@@ -243,7 +243,7 @@
       // Update the leave request
       leaveRequest.StartDate = updateLeaveRequestDto.StartDate;
       leaveRequest.EndDate = updateLeaveRequestDto.EndDate;
-      leaveRequest.Status = Status.Pending;
+      leaveRequest.RequestComments = updateLeaveRequestDto.Comment;
 
       dataContext.LeaveRequests.Update(leaveRequest);
       await dataContext.SaveChangesAsync();

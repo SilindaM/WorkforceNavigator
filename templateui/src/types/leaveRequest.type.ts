@@ -19,6 +19,5 @@ export enum Status {
   export interface IUpdateLeaveRequestDto{
     startDate:Date;
     endDate:Date;
-    comments?:string;
-    numberOfDays: number;
+    comments:string;
   }

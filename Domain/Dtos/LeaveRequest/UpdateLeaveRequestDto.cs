@@ -13,7 +13,6 @@
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
 
-    [JsonIgnore]
-    public Status Status { get; set; }
+    public string? Comment { get; set; }
   }
 }

@@ -100,6 +100,7 @@
       return mapper.Map<IEnumerable<EmployeeLeaveAllocationDto>>(leaveAllocations);
 
     }
+
     public async Task<IEnumerable<EmployeeLeaveAllocationDto>> GetMyLeavesAllocations(ClaimsPrincipal User)
     {
       var employee = await dataContext.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
@@ -121,8 +122,6 @@
       return mapper.Map<IEnumerable<EmployeeLeaveAllocationDto>>(leaveAllocations);
 
     }
-
-
 
     public async Task<IEnumerable<LeaveAllocationDto>> GetLeaveAllocationsByLeaveType(string LeaveName)
     {
@@ -150,6 +149,5 @@
 
       return leaveAllocations;
     }
-
   }
 }
