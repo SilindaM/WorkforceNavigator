@@ -5,7 +5,8 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { MY_LEAVE_REQUESTS } from "../../../utils/globalConfig";
 import toast from "react-hot-toast";
 import Spinner from "../../../components/general/Spinner";
-import { Button, TableCell, TableRow, TableBody, ButtonGroup, TextField } from "@mui/material";
+import { Button, TableHead } from "@mui/material";
+import { Table, TableRow, TableCell, TableBody, ButtonGroup } from "semantic-ui-react";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import LeaveRequestModal from "./LeaveRequestModal";
@@ -24,10 +25,10 @@ const MyLeaveRequestPage = () => {
         MY_LEAVE_REQUESTS
       );
       const { data } = response;
-      setLeaveRequests(data.map((request: IMyLeaveRequestDto) => ({ ...request, isEditing: false })));
+      setLeaveRequests(data);
       setLoading(false);
     } catch (error) {
-      toast.error("Error Occurred");
+      toast.error("Error Occured");
       setLoading(false);
     }
   };
@@ -36,35 +37,11 @@ const MyLeaveRequestPage = () => {
     getMyLeaveRequests();
   }, []);
 
-  const handleEdit = (index: number) => {
-    const updatedRequests = [...requests];
-    updatedRequests[index].isEditing = true;
-    setLeaveRequests(updatedRequests);
+  const handleEdit = (request: IMyLeaveRequestDto) => {
+    setSelectedRequest(request);
+    setIsModalOpen(true);
   };
 
-  const handleSave = async (index: number) => {
-    const updatedRequests = [...requests];
-    updatedRequests[index].isEditing = false;
-    try {
-      setLoading(true);
-      // Perform API call to save changes
-      // For example:
-      // await axiosInstance.put(`/leave-request/${updatedRequests[index].id}`, updatedRequests[index]);
-      setLoading(false);
-    } catch (error) {
-      toast.error("Failed to save changes");
-      setLoading(false);
-    }
-    setLeaveRequests(updatedRequests);
-  };
-
- const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number, field: keyof IMyLeaveRequestDto) => {
- const { value } = event.target;
- const updatedRequests = [...requests];
- // Use a type assertion to tell TypeScript that you know the type of the field
- (updatedRequests[index] as any)[field] = value;
- setLeaveRequests(updatedRequests);
-};
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -79,9 +56,10 @@ const MyLeaveRequestPage = () => {
 
   return (
     <React.Fragment>
-      <table>
-        <thead>
-          <tr>
+      <Table size="small" bordered>
+        <TableHead>
+          <TableRow>
+            {/* Header cells */}
             <TableCell>Id</TableCell>
             <TableCell>Start Date</TableCell>
             <TableCell>End Date</TableCell>
@@ -91,71 +69,47 @@ const MyLeaveRequestPage = () => {
             <TableCell>Status</TableCell>
             <TableCell>Comments</TableCell>
             <TableCell>Actions</TableCell>
-          </tr>
-        </thead>
+          </TableRow>
+        </TableHead>
         <TableBody>
-          {requests.map((row, index) => (
+          {requests.map((row) => (
             <TableRow key={row.id}>
+              {/* Table cells */}
               <TableCell>{row.id}</TableCell>
-              <TableCell>
-                {row.isEditing ? (
-                  <TextField value={row.startDate} />
-                ) : (
-                  new Date(row.startDate).toLocaleDateString()
-                )}
-              </TableCell>
-              <TableCell>
-                {row.isEditing ? (
-                  <TextField value={row.endDate}/>
-                ) : (
-                  new Date(row.endDate).toLocaleDateString()
-                )}
-              </TableCell>
-              <TableCell>
-                {row.isEditing ? (
-                  <TextField value={row.requestedDate} />
-                ) : (
-                  new Date(row.requestedDate).toLocaleDateString()
-                )}
-              </TableCell>
-              <TableCell>
-                {row.isEditing ? (
-                  <TextField value={String(row.numberOfDays)} />
-                ) : (
-                  row.numberOfDays
-                )}
-              </TableCell>
-              <TableCell>
-                {row.isEditing ? (
-                  <TextField value={row.leaveName} />
-                ) : (
-                  row.leaveName
-                )}
-              </TableCell>
+              <TableCell>{new Date(row.startDate).toLocaleDateString()}</TableCell>
+              <TableCell>{new Date(row.endDate).toLocaleDateString()}</TableCell>
+              <TableCell>{new Date(row.requestedDate).toLocaleDateString()}</TableCell>
+              <TableCell>{row.numberOfDays}</TableCell>
+              <TableCell>{row.leaveName}</TableCell>
               <TableCell>{row.status}</TableCell>
+              <TableCell>{row.comments}</TableCell>
               <TableCell>
-                {row.isEditing ? (
-                  <TextField value={row.comments} />
-                ) : (
-                  row.comments
-                )}
-              </TableCell>
-              <TableCell>
-                {row.isEditing ? (
-                  <ButtonGroup>
-                    <Button variant="outlined" onClick={() => handleSave(index)}>Save</Button>
-                  </ButtonGroup>
-                ) : (
-                  <ButtonGroup>
-                    <Button variant="outlined" color="warning" onClick={() => handleEdit(index)} startIcon={<EditIcon />}>Edit</Button>
-                    <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => {}}>Delete</Button>
-                  </ButtonGroup>
-                )}
+                <ButtonGroup>
+                  <Button
+                    variant="outlined" color="warning"
+                    sx={{ height: '30px' }} // Adjust the height as needed
+                    style={{ fontSize: 'medium' }}
+                    startIcon={<EditIcon />}
+                    onClick={() => handleEdit(row)} // Pass the row data to the edit function
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outlined" color="error"
+                    sx={{ height: '30px' }} // Adjust the height as needed
+                    style={{ fontSize: 'medium' }}
+                    startIcon={<DeleteOutlineIcon />}
+                    onClick={() => {}} // Implement delete functionality if needed
+                  >
+                    Delete
+                  </Button>
+                </ButtonGroup>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
-      </table>
+      </Table>
+      {/* Render the modal */}
       {isModalOpen && selectedRequest && (
         <LeaveRequestModal
           isOpen={isModalOpen}
@@ -166,5 +120,4 @@ const MyLeaveRequestPage = () => {
     </React.Fragment>
   );
 };
-
 export default MyLeaveRequestPage;
