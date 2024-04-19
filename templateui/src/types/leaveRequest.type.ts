@@ -21,3 +21,8 @@ export enum Status {
     endDate:Date;
     comments:string;
   }
+  export interface IAddLeaveRequestDto{
+    startDate:Date;
+    endDate:Date;
+    leaveTypeid:number;
+  }
