@@ -34,9 +34,8 @@ const MyLeaveRequestPage = () => {
   const UpdateMyLeaveRequest = async (id: number, updatedData: IUpdateLeaveRequestDto) => {
     try {
       setLoading(true);
-    const response = await axiosInstance.post(`${UPDATE_LEAVE_REQUEST_URL}?leaveRequestId=${id}`, updatedData);
-      const {data} =response;
-      setLeaveRequests(data);
+      const response = await axiosInstance.post(`${UPDATE_LEAVE_REQUEST_URL}?leaveRequestId=${id}`, updatedData);
+      const {data} = response;
       setLeaveRequests(prevRequests => 
         prevRequests.map(request => 
           request.id === id ? { ...request, startDate: updatedData.startDate, endDate: updatedData.endDate } : request
