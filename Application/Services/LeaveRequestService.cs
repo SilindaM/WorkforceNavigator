@@ -74,10 +74,14 @@
       {
         return (GeneralServiceResponseDto)ResponseHelper.CreateResponse(false, 400, "Invalid number of days requested");
       }
+      var query = dataContext.LeaveAllocations
+          .Where(x => x.Username == user.Identity.Name && x.LeaveTypeId == createLeaveRequestDto.LeaveTypeId);
 
-      var allocation = await dataContext.LeaveAllocations
-          .Where(x => x.Username == user.Identity.Name && x.LeaveType.Id == createLeaveRequestDto.LeaveTypeId)
-          .FirstOrDefaultAsync();
+      // Log the query to see what's being executed
+      Console.WriteLine(query.ToQueryString());
+
+      var allocation = await query.FirstOrDefaultAsync();
+
 
       if (allocation == null)
       {
