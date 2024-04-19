@@ -8,6 +8,9 @@ import { MY_LEAVE_ALLOCATIONS } from "../../../utils/globalConfig";
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from 'react-router-dom';
+import ManageLeavesPage from "../LeaveAllocations/ManageLeavesPage";
+import { PATH_DASHBOARD } from "../../../routes/path";
 
 interface IProps {
   isOpen: boolean;
@@ -25,6 +28,7 @@ const LeaveRequestModal = ({ isOpen, closeModal, selectedRequest,updateLeaveRequ
   const [comments, setComments] = useState<string>(selectedRequest.comments);
   const [numberOfDays, setNumberOfDays] = useState<number>( selectedRequest.numberOfDays);
   const [status, setStatus] = useState<string>(selectedRequest.status);
+  const navigate = useNavigate();
 
   const myLeaveAllocations = async () => {
     try {
@@ -58,6 +62,7 @@ const LeaveRequestModal = ({ isOpen, closeModal, selectedRequest,updateLeaveRequ
       comments: selectedRequest.comments
     };
     updateLeaveRequest(selectedRequest.id, updateData);
+    closeModal();
   };
   
   
