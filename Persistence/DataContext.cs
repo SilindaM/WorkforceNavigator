@@ -8,6 +8,7 @@ namespace Persistence
   using Microsoft.AspNetCore.Identity;
   using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
   using Microsoft.EntityFrameworkCore;
+  using System.Reflection.Emit;
   using Department = Domain.Enties.Department;
 
   public class DataContext : IdentityDbContext<ApplicationUser>
@@ -33,6 +34,10 @@ namespace Persistence
         .WithMany(c=> c.JobTitles)
         .HasForeignKey(x=>x.DepartmentId)
         .OnDelete(DeleteBehavior.Restrict);
+
+
+      builder.Entity<LeaveRequest>()
+       .HasKey(lr => lr.Id); // Assuming 'Id' is the primary key property
 
       builder.Entity<ApplicationUser>(e =>
       {
