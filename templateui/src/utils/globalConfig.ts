@@ -24,7 +24,7 @@ export const LOGS_URL = '/Logs';
 export const MY_LOGS_URL = '/Logs/mine';
 
 // LEAVE ALLOCATION
-export const ALL_LEAVE_ALLOCATIONS = '/LeaveAllocations'
+export const ALL_LEAVE_ALLOCATIONS = 'LeaveAllocation/LeaveAllocations'
 export const MY_LEAVE_ALLOCATIONS = '/LeaveAllocation/MyLeaveAllocations'
 export const USERNAME_LEAVE_ALLOCATIONS = '/LeaveAllocations/username'
 export const LEAVE_ALLOCATION_BYTYPE = '/LeaveAllocation/type'

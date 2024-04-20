@@ -37,21 +37,22 @@ const AllAllocationPage = () => {
   return (
     <div>
       <div className='pageTemplate3 items-stretch'>
-        <Table celled>
+        <Table size="small" bordered>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>No Of Days</Table.HeaderCell>
               <Table.HeaderCell>Leave Name</Table.HeaderCell>
+              <Table.HeaderCell>FirstName</Table.HeaderCell>
+              <Table.HeaderCell>LastName</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <tbody>
             {leaveAllocation.map((item) => (
-              <tr key={item.Username}>
-                 <Table.Cell>{item.NumberOfDays}</Table.Cell>
-               <Table.Cell>{item.LeaveName}</Table.Cell>
-                <Table.Cell>{item.NumberOfDays}</Table.Cell>
-                <Table.Cell>{item.LeaveName}</Table.Cell>
-                <Table.Cell>{item.Username}</Table.Cell>
+              <tr key={item.username}>
+                 <Table.Cell>{item.numberOfDays}</Table.Cell>
+               <Table.Cell>{item.leaveName}</Table.Cell>
+                <Table.Cell>{item.firstName}</Table.Cell>
+                <Table.Cell>{item.lastName}</Table.Cell>
               </tr>
             ))}
           </tbody>

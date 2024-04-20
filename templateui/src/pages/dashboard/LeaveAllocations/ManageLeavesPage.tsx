@@ -3,6 +3,7 @@ import { TabPane, ListItem, List, Label, Tab } from 'semantic-ui-react'
 import InboxPage from '../Messages/InboxPage'
 import MyLeaveAllocationsPage from './MyLeaveAllocationsPage'
 import MyLeaveRequestPage from '../LeaveRequests/MyLeaveRequestPage'
+import AllAllocationPage from './AllAllocationPage'
 
 const panes = [
   {
@@ -30,17 +31,11 @@ const panes = [
   },
   {
     menuItem: 'LEAVE ALLOCATIONS',
-    pane: (
-      <TabPane key='tab4'>
-        <p>This tab has complex content</p>
-
-        <List>
-          <ListItem>Apples</ListItem>
-          <ListItem>Pears</ListItem>
-          <ListItem>Oranges</ListItem>
-        </List>
-      </TabPane>
-    ),
+    pane: {
+      key: 'tab4',
+      content: <AllAllocationPage/>,
+      textAlign: 'center',
+    },
   },
 ]
 
