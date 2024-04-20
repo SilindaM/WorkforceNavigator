@@ -1,28 +1,54 @@
-import React from 'react';
-import { Container, Grid, GridColumn, Segment, Header } from 'semantic-ui-react';
-import MyLeaveAllocationsPage from './MyLeaveAllocationsPage';
-import MyLeaveRequestPage from '../LeaveRequests/MyLeaveRequestPage';
+import React from 'react'
+import { TabPane, ListItem, List, Label, Tab } from 'semantic-ui-react'
+import InboxPage from '../Messages/InboxPage'
+import MyLeaveAllocationsPage from './MyLeaveAllocationsPage'
+import MyLeaveRequestPage from '../LeaveRequests/MyLeaveRequestPage'
 
-const ManageLeavesPage = () => {
-  return (
-    <Container fluid className="pageTemplate3">
-      <Grid columns={2}>
-        <GridColumn width={6}>
-          <Segment raised>
-            <Header as='h2' textAlign='center'>My Allocated Leave</Header>
-            <MyLeaveAllocationsPage />
-          </Segment>
-        </GridColumn>
+const panes = [
+  {
+    menuItem: 'MY LEAVE ALLOCATIONS',
+    pane: { key: 'tab1', content: <MyLeaveAllocationsPage/>},
+  },
+  {
+    menuItem: 'MY LEAVE REQUESTS',
+    pane: {
+      key: 'tab2',
+      content: <MyLeaveRequestPage/>,
+      textAlign: 'center',
+    },
+  },
+  {
+    menuItem: 'ALL LEAVE REQUESTS',
+    pane: {
+      key: 'tab3',
+      content: (
+        <div>
+          This tab contains a <Label>JSX</Label> element
+        </div>
+      ),
+    },
+  },
+  {
+    menuItem: 'LEAVE ALLOCATIONS',
+    pane: (
+      <TabPane key='tab4'>
+        <p>This tab has complex content</p>
 
-        <GridColumn width={10}>
-          <Segment raised>
-            <Header as='h2' textAlign='center'>My Leave Requests</Header>
-            <MyLeaveRequestPage/>
-          </Segment>
-        </GridColumn>
-      </Grid>
-    </Container>
-  );
-};
+        <List>
+          <ListItem>Apples</ListItem>
+          <ListItem>Pears</ListItem>
+          <ListItem>Oranges</ListItem>
+        </List>
+      </TabPane>
+    ),
+  },
+]
 
-export default ManageLeavesPage;
+const ManageLeavesPage = () => (
+  <div className='pageTemplate3 '>
+    
+  <Tab panes={panes} renderActiveOnly={false} />
+  </div>
+)
+
+export default ManageLeavesPage

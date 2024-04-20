@@ -48,6 +48,7 @@ namespace API.Controllers
     }
     [HttpGet]
     [Route("LeaveRequests")]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<LeaveRequestDto>>> GetLeaveRequests()
     {
       var leaveRequests = await leaveRequestService.GetAllLeaveRequests();
@@ -68,6 +69,7 @@ namespace API.Controllers
     }
     [HttpGet]
     [Route("MyLeaveRequests")]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<LeaveRequestDto>>> GetMyLeaveRequests()
     {
       var leaveRequests = await leaveRequestService.GetLeaveRequestsByUser(User.Identity.Name);
