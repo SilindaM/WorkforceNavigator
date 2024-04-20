@@ -1,9 +1,9 @@
   export interface ILeaveAllocationDto {
-        NumberOfDays: number;
-        Username: string;
-        LeaveName: string;
-        FirstName:string;
-        LastName:string;
+        numberOfDays: number;
+        username: string;
+        leaveName: string;
+        firstName:string;
+        lastName:string;
     }
     export interface IMyLeaveAllocationDto{
       id:number;
