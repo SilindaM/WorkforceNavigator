@@ -4,6 +4,7 @@ import InboxPage from '../Messages/InboxPage'
 import MyLeaveAllocationsPage from './MyLeaveAllocationsPage'
 import MyLeaveRequestPage from '../LeaveRequests/MyLeaveRequestPage'
 import AllAllocationPage from './AllAllocationPage'
+import AllLeaveRequestPage from '../LeaveRequests/AllLeaveRequestPage'
 
 const panes = [
   {
@@ -22,15 +23,19 @@ const panes = [
     menuItem: 'ALL LEAVE REQUESTS',
     pane: {
       key: 'tab3',
-      content: (
-        <div>
-          This tab contains a <Label>JSX</Label> element
-        </div>
-      ),
+      content: <AllLeaveRequestPage/>
     },
   },
   {
     menuItem: 'LEAVE ALLOCATIONS',
+    pane: {
+      key: 'tab4',
+      content: <AllAllocationPage/>,
+      textAlign: 'center',
+    },
+  },
+  {
+    menuItem: 'PROCESS REQUESTS',
     pane: {
       key: 'tab4',
       content: <AllAllocationPage/>,
