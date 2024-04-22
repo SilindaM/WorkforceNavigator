@@ -26,3 +26,14 @@ export enum Status {
     endDate:Date;
     leaveTypeid:number;
   }
+  export interface ILeaveRequestDto{
+    id: number;
+    leaveName: string;
+    startDate: Date;
+    endDate: Date;
+    requestedDate: Date;
+    status: string;
+    firstName: string;
+    lastName: string;
+    numberOfDays: number;
+  }

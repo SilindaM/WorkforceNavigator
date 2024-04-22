@@ -40,6 +40,7 @@
                                  where !request.IsDeleted
                                  select new LeaveRequestDto
                                  {
+                                   Id = request.Id,
                                    FirstName = user.FirstName,
                                    LastName = user.LastName,
                                    NumberOfDays = request.NumberOfDays,

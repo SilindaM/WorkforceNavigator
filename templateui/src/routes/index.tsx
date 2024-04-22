@@ -70,6 +70,7 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.allMessages} element={<AllMessagesPage />} />
             <Route path={PATH_DASHBOARD.systemLogs} element={<SystemLogsPage />} />
             <Route path={PATH_DASHBOARD.admin} element={<AdminPage />} />
+            <Route path={PATH_DASHBOARD.admin} element={<AdminPage />} />
           </Route>
 
           {/* Owner access roles */}

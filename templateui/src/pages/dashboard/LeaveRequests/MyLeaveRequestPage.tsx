@@ -108,35 +108,34 @@ const MyLeaveRequestPage = () => {
       >
         New Leave Request
       </Button>
-      <React.Fragment>
         <Table size="small" bordered>
-          <TableHead>
+          <Table.Header>
             <TableRow>
               {/* Header cells */}
-              <TableCell>Id</TableCell>
-              <TableCell>Start Date</TableCell>
-              <TableCell>End Date</TableCell>
-              <TableCell>Requested Date</TableCell>
-              <TableCell>Days</TableCell>
-              <TableCell>Leave Name</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Comments</TableCell>
-              <TableCell>Actions</TableCell>
+              <Table.HeaderCell>Id</Table.HeaderCell>
+              <Table.HeaderCell>Start Date</Table.HeaderCell>
+              <Table.HeaderCell>End Date</Table.HeaderCell>
+              <Table.HeaderCell>Requested Date</Table.HeaderCell>
+              <Table.HeaderCell>Days</Table.HeaderCell>
+              <Table.HeaderCell>Leave Name</Table.HeaderCell>
+              <Table.HeaderCell>Status</Table.HeaderCell>
+              <Table.HeaderCell>Comments</Table.HeaderCell>
+              <Table.HeaderCell>Actions</Table.HeaderCell>
             </TableRow>
-          </TableHead>
+          </Table.Header>
           <TableBody>
             {requests.map((row) => (
               <TableRow key={row.id}>
                 {/* Table cells */}
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{new Date(row.startDate).toLocaleDateString()}</TableCell>
-                <TableCell>{new Date(row.endDate).toLocaleDateString()}</TableCell>
-                <TableCell>{new Date(row.requestedDate).toLocaleDateString()}</TableCell>
-                <TableCell>{row.numberOfDays}</TableCell>
-                <TableCell>{row.leaveName}</TableCell>
-                <TableCell>{row.status}</TableCell>
-                <TableCell>{row.comments}</TableCell>
-                <TableCell>
+                <Table.Cell>{row.id}</Table.Cell>
+                <Table.Cell>{new Date(row.startDate).toLocaleDateString()}</Table.Cell>
+                <Table.Cell>{new Date(row.endDate).toLocaleDateString()}</Table.Cell>
+                <Table.Cell>{new Date(row.requestedDate).toLocaleDateString()}</Table.Cell>
+                <Table.Cell>{row.numberOfDays}</Table.Cell>
+                <Table.Cell>{row.leaveName}</Table.Cell>
+                <Table.Cell>{row.status}</Table.Cell>
+                <Table.Cell>{row.comments}</Table.Cell>
+                <Table.Cell>
                   <ButtonGroup>
                     <Button
                       variant="outlined" color="warning"
@@ -157,7 +156,7 @@ const MyLeaveRequestPage = () => {
                       Delete
                     </Button>
                   </ButtonGroup>
-                </TableCell>
+                </Table.Cell>
               </TableRow>
             ))}
           </TableBody>
@@ -172,7 +171,6 @@ const MyLeaveRequestPage = () => {
             mode={selectedRequest ? "edit" : "add"}
           />
         )}
-      </React.Fragment>
     </>
   );
 };
