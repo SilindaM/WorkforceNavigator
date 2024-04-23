@@ -29,6 +29,7 @@ import SignUpPage from '../pages/public/SignUpPage';
 import { AppBar } from '@mui/material';
 import ManageLeavesPage from '../pages/dashboard/LeaveAllocations/ManageLeavesPage';
 import ProcessLeaveRequestPage from '../pages/dashboard/LeaveRequests/ProcessLeaveRequestPage';
+import ManageUsersPage from '../pages/dashboard/User/ManageUsersPage';
 
 const GlobalRouter = () => {
     return (
@@ -70,6 +71,7 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.allMessages} element={<AllMessagesPage />} />
             <Route path={PATH_DASHBOARD.systemLogs} element={<SystemLogsPage />} />
             <Route path={PATH_DASHBOARD.admin} element={<AdminPage />} />
+            <Route path={PATH_DASHBOARD.manageUsers} element={<ManageUsersPage />} />
             <Route path={PATH_DASHBOARD.manageLeaves} element={<ProcessLeaveRequestPage />} />
           </Route>
 
