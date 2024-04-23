@@ -38,3 +38,13 @@ export const isAuthorizedForUpdateRole =(loggedInUserRole:string,selectedUserRol
     }
     return result;
 }
+export const isAuthorizedForProcessLeave =(loggedInUserRole:string)=>{
+    let result =true;
+    if(loggedInUserRole === RolesEnum.OWNER ){
+        result=false;
+    }
+    else if(loggedInUserRole=== RolesEnum.ADMIN){
+        result =false;
+    }
+    return result;
+}

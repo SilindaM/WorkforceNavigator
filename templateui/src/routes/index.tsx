@@ -28,6 +28,7 @@ import ManageMessagesPage from '../pages/dashboard/Messages/ManageMessagesPage';
 import SignUpPage from '../pages/public/SignUpPage';
 import { AppBar } from '@mui/material';
 import ManageLeavesPage from '../pages/dashboard/LeaveAllocations/ManageLeavesPage';
+import ProcessLeaveRequestPage from '../pages/dashboard/LeaveRequests/ProcessLeaveRequestPage';
 
 const GlobalRouter = () => {
     return (
@@ -35,7 +36,7 @@ const GlobalRouter = () => {
         {/* Wrap all routes with the Layout component */}
         <Route element={<Layout />}>
           {/* Public routes */}
-          <Route index element={<HomePage />} />
+          <Route index element={<LoginPage />} />
           <Route path={PATH_PUBLIC.login} element={<LoginPage />} />
           <Route path={PATH_PUBLIC.register} element={<SignUpPage />} />
           <Route path={PATH_PUBLIC.unauthorized} element={<UnauthorizedPage />} />
@@ -51,8 +52,6 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.myLogs} element={<MyLogsPage />} />
             <Route path={PATH_DASHBOARD.user} element={<UserPage />} />
 
-            
-            <Route path={PATH_DASHBOARD.allLeaveAllocations} element={<AllAllocationPage />} />
             <Route path={PATH_DASHBOARD.allocationByLeaveName} element={<AllocationByLeaveNamePage/>} />
             <Route path={PATH_DASHBOARD.myAllocation} element={<MyLeaveAllocationsPage/>} />
             <Route path={PATH_DASHBOARD.allocationByusername} element={<LeaveAllocationByUserNamePage />} />
@@ -65,12 +64,13 @@ const GlobalRouter = () => {
 
           {/* Admin access roles */}
           <Route element={<AuthGuard roles={adminAccessRoles} />}>
+            <Route path={PATH_DASHBOARD.allLeaveAllocations} element={<AllAllocationPage />} />
             <Route path={PATH_DASHBOARD.usersManagement} element={<UserManagementPage />} />
             <Route path={PATH_DASHBOARD.updateRole} element={<UpdateRolePage />} />
             <Route path={PATH_DASHBOARD.allMessages} element={<AllMessagesPage />} />
             <Route path={PATH_DASHBOARD.systemLogs} element={<SystemLogsPage />} />
             <Route path={PATH_DASHBOARD.admin} element={<AdminPage />} />
-            <Route path={PATH_DASHBOARD.admin} element={<AdminPage />} />
+            <Route path={PATH_DASHBOARD.manageLeaves} element={<ProcessLeaveRequestPage />} />
           </Route>
 
           {/* Owner access roles */}
