@@ -37,7 +37,7 @@
       var leaveRequests = await (from request in dataContext.LeaveRequests
                                  join user in dataContext.Users on request.UserName equals user.UserName
                                  join leaveType in dataContext.LeaveTypes on request.LeaveTypeId equals leaveType.Id
-                                 where !request.IsDeleted
+                                 where !request.IsDeleted && request.Status==Status.Pending
                                  select new LeaveRequestDto
                                  {
                                    Id = request.Id,

@@ -81,7 +81,7 @@ const GlobalRouter = () => {
           {/* Catch all (404) */}
        {/*   <Route path={PATH_PUBLIC.notFound} element={<LoginPage />} />*/}
           <Route path={PATH_PUBLIC.login} element={<LoginPage />} />
-          <Route path='*' element={<Navigate to={PATH_PUBLIC.notFound} replace />} />
+          <Route path='*' element={<Navigate to={PATH_PUBLIC.login} replace />} />
         </Route>
       </Routes>
     );

@@ -5,6 +5,7 @@ import MyLeaveAllocationsPage from './MyLeaveAllocationsPage'
 import MyLeaveRequestPage from '../LeaveRequests/MyLeaveRequestPage'
 import AllAllocationPage from './AllAllocationPage'
 import AllLeaveRequestPage from '../LeaveRequests/AllLeaveRequestPage'
+import ProcessLeaveRequestPage from '../LeaveRequests/ProcessLeaveRequestPage'
 
 const panes = [
   {
@@ -37,8 +38,8 @@ const panes = [
   {
     menuItem: 'PROCESS REQUESTS',
     pane: {
-      key: 'tab4',
-      content: <AllAllocationPage/>,
+      key: 'tab5',
+      content: <ProcessLeaveRequestPage/>,
       textAlign: 'center',
     },
   },
