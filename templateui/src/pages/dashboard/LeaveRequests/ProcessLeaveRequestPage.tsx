@@ -9,9 +9,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Table, TableRow, TableCell, TableBody } from "semantic-ui-react";
 import { Button, ButtonGroup } from '@mui/material';
 import { ALL_LEAVE_REQUEST_URL, PROCESS_LEAVE_REQUEST_URL } from '../../../utils/globalConfig';
+import useAuth from '../../../hooks/useAuth.hook';
 
 
 const ProcessLeaveRequestPage = () => {
+  const { user: loggedInUser } = useAuth();
     const [leaveRequest,setLeaveRequest] = useState<ILeaveRequestDto[]>([]);
     const [loading,setLoading] = useState<boolean>(false);
     const [selectRequest,setSelectedRequest] = useState<ILeaveRequestDto|null>(null);
