@@ -69,7 +69,6 @@ const SendMessagePage = () => {
       await axiosInstance.post(CREATE_MESSAGE_URL, newMessage);
       setLoading(false);
       toast.success("Your message Sent successfully.");
-      navigate(PATH_DASHBOARD.inbox);
     } catch (error) {
       setLoading(false);
       reset();
