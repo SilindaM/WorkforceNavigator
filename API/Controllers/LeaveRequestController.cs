@@ -126,6 +126,24 @@ namespace API.Controllers
         return StatusCode(processLeaveRequest.StatusCode, processLeaveRequest.Message);
       }
     }
+    [HttpGet("UpcomingLeaveRequest")]
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<LeaveRequestDto>>> GetUpcomingLeaves()
+    {
+      try
+      {
+        var upcomingLeaves = await leaveRequestService.GetUpComingLeaves();
+        if (upcomingLeaves == null || !upcomingLeaves.Any())
+        {
+          return NotFound("No upcoming leaves found.");
+        }
+        return Ok(upcomingLeaves);
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, $"Internal server error: {ex.Message}");
+      }
+    }
     [HttpPost]
     [Route("deleteLeaveRequest")]
     [Authorize(Roles = StaticUserRoles.ADMIN)]

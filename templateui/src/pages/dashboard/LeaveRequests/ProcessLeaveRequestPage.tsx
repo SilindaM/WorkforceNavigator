@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { ILeaveAllocationDto } from '../../../types/leaveAllocation.type';
 import { ILeaveRequestDto, Status } from '../../../types/leaveRequest.type';
 import axiosInstance from '../../../utils/axiosInstance';
-import { ALL_LEAVE_REQUESTS, PROCESS_LEAVE_REQUEST_URL } from '../../../utils/globalConfig';
 import toast from 'react-hot-toast';
 import Spinner from '../../../components/general/Spinner';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { Table, TableRow, TableCell, TableBody } from "semantic-ui-react";
 import { Button, ButtonGroup } from '@mui/material';
+import { ALL_LEAVE_REQUEST_URL, PROCESS_LEAVE_REQUEST_URL } from '../../../utils/globalConfig';
 
 
 const ProcessLeaveRequestPage = () => {
@@ -19,7 +19,7 @@ const ProcessLeaveRequestPage = () => {
     const getAllLeaveRequests = async()=>{
         try {
             setLoading(true);
-            const response = await axiosInstance.get<ILeaveRequestDto[]>(ALL_LEAVE_REQUESTS);
+            const response = await axiosInstance.get<ILeaveRequestDto[]>(ALL_LEAVE_REQUEST_URL);
             const {data} = response;
             setLeaveRequest(data);
             setLoading(false);

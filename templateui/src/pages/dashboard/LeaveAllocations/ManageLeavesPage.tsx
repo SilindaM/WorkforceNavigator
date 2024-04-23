@@ -4,8 +4,8 @@ import InboxPage from '../Messages/InboxPage'
 import MyLeaveAllocationsPage from './MyLeaveAllocationsPage'
 import MyLeaveRequestPage from '../LeaveRequests/MyLeaveRequestPage'
 import AllAllocationPage from './AllAllocationPage'
-import AllLeaveRequestPage from '../LeaveRequests/AllLeaveRequestPage'
 import ProcessLeaveRequestPage from '../LeaveRequests/ProcessLeaveRequestPage'
+import UpcomingLeaveRequestPage from '../LeaveRequests/UpcomingLeaveRequestPage'
 
 const panes = [
   {
@@ -21,10 +21,10 @@ const panes = [
     },
   },
   {
-    menuItem: 'ALL LEAVE REQUESTS',
+    menuItem: 'UPCOMING LEAVES',
     pane: {
       key: 'tab3',
-      content: <AllLeaveRequestPage/>
+      content: <UpcomingLeaveRequestPage/>
     },
   },
   {
