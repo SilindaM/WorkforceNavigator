@@ -40,12 +40,11 @@ const UsersManagementPage = () => {
 
   return (
     <div className='pageTemplate2'>
-      <h1 className='text-2xl font-bold'>Users Management</h1>
-      <UserCountSection usersList={users} />
+     {/* <UserCountSection usersList={users} />
       <div className='grid grid-cols-1 lg:grid-cols-4 gap-x-4'>
         <UserChartSection usersList={users} />
         <LatestUsersSection usersList={users} />
-      </div>
+  </div>*/}
       <UsersTableSection usersList={users} />
     </div>
   );

@@ -20,6 +20,7 @@ import { PATH_DASHBOARD } from '../../routes/path';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/layout/header';
 import { boolean } from 'yup';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
 const drawerWidth: number = 240;
 
@@ -129,6 +130,21 @@ export default function NavSideBar() {
             </IconButton>
           </Toolbar>
           <Divider />
+          <Box sx={{ p: 2 }}>
+            {/* Button with icon */}
+            <Button
+              variant="outlined"
+              fullWidth
+              sx={{ height: '60px' }} // Adjust the height as needed
+              startIcon={<SupervisorAccountIcon/>}
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                navigate(PATH_DASHBOARD.manageUsers);
+              }}
+            >
+              USER MANAGEMENT
+            </Button>
+          </Box>
           <Box sx={{ p: 2 }}>
             {/* Button with icon */}
             <Button
