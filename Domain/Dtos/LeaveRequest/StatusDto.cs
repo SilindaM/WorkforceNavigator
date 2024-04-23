@@ -1,5 +1,6 @@
-﻿namespace Domain.Enums
+﻿namespace Domain.Dtos.LeaveRequest
 {
+  using Domain.Enums;
   using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
   using System;
   using System.Collections.Generic;
@@ -8,12 +9,9 @@
   using System.Text.Json.Serialization;
   using System.Threading.Tasks;
 
-
-  [JsonConverter(typeof(JsonStringEnumConverter))]
-  public enum Status
+  public class StatusDto
   {
-    Approved,
-    Declined,
-    Pending
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public Status status { get; set; }
   }
-  }
+}
