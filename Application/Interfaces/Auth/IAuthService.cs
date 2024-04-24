@@ -18,6 +18,7 @@ namespace Application.Interfaces.Auth
     Task<LoginServiceResponseDto?> MeAsync(MeDto meDto);
     Task<IEnumerable<UserInfoResult>> GetUserListAsync();
     Task<UserInfoResult?> GetUserDetailsByUserNamesync(string userName);
+    Task<UserDetailsDto> GetUserExtraDetailsByUserNameAsync(string userName);
     Task<IEnumerable<string>> GetUsernamesListAsync();
   }
 }

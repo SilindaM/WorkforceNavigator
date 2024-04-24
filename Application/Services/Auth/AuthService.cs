@@ -23,14 +23,16 @@
 
   public class AuthService : IAuthService
   {
+    private readonly IUserJobTitleService userJobTitleService;
     private readonly UserManager<ApplicationUser> userManager;
     private readonly IConfiguration configuration;
     private readonly RoleManager<IdentityRole> roleManager;
     private readonly ILogService logService;
     private readonly ILeaveAllocationService leaveAllocationService;
 
-    public AuthService(UserManager<ApplicationUser> userManager,IConfiguration configuration, RoleManager<IdentityRole> roleManager, ILogService logService,ILeaveAllocationService leaveAllocationService)
+    public AuthService(IUserJobTitleService userJobTitleService,UserManager<ApplicationUser> userManager,IConfiguration configuration, RoleManager<IdentityRole> roleManager, ILogService logService,ILeaveAllocationService leaveAllocationService)
     {
+      this.userJobTitleService = userJobTitleService;
       this.userManager = userManager;
       this.configuration = configuration;
       this.roleManager = roleManager;
@@ -253,6 +255,34 @@
 
       string token = new JwtSecurityTokenHandler().WriteToken(tokenObject);
       return token;
+    }
+
+    public async Task<UserDetailsDto> GetUserExtraDetailsByUserNameAsync(string userName)
+    {
+      var user = await userManager.FindByNameAsync(userName);
+      if (user is null) { return null; }
+
+      var roles = await userManager.GetRolesAsync(user);
+      var userInfor = await GenerateUserInfo(user, roles,userJobTitleService);
+      return userInfor;
+    }
+    private async Task<UserDetailsDto> GenerateUserInfo(ApplicationUser user, IList<string> roles, IUserJobTitleService userJobTitleService)
+    {
+      var details = await userJobTitleService.GetJobTitleForUser(user.UserName);
+      var userInfo = new UserDetailsDto
+      {
+        Id = user.Id,
+        JoiningDate = user.CreatedAt,
+        Email = user.Email,
+        FirstName = user.FirstName,
+        LastName = user.LastName,
+        Roles = roles,
+        Username = user.UserName,
+        Department = details.DepartmentName,
+        JobTitle = details.Title,
+        Seniority = details.Seniority,
+      };
+      return userInfo;
     }
   }
 }
