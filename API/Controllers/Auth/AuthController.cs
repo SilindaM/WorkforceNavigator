@@ -121,12 +121,26 @@
       return Ok(userList);
     }
 
+    //[HttpGet]
+    //[Route("users/{username}")]
+    //public async Task<ActionResult<UserDetailsDto>> GetUserDetailsByUsernames([FromRoute] string username)
+    //{
+    //  var user = await authService.GetUserDetailsByUserNamesync(username);
+    //  if (user is not null)
+    //  {
+    //    return Ok(user);
+    //  }
+    //  else
+    //  {
+    //    return NotFound("Username not found");
+    //  }
+    //}
     [HttpGet]
-    [Route("users/{username}")]
-    public async Task<ActionResult<UserInfoResult>> GetUserDetailsByUsername([FromRoute] string username)
+    [Route("userDetails/{username}")]
+    public async Task<ActionResult<UserDetailsDto>> GetUserExtraDetailsByUsername([FromRoute] string username)
     {
-      var user = await authService.GetUserDetailsByUserNamesync(username);
-      if(user is not null)
+      var user = await authService.GetUserExtraDetailsByUserNameAsync(username);
+      if (user is not null)
       {
         return Ok(user);
       }

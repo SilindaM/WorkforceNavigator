@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using Application.Interfaces.GenericInterfaces;
 using Application.Services.Auth;
 using Application.Services.GenericServices;
@@ -19,13 +20,16 @@ namespace API.Controllers.GeneralAdmin
   {
     private readonly IGenericService<JobTitle, JobTitleDto> _JobTitleService;
     private readonly IGenericService<JobTitle, UpdateCreateJobTitleDto> _JobTitleUpdateService;
+    private readonly IUserJobTitleService userJobTitleService;
 
     public JobTitleController(
         IGenericService<JobTitle, JobTitleDto> JobTitleService,
-        IGenericService<JobTitle, UpdateCreateJobTitleDto> JobTitleUpdateService)
+        IGenericService<JobTitle, UpdateCreateJobTitleDto> JobTitleUpdateService,
+        IUserJobTitleService userJobTitleService)
     {
       _JobTitleService = JobTitleService;
       _JobTitleUpdateService = JobTitleUpdateService;
+      this.userJobTitleService = userJobTitleService;
     }
 
     [HttpGet]
@@ -89,6 +93,13 @@ namespace API.Controllers.GeneralAdmin
         return Ok(result.Message);
       }
       return StatusCode(result.StatusCode, result.Message);
+    }
+    [HttpGet("JobTitleUse")]
+
+    public async Task<JobTitleDto> GetUserJobTitle(string userName)
+    {
+      var jobTitle = await userJobTitleService.GetJobTitleForUser(userName);
+      return (JobTitleDto)jobTitle;
     }
   }
 }

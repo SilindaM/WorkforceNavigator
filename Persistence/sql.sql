@@ -1,2 +1,4 @@
 ﻿use Template;
-select * from LeaveRequests
+select * from Departments
+select * from JobTitles
+select * from Users

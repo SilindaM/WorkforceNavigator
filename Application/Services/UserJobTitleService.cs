@@ -63,6 +63,7 @@
         throw new Exception("JobTitleId is null for the user.");
       }
     }
+ 
 
 
     //will get the jobTitle including department name
