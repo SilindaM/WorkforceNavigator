@@ -8,8 +8,14 @@ import UserChartSection from '../../components/dashboard/usermanagement/UserChar
 import UserCountSection from '../../components/dashboard/usermanagement/UserCountSection';
 import UsersTableSection from '../../components/dashboard/usermanagement/UsersTableSection';
 import { IAuthUser } from '../../types/auth.type';
+import { TableContainer, TableHead } from '@mui/material';
+import { Table, TableRow, TableCell, TableBody } from 'semantic-ui-react';
 
-const UsersManagementPage = () => {
+interface IProps{
+  selectedUsername :(username:string|null) =>void;
+}
+
+const UsersManagementPage = ({selectedUsername}:IProps) => {
   const [users, setUsers] = useState<IAuthUser[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -21,7 +27,7 @@ const UsersManagementPage = () => {
       setUsers(data);
       setLoading(false);
     } catch (error) {
-      toast.error('An Error happened. Please Contact admins');
+      toast.error('An error occurred. Please contact admins.');
       setLoading(false);
     }
   };
@@ -38,14 +44,37 @@ const UsersManagementPage = () => {
     );
   }
 
+  const handleSelectedUser = (username:string | null) => {
+    selectedUsername(username);
+  }
+
+
   return (
     <div className='pageTemplate2'>
-     {/* <UserCountSection usersList={users} />
-      <div className='grid grid-cols-1 lg:grid-cols-4 gap-x-4'>
-        <UserChartSection usersList={users} />
-        <LatestUsersSection usersList={users} />
-  </div>*/}
-      <UsersTableSection usersList={users} />
+      <TableContainer component="div">
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>No</TableCell>
+              <TableCell>First Name</TableCell>
+              <TableCell>Last Name</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users.map((user, index) => (
+              <TableRow 
+                key={index} 
+                onClick={() => handleSelectedUser(user.username)} 
+                style={{ cursor: 'pointer' }}
+              >
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{user.firstName}</TableCell>
+                <TableCell>{user.lastName}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };
