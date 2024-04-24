@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Segment, Header, List, Icon, Grid } from "semantic-ui-react";
+import { UserDetailsDto } from "../../../types/userDetails.type";
+import axiosInstance from "../../../utils/axiosInstance";
+import { USER_DETAILS_URL } from "../../../utils/globalConfig";
+import toast from "react-hot-toast";
 
-const UserDetails = () => {
+interface IProps{
+  username:string;
+}
+
+const UserDetails = ({username}:IProps) => {
+  const [loading,setLoading] = useState<boolean>(false);
+  const [userDetails,setUserDetails] = useState<UserDetailsDto|null>(null);
+
+const getUserDetails = async(username:string)=>{
+  try {
+    setLoading(true);
+    console.log("get username " +username)
+    const response = await axiosInstance.get<UserDetailsDto>(`${USER_DETAILS_URL}/${username}`);
+    console.log(username);
+    console.log("finished getting users");
+    const {data} = response;
+    console.log(data);
+    setUserDetails(data);
+    setLoading(false);
+  } catch (error) {
+      toast("failed to load user Details");
+      setLoading(false);
+  }
+}
+useEffect(()=>{
+  getUserDetails(username);
+  console.log("Effect " + username);
+},[username])
     
  return (
     <div style={{ padding: "20px" }}>
@@ -17,8 +48,8 @@ const UserDetails = () => {
                  <Header as="h3">Personal Information</Header>
                  <List.Description>
                     <p><strong>First Name:</strong> John</p>
-                    <p><strong>Last Name:</strong> Doe</p>
-                    <p><strong>Gender:</strong> Male</p>
+                    <p><strong>First Name:</strong> John</p>
+                    <p><strong>First Name:</strong> John</p>
                  </List.Description>
                 </Grid.Column>
               </Grid>
