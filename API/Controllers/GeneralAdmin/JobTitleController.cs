@@ -1,16 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.Helpers;
 using Application.Interfaces;
 using Application.Interfaces.GenericInterfaces;
 using Application.Services.Auth;
 using Application.Services.GenericServices;
 using Domain.Dtos.Account;
+using Domain.Dtos.General;
 using Domain.Dtos.JobTitles;
 using Domain.Enties;
 using Domain.Enties.Leaves;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
 
 namespace API.Controllers.GeneralAdmin
 {
@@ -100,6 +104,17 @@ namespace API.Controllers.GeneralAdmin
     {
       var jobTitle = await userJobTitleService.GetJobTitleForUser(userName);
       return (JobTitleDto)jobTitle;
+    }
+    [HttpPost("AssignJobTitle")]
+    public async Task<IActionResult> AssignJobTitleToUser([FromBody] AssignJobTitleDto request)
+    {
+      
+        var result = await userJobTitleService.AssignJobTitleToUser(request); if (result.IsSucceed)
+      {
+        return Ok(result.Message);
+      }
+      return StatusCode(result.StatusCode, result.Message);
+
     }
   }
 }

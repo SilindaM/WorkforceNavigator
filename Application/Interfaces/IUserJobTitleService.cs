@@ -12,7 +12,7 @@
 
   public interface IUserJobTitleService
   {
-    Task<GeneralServiceResponseDto> AssignJobTitleToUser(ClaimsPrincipal User, string username,int jobTitleId);
+    Task<GeneralServiceResponseDto> AssignJobTitleToUser(AssignJobTitleDto assignJobTitle);
 
     Task<JobTitleDto> GetJobTitleForUser(string username);
 

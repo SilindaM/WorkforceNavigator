@@ -11,5 +11,6 @@ namespace Application.Interfaces
     Task<int> CreateJobTitleAsync(UpdateCreateJobTitleDto jobTitleDto);
     Task UpdateJobTitleAsync(int id, UpdateCreateJobTitleDto jobTitleDto);
     Task DeleteJobTitleAsync(int id);
+    Task  AssignJobTitle(AssignJobTitleDto jobTitleDto);
   }
 }

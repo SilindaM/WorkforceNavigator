@@ -22,18 +22,7 @@
       this.authService = authService;
       this.userJobTitleService = userJobTitleService;
     }
-    [HttpPost]
-    [Authorize]
-    [Route("AssignJobTitle")]
-    public async Task<IActionResult> AssignJobTitle(string username,int jobTitleId)
-    {
-      var result = await userJobTitleService.AssignJobTitleToUser(User,username, jobTitleId);
-      if (result.IsSucceed)
-      {
-        return Ok(result.Message);
-      }
-      return StatusCode(result.StatusCode, result.Message);
-    }
+   
     [HttpGet]
     [Route("jobtitle/{username}")]
     public async Task<ActionResult<JobTitleDto>> GetJobTitleByUsername([FromRoute] string username)
