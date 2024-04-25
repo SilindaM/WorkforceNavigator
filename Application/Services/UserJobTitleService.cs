@@ -22,21 +22,18 @@
   public class UserJobTitleService : IUserJobTitleService
   {
     private readonly DataContext dataContext;
-    private readonly ILogService logService;
 
-    public UserJobTitleService(DataContext dataContext,ILogService logService)
+    public UserJobTitleService(DataContext dataContext)
     {
       this.dataContext = dataContext;
-      this.logService = logService;
     }
 
-    public async Task<GeneralServiceResponseDto> AssignJobTitleToUser(ClaimsPrincipal User, string username, int jobTitleId)
+    public async Task<GeneralServiceResponseDto> AssignJobTitleToUser(AssignJobTitleDto assignJobTitle)
     {
-      var user = await dataContext.Users.FirstOrDefaultAsync(x => x.UserName == username);
+      var user = await dataContext.Users.FirstOrDefaultAsync(x => x.UserName == assignJobTitle.username);
       //assign the jobTitle id
-      user.JobTitleId = jobTitleId;
+      user.JobTitleId = assignJobTitle.jobTitleId;
       await dataContext.SaveChangesAsync();
-      await logService.SaveNewLog(User.Identity.Name,"Assigned JobTitle");
       return ResponseHelper.CreateResponse(true,200,"JobTitle Assigned Successfully");
     }
 
