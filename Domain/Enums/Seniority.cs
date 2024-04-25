@@ -8,7 +8,7 @@
 
   public enum Seniority
   {
-    Entry,
+    Junior,
     Mid,
     Senior,
     Lead
