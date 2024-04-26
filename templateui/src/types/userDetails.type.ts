@@ -13,4 +13,21 @@ export interface UserDetailsDto {
     seniority: string;
     joiningDate: Date;
 }
+export interface DepartmentDto{
+    id:number;
+    departmentName:string;
+    description:string;
+}
+
+export interface UserDetailsUpdateDto {
+    firstName: string;
+    lastName: string;
+    email: string;
+    roles: string[];
+    gender?: string;
+    jobTitle?: string;
+    salary?: number;
+    lineManager?: string;
+    departmentName: string;
+}
 
