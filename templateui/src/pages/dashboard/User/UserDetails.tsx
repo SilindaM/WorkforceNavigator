@@ -11,17 +11,22 @@ import {
   TableBody,
   TableRow,
   Divider,
+  Form,
+  Dropdown,
 } from "semantic-ui-react";
-import { UserDetailsDto } from "../../../types/userDetails.type";
+import { DepartmentDto, UserDetailsDto, UserDetailsUpdateDto } from "../../../types/userDetails.type";
 import axiosInstance from "../../../utils/axiosInstance";
 import {
+  ALL_DEPARTMENTS,
   MY_LEAVE_REQUESTS,
   UPCOMNG_LEAVE_REQUESTS,
+  UPDATE_USER_DETAILS,
   USER_DETAILS_URL,
 } from "../../../utils/globalConfig";
 import toast from "react-hot-toast";
 import { IMyLeaveAllocationDto } from "../../../types/leaveAllocation.type";
 import { IMyLeaveRequestDto, Status } from "../../../types/leaveRequest.type";
+import { RolesEnum } from "../../../types/auth.type";
 
 interface IProps {
   username: string;
@@ -29,9 +34,40 @@ interface IProps {
 
 const UserDetails = ({ username }: IProps) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [userDetails, setUserDetails] = useState<UserDetailsDto | null>(null);
+  const [userDetails, setUserDetails] = useState<UserDetailsDto>();
   const [leaves, setLeaves] = useState<IMyLeaveRequestDto[]>([]);
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [cellphone, setCellphone] = useState<number>(0);
+  const [lineManager, setLineManager] = useState<string>("");
+  const [jobTitle, setJobtitle] = useState<string>("");
+  const [departmentName, setdepartmentName] = useState<string>("");
+  const [roles, setRoles] = useState<RolesEnum[]>([]);
+  const [department,setDepartments] = useState<DepartmentDto[]>([]);
 
+  const UpdateUserDetails =async(userDetail: UserDetailsUpdateDto)=>{
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get<UserDetailsUpdateDto>(UPDATE_USER_DETAILS);
+      const {data} =response;
+      setLoading(false);
+    } catch (error) {
+      toast.error("Failed To Update the user");
+      setLoading(false);
+    }
+  }
+
+  const getAllDepartments = async()=>{
+    try {
+      const response= await axiosInstance.get<DepartmentDto[]>(ALL_DEPARTMENTS);
+      const {data}= response;
+      setDepartments(data);
+    } catch (error) {
+      toast.error("Failed to fetch depaertment")
+    }
+  }
   const getMyLeaves = async () => {
     try {
       setLoading(true);
@@ -65,130 +101,134 @@ const UserDetails = ({ username }: IProps) => {
   useEffect(() => {
     getUserDetails(username);
     getMyLeaves();
+    getAllDepartments();
+    setUserDetails(undefined);
+
     console.log("Effect " + username);
   }, [username]);
+  const Gender = [
+    { key: 'male', text: 'Male', value: 'male' },
+    { key: 'female', text: 'Female', value: 'female' }
+  ]
+const Depar=[
+  department
+]
+  const selectedGender = userDetails ? Gender.find(option => option.value === userDetails.gender) : null;
+  const selectedDepartment = userDetails ? department.find(option => option.departmentName === userDetails.department) : null;
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setUserDetails(
+      (
+        prevDetails = {
+          id: "", // Provide default values for all properties
+          firstName: "",
+          lastName: "",
+          email: "",
+          username: "",
+          roles: [],
+          gender: "",
+          jobTitle: "",
+          salary: 0,
+          lineManager: "",
+          department: "",
+          seniority: "",
+          joiningDate: new Date(),
+        }
+      ) => ({
+        ...prevDetails,
+        [name]: value,
+      })
+    );
+  };
+const handleUpdate=()=>{
+  const updateData : UserDetailsUpdateDto={
+    email,
+    firstName,
+    lastName,
+    gender,
+    jobTitle,
+    lineManager,
+    roles,
+    departmentName
+  }
+  UpdateUserDetails(updateData);
+  console.log(email,departmentName)
+}
   return (
     <div style={{ padding: "20px" }}>
       <Segment>
-        <div className="ui form">
-          <div className="two fields">
-            <div className="field ">
-              <>
-                <label>First Name</label>
-                <input type="text" value={userDetails?.firstName}></input>
-              </>
-            </div>
-            <div className="field">
-              <>
-                <label>Last Name</label>
-                <input type="text" value={userDetails?.lastName}></input>
-              </>
-            </div>
-            <div className="field ">
-              <>
-                <label>Gender</label>
-                <input type="text" value={userDetails?.gender} disabled></input>
-              </>
-            </div>
-          </div>
-          <div className="ui inverted divider"></div>
-          <div className="two fields mt-2">
-            <div className="field ">
-              <>
-                <label>User Name</label>
-                <input type="text" value={userDetails?.username}></input>
-              </>
-            </div>
-            <div className="field">
-              <>
-                <label>Email</label>
-                <input type="text" value={userDetails?.email}></input>
-              </>
-            </div>
-            <div className="field ">
-              <>
-                <label>Cellphone</label>
-                <input type="text" value={userDetails?.email}></input>
-              </>
-            </div>
-          </div>
-          <div className="two fields"></div>
-          <div className="ui inverted divider"></div>
-          <div className="two fields mt-2">
-            <div className="field ">
-              <>
-                <label>Career Manager</label>
-                <input
-                  placeholder="Career Manager"
-                  type="text"
-                  value={userDetails?.lineManager}
-                ></input>
-              </>
-            </div>
-            <div className="field">
-              <>
-                <label>Department</label>
-                <input
-                  placeholder="Last Name"
-                  type="text"
-                  value={userDetails?.department} disabled
-                ></input>
-              </>
-            </div>
-            <div className="field">
-              <>
-                <label>Level</label>
-                <input
-                  placeholder="First Name"
-                  type="text"
-                  value={userDetails?.seniority} disabled
-                ></input>
-              </>
-            </div>
-          </div>
-          <div className="ui inverted divider"></div>
-          <div className="two fields">
-            <div className="field">
-              <>
-                <label>Assigned Roles</label>
-                <input
-                  placeholder="Last Name"
-                  type="text"
-                  value={userDetails?.roles} disabled
-                ></input>
-              </>
-            </div>
-            <div className="field">
-              <>
-                <label>Joining Date</label>
-                <input
-                  placeholder="Joining Date"
-                  type="date"
-                  value={
-                    userDetails?.joiningDate
-                      ? new Date(userDetails.joiningDate)
-                          .toISOString()
-                          .substring(0, 10)
-                      : ""
-                  } disabled
-                ></input>
-              </>
-            </div>
+      <Form>
+    <Form.Group widths="equal">
+        <Form.Field>
+          <label>First Name</label>
+          <input type="text" defaultValue={userDetails?.firstName} />
+        </Form.Field>
+      <Form.Field>
+        <label>Last Name</label>
+        <input type="text" defaultValue={userDetails?.lastName} />
+      </Form.Field> <Form.Field>
+      <label>Gender</label>
+      <Dropdown
+        selection
+        options={Gender}
+        defaultValue={userDetails?.gender}
+      />
+    </Form.Field>
+    </Form.Group>
+    <Form.Group widths="equal">
+      <Form.Field>
+        <label>User Name</label>
+        <input type="text" value={userDetails?.username} disabled />
+      </Form.Field>
+      <Form.Field>
+        <label>Email</label>
+        <input type="email" defaultValue={userDetails?.email} />
+      </Form.Field>
+      <Form.Field>
+        <label>Cellphone</label>
+        <input type="text" defaultValue={userDetails?.email} />
+      </Form.Field>
+    </Form.Group>
+    <Form.Group widths="equal">
+      <Form.Field>
+        <label>Career Manager</label>
+        <input placeholder="Career Manager" type="text" defaultValue={userDetails?.lineManager} />
+      </Form.Field>
+      <Form.Field>
+  <label>Department</label> 
+  <Dropdown
+    selection
+    options={department.map(dept => ({ key: dept.id, text: dept.departmentName, value: dept.departmentName }))} // Map department names as options
+    defaultValue={userDetails?.department} // Use selectedGender value if available
+  />
+</Form.Field>
 
-            <div className="field">
-              <>
-                <label>Job Title</label>
-                <input
-                  placeholder="Last Name"
-                  type="text"
-                  value={userDetails?.jobTitle}
-                ></input>
-              </>
-            </div>
-          </div>
-          <Button primary>Update User Details</Button>
-        </div>
+      <Form.Field>
+        <label>Level</label>
+        <input placeholder="Level" type="text" value={userDetails?.seniority} disabled />
+      </Form.Field>
+    </Form.Group>
+    <Form.Group widths="equal">
+      <Form.Field>
+        <label>Assigned Roles</label>
+        <input placeholder="Assigned Roles" type="text" defaultValue={userDetails?.roles || ""} disabled />
+      </Form.Field>
+      <Form.Field>
+        <label>Joining Date</label>
+        <input placeholder="Joining Date" type="date" value={userDetails?.joiningDate ? new Date(userDetails.joiningDate).toISOString().substring(0, 10) : ""} disabled />
+      </Form.Field>
+      <Form.Field>
+        <label>Job Title</label> 
+        <Dropdown
+        selection
+        options={Gender}
+        defaultValue={selectedGender ? selectedGender.value : userDetails?.jobTitle} // Use selectedGender value if available
+      />
+      </Form.Field>
+    </Form.Group>
+    <Button primary type="submit" onClick={handleUpdate}>Update User Details</Button>
+ </Form>
         <Divider horizontal>Upcoming Leaves</Divider>
         <Table size="small" bordered>
           <Table.Header>
