@@ -5,10 +5,12 @@
   using Application.Services.Auth;
   using Domain.Constants;
   using Domain.Dtos.Account;
+  using Domain.Dtos.General;
   using Domain.Dtos.JobTitles;
   using Microsoft.AspNetCore.Authorization;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
+  using Persistence;
 
   [Route("api/[controller]")]
   [ApiController]
@@ -144,6 +146,22 @@
     {
       var usernames = await authService.GetUsernamesListAsync();
       return Ok(usernames);
+    }
+
+    [HttpPut("update/{username}")]
+    public async Task<ActionResult<GeneralServiceResponseDto>> UpdateUserDetails([FromRoute] string username,[FromBody]UserDetailsDto userDetailsDto)
+    {
+      try
+      {
+        // Assuming you have a service class that contains the UpdateUserDetails method
+        var response = await authService.UpdateUserDetails(username,userDetailsDto);
+        return Ok(response);
+      }
+      catch (Exception ex)
+      {
+        // Log the exception and return an error response
+        return BadRequest(new GeneralServiceResponseDto { });
+      }
     }
   }
 }

@@ -13,6 +13,7 @@
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.Options;
   using Microsoft.IdentityModel.Tokens;
+  using Persistence;
   using System;
   using System.Collections.Generic;
   using System.IdentityModel.Tokens.Jwt;
@@ -23,6 +24,7 @@
 
   public class AuthService : IAuthService
   {
+    private readonly DataContext dataContext;
     private readonly IUserJobTitleService userJobTitleService;
     private readonly UserManager<ApplicationUser> userManager;
     private readonly IConfiguration configuration;
@@ -30,8 +32,9 @@
     private readonly ILogService logService;
     private readonly ILeaveAllocationService leaveAllocationService;
 
-    public AuthService(IUserJobTitleService userJobTitleService,UserManager<ApplicationUser> userManager,IConfiguration configuration, RoleManager<IdentityRole> roleManager, ILogService logService,ILeaveAllocationService leaveAllocationService)
+    public AuthService(DataContext dataContext,IUserJobTitleService userJobTitleService,UserManager<ApplicationUser> userManager,IConfiguration configuration, RoleManager<IdentityRole> roleManager, ILogService logService,ILeaveAllocationService leaveAllocationService)
     {
+      this.dataContext = dataContext;
       this.userJobTitleService = userJobTitleService;
       this.userManager = userManager;
       this.configuration = configuration;
@@ -280,9 +283,39 @@
         Username = user.UserName,
         Department = details.DepartmentName,
         JobTitle = details.Title,
-        Seniority = details.Seniority,
       };
       return userInfo;
+    }
+    public async Task<GeneralServiceResponseDto> UpdateUserDetails(string username,UserDetailsDto userDetailsDto)
+    {
+      // Step 1: Retrieve the user from the database
+      var user = await dataContext.Users
+          .Include(u => u.JobTitle) 
+          .Where(x => x.UserName == username)
+          .FirstOrDefaultAsync();
+
+      if (user == null)
+      {
+        // Handle the case where the user is not found
+        throw new Exception("User not found");
+      }
+
+      // Step 2: Update the user entity with the new values
+      user.FirstName = userDetailsDto.FirstName;
+      user.LastName = userDetailsDto.LastName;
+      user.Email = userDetailsDto.Email;
+      user.Gender = userDetailsDto.Gender;
+      user.Salary = userDetailsDto.Salary;
+      user.LineManager = userDetailsDto.LineManager;
+      user.Seniority = userDetailsDto.Seniority;
+      user.CreatedAt = userDetailsDto.JoiningDate;
+      user.JobTitle.Title = userDetailsDto.JobTitle; // Assuming JobTitle has a Title property
+
+      // Step 3: Save the changes to the database
+      await dataContext.SaveChangesAsync();
+
+      // Return a response indicating success
+      return new GeneralServiceResponseDto {};
     }
   }
 }
