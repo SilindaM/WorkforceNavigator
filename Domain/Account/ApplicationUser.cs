@@ -1,4 +1,5 @@
 ﻿using Domain.Enties;
+using Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,5 +15,9 @@ namespace Domain.Account
 
     public int? JobTitleId { get; set; }
     public JobTitle JobTitle { get; set; }
+    public string? LineManager { get; set; }
+    public Gender? Gender { get; set; }
+    public decimal? Salary { get; set; }
+    public Seniority? Seniority { get; set; }
   }
 }

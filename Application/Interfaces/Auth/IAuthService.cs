@@ -20,5 +20,6 @@ namespace Application.Interfaces.Auth
     Task<UserInfoResult?> GetUserDetailsByUserNamesync(string userName);
     Task<UserDetailsDto> GetUserExtraDetailsByUserNameAsync(string userName);
     Task<IEnumerable<string>> GetUsernamesListAsync();
+    Task<GeneralServiceResponseDto> UpdateUserDetails(string username,UserDetailsDto userDetailsDto);
   }
 }
