@@ -27,6 +27,7 @@ export const PATH_PUBLIC = {
     updateLeaveRequest:'/dashboard/LeaveRequests',
     processLeaveRequest:'/dashboard/LeaveRequests',
     departmentRequest:'/dashboard/Department',
+    updateUserDetails:'/dashboard/Update',
 
     allocationByusername: '/dashboard/allocations/username',
     myAllocation: '/dashboard/my-allocations',

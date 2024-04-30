@@ -30,6 +30,7 @@ import { AppBar } from '@mui/material';
 import ManageLeavesPage from '../pages/dashboard/LeaveAllocations/ManageLeavesPage';
 import ProcessLeaveRequestPage from '../pages/dashboard/LeaveRequests/ProcessLeaveRequestPage';
 import ManageUsersPage from '../pages/dashboard/User/ManageUsersPage';
+import UserDetails from '../pages/dashboard/User/UserDetails';
 
 const GlobalRouter = () => {
     return (
@@ -66,12 +67,12 @@ const GlobalRouter = () => {
           {/* Admin access roles */}
           <Route element={<AuthGuard roles={adminAccessRoles} />}>
             <Route path={PATH_DASHBOARD.allLeaveAllocations} element={<AllAllocationPage />} />
-            <Route path={PATH_DASHBOARD.usersManagement} element={<UserManagementPage />} />
             <Route path={PATH_DASHBOARD.updateRole} element={<UpdateRolePage />} />
             <Route path={PATH_DASHBOARD.allMessages} element={<AllMessagesPage />} />
             <Route path={PATH_DASHBOARD.systemLogs} element={<SystemLogsPage />} />
             <Route path={PATH_DASHBOARD.admin} element={<AdminPage />} />
             <Route path={PATH_DASHBOARD.manageUsers} element={<ManageUsersPage />} />
+            <Route path={PATH_DASHBOARD.updateUserDetails} element={<UserDetails username={''}  />} />
             <Route path={PATH_DASHBOARD.manageLeaves} element={<ProcessLeaveRequestPage />} />
           </Route>
 

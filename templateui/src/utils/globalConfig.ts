@@ -12,7 +12,7 @@ export const UPDATE_ROLE_URL = '/Auth/UpdateRoles';
 export const USERNAMES_LIST_URL = '/Auth/usernames';
 export const USERS_LIST_URL = '/Auth/users';
 export const USER_DETAILS_URL = '/Auth/userDetails';
-export const UPDATE_USER_DETAILS ='/Auth/UpdateUserDetails'
+export const UPDATE_USER_DETAILS ='/Auth/update'
 
 //MESSAGES
 

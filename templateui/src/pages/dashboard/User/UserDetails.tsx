@@ -14,7 +14,11 @@ import {
   Form,
   Dropdown,
 } from "semantic-ui-react";
-import { DepartmentDto, UserDetailsDto, UserDetailsUpdateDto } from "../../../types/userDetails.type";
+import {
+  DepartmentDto,
+  UserDetailsDto,
+  UserDetailsUpdateDto,
+} from "../../../types/userDetails.type";
 import axiosInstance from "../../../utils/axiosInstance";
 import {
   ALL_DEPARTMENTS,
@@ -45,29 +49,57 @@ const UserDetails = ({ username }: IProps) => {
   const [jobTitle, setJobtitle] = useState<string>("");
   const [departmentName, setdepartmentName] = useState<string>("");
   const [roles, setRoles] = useState<RolesEnum[]>([]);
-  const [department,setDepartments] = useState<DepartmentDto[]>([]);
+  const [department, setDepartments] = useState<DepartmentDto[]>([]);
 
-  const UpdateUserDetails =async(userDetail: UserDetailsUpdateDto)=>{
-    try {
-      setLoading(true);
-      const response = await axiosInstance.get<UserDetailsUpdateDto>(UPDATE_USER_DETAILS);
-      const {data} =response;
-      setLoading(false);
-    } catch (error) {
-      toast.error("Failed To Update the user");
-      setLoading(false);
+  const UpdateUserDetails = async (
+  updateUsername: string,
+  userDetail: UserDetailsUpdateDto
+) => {
+  try {
+    setLoading(true);
+    console.log("Retrieve");
+    const response = await axiosInstance.post<UserDetailsUpdateDto>(
+      `${UPDATE_USER_DETAILS}/${updateUsername}`, // Update the URL with username in path
+      userDetail
+    );
+    console.log("get data");
+    const { data } = response;
+    setLoading(false);
+    console.log("get data to update " + data);
+  } catch (error:any) {
+    if (error.response) {
+       // The request was made and the server responded with a status code
+       // that falls out of the range of 2xx
+       console.log("Data "+error.response.data);
+       console.log("Status "+error.response.status);
+       console.log("Headers "+error.response.headers);
+    } else if (error.request) {
+       // The request was made but no response was received
+       console.log(error.request);
+    } else {
+       // Something happened in setting up the request that triggered an Error
+       console.log('Error', error.message);
     }
-  }
+    console.log(error.config);
+   }
+   
+};
 
-  const getAllDepartments = async()=>{
+  
+   
+
+  const getAllDepartments = async () => {
     try {
-      const response= await axiosInstance.get<DepartmentDto[]>(ALL_DEPARTMENTS);
-      const {data}= response;
+      const response = await axiosInstance.get<DepartmentDto[]>(
+        ALL_DEPARTMENTS
+      );
+      const { data } = response;
       setDepartments(data);
     } catch (error) {
-      toast.error("Failed to fetch depaertment")
+      toast.error("Failed to fetch depaertment");
+      setLoading(false);
     }
-  }
+  };
   const getMyLeaves = async () => {
     try {
       setLoading(true);
@@ -107,16 +139,21 @@ const UserDetails = ({ username }: IProps) => {
     console.log("Effect " + username);
   }, [username]);
   const Gender = [
-    { key: 'male', text: 'Male', value: 'male' },
-    { key: 'female', text: 'Female', value: 'female' }
-  ]
-const Depar=[
-  department
-]
-  const selectedGender = userDetails ? Gender.find(option => option.value === userDetails.gender) : null;
-  const selectedDepartment = userDetails ? department.find(option => option.departmentName === userDetails.department) : null;
+    { key: "male", text: "Male", value: "male" },
+    { key: "female", text: "Female", value: "female" },
+  ];
+  const Depar = [department];
+  const selectedGender = userDetails
+    ? Gender.find((option) => option.value === userDetails.gender)
+    : null;
+  const selectedDepartment = userDetails
+    ? department.find(
+        (option) => option.departmentName === userDetails.department
+      )
+    : null;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
     const { name, value } = event.target;
     setUserDetails(
       (
@@ -141,94 +178,130 @@ const Depar=[
       })
     );
   };
-const handleUpdate=()=>{
-  const updateData : UserDetailsUpdateDto={
-    email,
-    firstName,
-    lastName,
-    gender,
-    jobTitle,
-    lineManager,
-    roles,
-    departmentName
-  }
-  UpdateUserDetails(updateData);
-  console.log(email,departmentName)
-}
+  const handleUpdate = () => {
+    const updateData: UserDetailsUpdateDto = {
+      email,
+      firstName,
+      lastName,
+      gender,
+      jobTitle,
+      lineManager,
+      roles,
+      departmentName,
+    };
+    UpdateUserDetails(username, updateData);
+  };
   return (
     <div style={{ padding: "20px" }}>
       <Segment>
-      <Form>
-    <Form.Group widths="equal">
-        <Form.Field>
-          <label>First Name</label>
-          <input type="text" defaultValue={userDetails?.firstName} />
-        </Form.Field>
-      <Form.Field>
-        <label>Last Name</label>
-        <input type="text" defaultValue={userDetails?.lastName} />
-      </Form.Field> <Form.Field>
-      <label>Gender</label>
-      <Dropdown
-        selection
-        options={Gender}
-        defaultValue={userDetails?.gender}
-      />
-    </Form.Field>
-    </Form.Group>
-    <Form.Group widths="equal">
-      <Form.Field>
-        <label>User Name</label>
-        <input type="text" value={userDetails?.username} disabled />
-      </Form.Field>
-      <Form.Field>
-        <label>Email</label>
-        <input type="email" defaultValue={userDetails?.email} />
-      </Form.Field>
-      <Form.Field>
-        <label>Cellphone</label>
-        <input type="text" defaultValue={userDetails?.email} />
-      </Form.Field>
-    </Form.Group>
-    <Form.Group widths="equal">
-      <Form.Field>
-        <label>Career Manager</label>
-        <input placeholder="Career Manager" type="text" defaultValue={userDetails?.lineManager} />
-      </Form.Field>
-      <Form.Field>
-  <label>Department</label> 
-  <Dropdown
-    selection
-    options={department.map(dept => ({ key: dept.id, text: dept.departmentName, value: dept.departmentName }))} // Map department names as options
-    defaultValue={userDetails?.department} // Use selectedGender value if available
-  />
-</Form.Field>
+        <Form>
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>First Name</label>
+              <input type="text" defaultValue={userDetails?.firstName} />
+            </Form.Field>
+            <Form.Field>
+              <label>Last Name</label>
+              <input type="text" defaultValue={userDetails?.lastName} />
+            </Form.Field>{" "}
+            <Form.Field>
+              <label>Gender</label>
+              <input type="text" defaultValue={userDetails?.gender} />
+              <Dropdown
+                selection
+                options={Gender}
+                defaultValue={userDetails?.gender}
+              />
+            </Form.Field>
+          </Form.Group>
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>User Name</label>
+              <input type="text" value={userDetails?.username} disabled />
+            </Form.Field>
+            <Form.Field>
+              <label>Email</label>
+              <input type="email" defaultValue={userDetails?.email} />
+            </Form.Field>
+            <Form.Field>
+              <label>Cellphone</label>
+              <input type="text" defaultValue={userDetails?.email} />
+            </Form.Field>
+          </Form.Group>
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>Career Manager</label>
+              <input
+                placeholder="Career Manager"
+                type="text"
+                defaultValue={userDetails?.lineManager}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Department</label>
+              <input type="text" defaultValue={userDetails?.department} />
+              <Dropdown
+                selection
+                options={department.map((dept) => ({
+                  key: dept.id,
+                  text: dept.departmentName,
+                  value: dept.departmentName,
+                }))} // Map department names as options
+                defaultValue={userDetails?.department} // Use selectedGender value if available
+              />
+            </Form.Field>
 
-      <Form.Field>
-        <label>Level</label>
-        <input placeholder="Level" type="text" value={userDetails?.seniority} disabled />
-      </Form.Field>
-    </Form.Group>
-    <Form.Group widths="equal">
-      <Form.Field>
-        <label>Assigned Roles</label>
-        <input placeholder="Assigned Roles" type="text" defaultValue={userDetails?.roles || ""} disabled />
-      </Form.Field>
-      <Form.Field>
-        <label>Joining Date</label>
-        <input placeholder="Joining Date" type="date" value={userDetails?.joiningDate ? new Date(userDetails.joiningDate).toISOString().substring(0, 10) : ""} disabled />
-      </Form.Field>
-      <Form.Field>
-        <label>Job Title</label> 
-        <Dropdown
-        selection
-        options={Gender}
-        defaultValue={selectedGender ? selectedGender.value : userDetails?.jobTitle} // Use selectedGender value if available
-      />
-      </Form.Field>
-    </Form.Group>
-    <Button primary type="submit" onClick={handleUpdate}>Update User Details</Button>
- </Form>
+            <Form.Field>
+              <label>Level</label>
+              <input
+                placeholder="Level"
+                type="text"
+                value={userDetails?.seniority}
+                disabled
+              />
+            </Form.Field>
+          </Form.Group>
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>Assigned Roles</label>
+              <input
+                placeholder="Assigned Roles"
+                type="text"
+                defaultValue={userDetails?.roles || ""}
+                disabled
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Joining Date</label>
+              <input
+                placeholder="Joining Date"
+                type="date"
+                value={
+                  userDetails?.joiningDate
+                    ? new Date(userDetails.joiningDate)
+                        .toISOString()
+                        .substring(0, 10)
+                    : ""
+                }
+                disabled
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Job Title</label>
+              <input type="text" defaultValue={userDetails?.jobTitle} />
+              <Dropdown
+                selection
+                options={Gender}
+                defaultValue={
+                  selectedGender ? selectedGender.value : userDetails?.jobTitle
+                } // Use selectedGender value if available
+              />
+            </Form.Field>
+          </Form.Group>
+          <Button primary type="submit" onClick={handleUpdate}>
+            Update User Details
+          </Button>
+        </Form>
         <Divider horizontal>Upcoming Leaves</Divider>
         <Table size="small" bordered>
           <Table.Header>

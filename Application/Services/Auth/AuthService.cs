@@ -286,7 +286,7 @@
       };
       return userInfo;
     }
-    public async Task<GeneralServiceResponseDto> UpdateUserDetails(string username,UserDetailsDto userDetailsDto)
+    public async Task<GeneralServiceResponseDto> UpdateUserDetails(string username, UpdateUserDetailsDto userDetailsDto)
     {
       // Step 1: Retrieve the user from the database
       var user = await dataContext.Users
@@ -303,12 +303,10 @@
       // Step 2: Update the user entity with the new values
       user.FirstName = userDetailsDto.FirstName;
       user.LastName = userDetailsDto.LastName;
-      user.Email = userDetailsDto.Email;
       user.Gender = userDetailsDto.Gender;
       user.Salary = userDetailsDto.Salary;
       user.LineManager = userDetailsDto.LineManager;
       user.Seniority = userDetailsDto.Seniority;
-      user.CreatedAt = userDetailsDto.JoiningDate;
       user.JobTitle.Title = userDetailsDto.JobTitle; // Assuming JobTitle has a Title property
 
       // Step 3: Save the changes to the database
