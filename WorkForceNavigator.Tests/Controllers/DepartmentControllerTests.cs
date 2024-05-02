@@ -99,6 +99,7 @@
       //Assert
       A.CallTo(()=> genericService.GetByIdAsync(departmentById.Id)).MustHaveHappenedOnceExactly();
     }
+
     [Fact]
     public async void DepartmentController_SoftDelete_ReturnOK()
     {
