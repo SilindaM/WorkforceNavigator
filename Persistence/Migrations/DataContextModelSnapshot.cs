@@ -93,9 +93,6 @@ namespace Persistence.Migrations
                     b.Property<int?>("Seniority")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -114,8 +111,6 @@ namespace Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("TeamId");
 
                     b.ToTable("Users", (string)null);
                 });
@@ -461,6 +456,48 @@ namespace Persistence.Migrations
                     b.ToTable("Teams");
                 });
 
+            modelBuilder.Entity("Domain.Enties.TimeSheets.TeamMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("JoinedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TeamMembers");
+                });
+
             modelBuilder.Entity("Domain.Entities.Log", b =>
                 {
                     b.Property<int>("Id")
@@ -688,10 +725,6 @@ namespace Persistence.Migrations
                         .WithMany("Users")
                         .HasForeignKey("JobTitleId");
 
-                    b.HasOne("Domain.Enties.TimeSheets.Team", null)
-                        .WithMany("Members")
-                        .HasForeignKey("TeamId");
-
                     b.Navigation("JobTitle");
                 });
 
@@ -732,6 +765,23 @@ namespace Persistence.Migrations
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("LeaveType");
+                });
+
+            modelBuilder.Entity("Domain.Enties.TimeSheets.TeamMember", b =>
+                {
+                    b.HasOne("Domain.Enties.TimeSheets.Team", "Team")
+                        .WithMany("Members")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Account.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Team");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

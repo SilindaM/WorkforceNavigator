@@ -2,6 +2,7 @@
 {
   using System.Collections.Generic;
   using System.Threading.Tasks;
+  using Application.Interfaces;
   using Application.Interfaces.GenericInterfaces;
   using Application.Services.Auth;
   using Application.Services.GenericServices;
@@ -18,11 +19,13 @@
   public class TeamController : ControllerBase
   {
     private readonly IGenericService<Team, TeamDto> _teamService;
+    private readonly ITeamInterface teamInterface;
 
     public TeamController(
-        IGenericService<Team, TeamDto> teamService)
+        IGenericService<Team, TeamDto> teamService,ITeamInterface teamInterface)
     {
       _teamService = teamService;
+      this.teamInterface = teamInterface;
     }
 
     [HttpGet]
@@ -85,6 +88,26 @@
         return Ok(result.Message);
       }
       return StatusCode(result.StatusCode, result.Message);
+    }
+    [HttpPost("add-member")]
+    public async Task<IActionResult> AddTeamMember(int teamId, string username)
+    {
+      var response = await teamInterface.AddTeamMember(teamId, username);
+      return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("remove-member")]
+    public async Task<IActionResult> RemoveTeamMember(int teamId, string username)
+    {
+      var response = await teamInterface.RemoveTeamMember(teamId, username);
+      return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("update-member")]
+    public async Task<IActionResult> UpdateTeamMember(int teamId, string username)
+    {
+      var response = await teamInterface.UpdateTeamMember(teamId, username);
+      return StatusCode(response.StatusCode, response);
     }
   }
 }

@@ -1,10 +1,9 @@
-﻿using Domain.Enties;
-using Domain.Enums;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Account
+﻿namespace Domain.Account
 {
+  using Domain.Enties;
+  using Domain.Enums;
+  using Microsoft.AspNetCore.Identity;
+  using System.ComponentModel.DataAnnotations.Schema;
   public class ApplicationUser : IdentityUser
   {
     public string FirstName { get; set; }
