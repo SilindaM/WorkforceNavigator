@@ -1,23 +1,24 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Application.Helpers;
-using Application.Interfaces;
-using Application.Interfaces.GenericInterfaces;
-using Application.Services.Auth;
-using Application.Services.GenericServices;
-using Domain.Dtos.Account;
-using Domain.Dtos.General;
-using Domain.Dtos.JobTitles;
-using Domain.Enties;
-using Domain.Enties.Leaves;
-using FluentResults;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
-
+﻿
 namespace API.Controllers.GeneralAdmin
 {
+  using System.Collections.Generic;
+  using System.Threading.Tasks;
+  using Application.Helpers;
+  using Application.Interfaces;
+  using Application.Interfaces.GenericInterfaces;
+  using Application.Services.Auth;
+  using Application.Services.GenericServices;
+  using Domain.Dtos.Account;
+  using Domain.Dtos.General;
+  using Domain.Dtos.JobTitles;
+  using Domain.Enties;
+  using Domain.Enties.Leaves;
+  using FluentResults;
+  using Microsoft.AspNetCore.Authorization;
+  using Microsoft.AspNetCore.Mvc;
+  using Microsoft.EntityFrameworkCore;
+  using Persistence;
+
   [ApiController]
   [Route("api/[controller]")]
   public class JobTitleController : ControllerBase

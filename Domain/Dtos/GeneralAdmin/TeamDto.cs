@@ -1,17 +1,15 @@
-﻿namespace Domain.Enties.TimeSheets
+﻿namespace Domain.Dtos.GeneralAdmin
 {
   using Domain.Account;
-  using Domain.Entities;
   using System;
   using System.Collections.Generic;
   using System.Linq;
   using System.Text;
   using System.Threading.Tasks;
 
-  public class Team : BaseEntity<int>
+  public class TeamDto
   {
     public string TeamName { get; set; }
     public string Description { get; set; }
-    public List<ApplicationUser>? Members { get; set; }
   }
 }

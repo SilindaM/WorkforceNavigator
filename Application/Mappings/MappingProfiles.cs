@@ -4,11 +4,13 @@
   using Domain.Account;
   using Domain.Dtos.Account;
   using Domain.Dtos.Departments;
+  using Domain.Dtos.GeneralAdmin;
   using Domain.Dtos.JobTitles;
   using Domain.Dtos.LeaveAllocation;
   using Domain.Dtos.LeaveRequest;
   using Domain.Enties;
   using Domain.Enties.Leaves;
+  using Domain.Enties.TimeSheets;
   using Domain.Entities;
 
   public class MappingProfiles : Profile
@@ -23,6 +25,7 @@
       CreateMap<LeaveRequest, CreateLeaveRequestDto>().ReverseMap();
       CreateMap<LeaveRequestDto, MyLeaveRequestDto>().ReverseMap();
       CreateMap<LeaveAllocation, EmployeeLeaveAllocationDto>().ReverseMap();
+      CreateMap<Team, TeamDto>().ReverseMap();
       CreateMap<ApplicationUser, UserInfoResult>().ReverseMap();
 
     }

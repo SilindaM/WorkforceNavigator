@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Application.Helpers;
-using Application.Interfaces.GenericInterfaces;
-using AutoMapper;
-using Domain.Dtos.General;
-using FluentResults;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
-
-namespace Application.Services.GenericServices
+﻿namespace Application.Services.GenericServices
 {
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
+  using System.Threading.Tasks;
+  using Application.Helpers;
+  using Application.Interfaces.GenericInterfaces;
+  using AutoMapper;
+  using Domain.Dtos.General;
+  using FluentResults;
+  using Microsoft.EntityFrameworkCore;
+  using Persistence;
   public class GenericService<TEntity, TDto> : IGenericService<TEntity, TDto>
       where TEntity : class
       where TDto : class

@@ -1,18 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Application.Interfaces.GenericInterfaces;
-using Application.Services.Auth;
-using Application.Services.GenericServices;
-using Domain.Dtos.Account;
-using Domain.Dtos.Departments;
-using Domain.Enties;
-using Domain.Enties.Leaves;
-using FluentResults;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
+﻿
 namespace API.Controllers.GeneralAdmin
 {
+  using System.Collections.Generic;
+  using System.Threading.Tasks;
+  using Application.Interfaces.GenericInterfaces;
+  using Application.Services.Auth;
+  using Application.Services.GenericServices;
+  using Domain.Dtos.Account;
+  using Domain.Dtos.Departments;
+  using Domain.Enties;
+  using Domain.Enties.Leaves;
+  using FluentResults;
+  using Microsoft.AspNetCore.Authorization;
+  using Microsoft.AspNetCore.Mvc;
+
   [ApiController]
   [Route("api/[controller]")]
   public class DepartmentController : ControllerBase
