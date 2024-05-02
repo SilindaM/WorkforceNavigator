@@ -4,6 +4,7 @@ namespace Persistence
   using Domain.Account;
   using Domain.Enties;
   using Domain.Enties.Leaves;
+  using Domain.Enties.TimeSheets;
   using Domain.Entities;
   using Microsoft.AspNetCore.Identity;
   using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -18,6 +19,11 @@ namespace Persistence
         }
     public DbSet<Log> Logs { get; set; }
     public DbSet<Message> Messages { get; set; }
+
+    public DbSet<Team> Teams { get; set; }
+    public DbSet<Client> Clients { get; set; }
+    public DbSet<Project> Projects { get; set; }
+    public DbSet<Task> Tasks { get; set; }
     public DbSet<JobTitle> JobTitles { get; set; }
     public DbSet<Department> Departments { get; set; }
     public DbSet<LeaveRequest> LeaveRequests { get; set; }

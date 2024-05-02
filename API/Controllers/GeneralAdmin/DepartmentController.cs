@@ -1,4 +1,4 @@
-﻿namespace API.Controllers.GeneralAdmin
+namespace API.Controllers.GeneralAdmin
 {
   using System.Collections.Generic;
   using System.Threading.Tasks;

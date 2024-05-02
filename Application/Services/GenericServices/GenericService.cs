@@ -1,5 +1,5 @@
-﻿
-namespace Application.Services.GenericServices
+
+﻿namespace Application.Services.GenericServices
 {
   using System;
   using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace Application.Services.GenericServices
   using FluentResults;
   using Microsoft.EntityFrameworkCore;
   using Persistence;
-
+   
   public class GenericService<TEntity, TDto> : IGenericService<TEntity, TDto>
       where TEntity : class
       where TDto : class
