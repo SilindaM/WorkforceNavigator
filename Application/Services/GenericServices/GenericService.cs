@@ -1,3 +1,4 @@
+
 ﻿namespace Application.Services.GenericServices
 {
   using System;
@@ -11,6 +12,7 @@
   using FluentResults;
   using Microsoft.EntityFrameworkCore;
   using Persistence;
+   
   public class GenericService<TEntity, TDto> : IGenericService<TEntity, TDto>
       where TEntity : class
       where TDto : class
