@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,10 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240503093604_Inidsdsdtial")]
+    partial class Inidsdsdtial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -473,6 +475,9 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("JobTitleId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
@@ -484,6 +489,8 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JobTitleId");
 
                     b.HasIndex("TeamId")
                         .IsUnique();
@@ -764,7 +771,13 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Enties.TimeSheets.TeamMember", b =>
                 {
-                    b.HasOne("Domain.Enties.TimeSheets.Team", "Team")
+                    b.HasOne("Domain.Enties.JobTitle", "JobTitle")
+                        .WithMany()
+                        .HasForeignKey("JobTitleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Enties.TimeSheets.Team", null)
                         .WithOne("TeamMembers")
                         .HasForeignKey("Domain.Enties.TimeSheets.TeamMember", "TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -776,7 +789,7 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Team");
+                    b.Navigation("JobTitle");
 
                     b.Navigation("User");
                 });
@@ -844,7 +857,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Enties.TimeSheets.Team", b =>
                 {
-                    b.Navigation("TeamMembers");
+                    b.Navigation("TeamMembers")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

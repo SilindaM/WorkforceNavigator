@@ -41,7 +41,7 @@
                                     join u in dataContext.Users on la.Username equals u.UserName
                                     select new LeaveAllocationDto
                                     {
-                                      Username = u.UserName,
+                                       Username = u.UserName,
                                       FirstName = u.FirstName,
                                       LastName = u.LastName,
                                       NumberOfDays = la.NumberOfDays,

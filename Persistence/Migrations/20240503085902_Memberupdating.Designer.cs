@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,10 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240503085902_Memberupdating")]
+    partial class Memberupdating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,6 +177,9 @@ namespace Persistence.Migrations
                     b.Property<int>("Seniority")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -185,6 +190,8 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("JobTitles");
                 });
@@ -473,6 +480,9 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("JobTitleId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
@@ -485,8 +495,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeamId")
-                        .IsUnique();
+                    b.HasIndex("JobTitleId");
+
+                    b.HasIndex("TeamId");
 
                     b.HasIndex("UserId");
 
@@ -731,6 +742,10 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Domain.Enties.TimeSheets.Team", null)
+                        .WithMany("Jobtitles")
+                        .HasForeignKey("TeamId");
+
                     b.Navigation("Department");
                 });
 
@@ -764,9 +779,15 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Enties.TimeSheets.TeamMember", b =>
                 {
+                    b.HasOne("Domain.Enties.JobTitle", "JobTitle")
+                        .WithMany()
+                        .HasForeignKey("JobTitleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Enties.TimeSheets.Team", "Team")
-                        .WithOne("TeamMembers")
-                        .HasForeignKey("Domain.Enties.TimeSheets.TeamMember", "TeamId")
+                        .WithMany("Members")
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -775,6 +796,8 @@ namespace Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("JobTitle");
 
                     b.Navigation("Team");
 
@@ -844,7 +867,9 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Enties.TimeSheets.Team", b =>
                 {
-                    b.Navigation("TeamMembers");
+                    b.Navigation("Jobtitles");
+
+                    b.Navigation("Members");
                 });
 #pragma warning restore 612, 618
         }

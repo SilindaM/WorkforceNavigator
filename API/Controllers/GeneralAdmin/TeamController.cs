@@ -109,5 +109,11 @@
       var response = await teamInterface.UpdateTeamMember(teamId, username);
       return StatusCode(response.StatusCode, response);
     }
+    [HttpGet("withdetails")]
+    public async Task<ActionResult<IEnumerable<TeamDto>>> GetAllTeamsWithMembers()
+    {
+      var teams = await teamInterface.GetAllTeamsWithMembersAsync();
+      return Ok(teams);
+    }
   }
 }

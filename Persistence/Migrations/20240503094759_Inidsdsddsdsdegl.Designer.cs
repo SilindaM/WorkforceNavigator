@@ -12,8 +12,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240502115706_AddTeamMember")]
-    partial class AddTeamMember
+    [Migration("20240503094759_Inidsdsddsdsdegl")]
+    partial class Inidsdsddsdsdegl
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -466,9 +466,6 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -478,17 +475,27 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("JobTitleId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("JobTitleId");
 
-                    b.HasIndex("TeamId");
+                    b.HasIndex("TeamId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("TeamMembers");
                 });
@@ -764,19 +771,29 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Enties.TimeSheets.TeamMember", b =>
                 {
-                    b.HasOne("Domain.Account.ApplicationUser", "ApplicationUser")
+                    b.HasOne("Domain.Enties.JobTitle", "JobTitle")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("Domain.Enties.TimeSheets.Team", "Team")
-                        .WithMany("Members")
-                        .HasForeignKey("TeamId")
+                        .HasForeignKey("JobTitleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.HasOne("Domain.Enties.TimeSheets.Team", "Team")
+                        .WithOne("TeamMembers")
+                        .HasForeignKey("Domain.Enties.TimeSheets.TeamMember", "TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Account.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("JobTitle");
 
                     b.Navigation("Team");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -842,7 +859,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Enties.TimeSheets.Team", b =>
                 {
-                    b.Navigation("Members");
+                    b.Navigation("TeamMembers")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

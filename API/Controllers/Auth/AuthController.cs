@@ -70,7 +70,7 @@
 
     [HttpPost]
     [Route("UpdateRoles")]
-    [Authorize(Roles =StaticUserRoles.OwnerAdmin)]
+    //[Authorize(Roles =StaticUserRoles.OwnerAdmin)]
     public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleDto updateRoleDto)
     {
       var updateRoleResult = await authService.UpdateRoleAsync(User, updateRoleDto);

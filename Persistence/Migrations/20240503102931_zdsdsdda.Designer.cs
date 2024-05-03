@@ -12,8 +12,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240502130827_TeamMemberFix")]
-    partial class TeamMemberFix
+    [Migration("20240503102931_zdsdsdda")]
+    partial class zdsdsdda
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -475,13 +475,6 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("JoinedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
@@ -489,11 +482,13 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeamId");
+                    b.HasIndex("TeamId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -772,14 +767,16 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Enties.TimeSheets.TeamMember", b =>
                 {
                     b.HasOne("Domain.Enties.TimeSheets.Team", "Team")
-                        .WithMany("Members")
-                        .HasForeignKey("TeamId")
+                        .WithOne("TeamMembers")
+                        .HasForeignKey("Domain.Enties.TimeSheets.TeamMember", "TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Account.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Team");
 
@@ -849,7 +846,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Enties.TimeSheets.Team", b =>
                 {
-                    b.Navigation("Members");
+                    b.Navigation("TeamMembers");
                 });
 #pragma warning restore 612, 618
         }
