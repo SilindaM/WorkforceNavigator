@@ -9,7 +9,14 @@
 
   public class TeamDto
   {
+    public int Id { get; set; }
     public string TeamName { get; set; }
-    public string Description { get; set; }
+    public List<MemberDetails> Members { get; set; } // Updated to include MemberDetails
+  }
+  public class MemberDetails
+  {
+    public string JobTitle { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
   }
 }

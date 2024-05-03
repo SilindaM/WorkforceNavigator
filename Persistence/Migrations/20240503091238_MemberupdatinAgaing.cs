@@ -4,7 +4,7 @@
 
 namespace Persistence.Migrations
 {
-    public partial class LeaveAlloxationfix : Migration
+    public partial class MemberupdatinAgaing : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

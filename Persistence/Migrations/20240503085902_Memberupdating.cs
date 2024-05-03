@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-#nullable disable
+﻿
 
 namespace Persistence.Migrations
 {
-    public partial class departmenty : Migration
+  using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+  public partial class Memberupdating : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

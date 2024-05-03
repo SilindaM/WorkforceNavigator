@@ -11,7 +11,6 @@
   using Domain.Enums;
   using Microsoft.EntityFrameworkCore;
   using Persistence;
-  using Persistence.Migrations;
   using System;
   using System.Collections.Generic;
   using System.Linq;

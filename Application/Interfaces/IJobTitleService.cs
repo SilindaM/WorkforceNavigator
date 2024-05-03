@@ -1,9 +1,9 @@
-﻿using Domain.Dtos.JobTitles;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
+﻿
 namespace Application.Interfaces
 {
+  using Domain.Dtos.JobTitles;
+  using System.Collections.Generic;
+  using System.Threading.Tasks;
   public interface IJobTitleService
     {
     Task<IEnumerable<JobTitleDto>> GetAllJobTitlesAsync();
