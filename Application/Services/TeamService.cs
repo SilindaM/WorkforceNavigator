@@ -19,7 +19,7 @@
   using Microsoft.EntityFrameworkCore;
   using Domain.Dtos.LeaveRequest;
   using Microsoft.AspNet.Identity;
-
+  using Domain.Account;
 
   public class TeamService : ITeamInterface
   {
@@ -29,22 +29,34 @@
     {
       this.dataContext = dataContext;
     }
-    public async Task<GeneralServiceResponseDto> AddTeamMember(int teamId, string username)
+    public async Task<GeneralServiceResponseDto> UpdateTeamMembership(string username, int? teamId = null)
     {
       try
       {
-        var assignee =  dataContext.Users.FirstOrDefault(x => x.UserName == username);
+        var assignee = dataContext.Users.FirstOrDefault(x => x.UserName == username);
 
         if (assignee == null)
         {
-          return ResponseHelper.CreateResponse(false, 400, "Username not Found");
+          return ResponseHelper.CreateResponse(false, 400, "Username not found.");
         }
 
-        assignee.TeamId = teamId;
+        // If teamId is provided, update it; otherwise, remove the member from the team
+        if (teamId.HasValue)
+        {
+          assignee.TeamId = teamId.Value;
+        }
+        else
+        {
+          assignee.TeamId = null; // Signifies removal
+        }
 
         await dataContext.SaveChangesAsync();
 
-        return ResponseHelper.CreateResponse(true, 200, "Member Added Successfully");
+        // Determine the action based on teamId: added or removed
+        var action = teamId.HasValue ? "added" : "removed";
+
+        // Return response with appropriate message
+        return ResponseHelper.CreateResponse(true, 200, $"Member {action} successfully.");
       }
       catch (Exception ex)
       {
@@ -53,16 +65,6 @@
     }
 
 
-
-    public Task<GeneralServiceResponseDto> RemoveTeamMember(int teamId, string username)
-    {
-      throw new NotImplementedException();
-    }
-
-    public Task<GeneralServiceResponseDto> UpdateTeamMember(int teamId, string username)
-    {
-      throw new NotImplementedException();
-    }
 
 
     public async Task<IEnumerable<TeamMemberDetailsDto>> GetAllTeamsWithMembersAsync()
@@ -100,8 +102,6 @@
         return Enumerable.Empty<TeamMemberDetailsDto>(); // Return an empty list in case of an error
       }
     }
-
-
+  
   }
-
 }

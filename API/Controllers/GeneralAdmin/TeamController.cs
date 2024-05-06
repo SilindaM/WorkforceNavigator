@@ -90,25 +90,19 @@
       return StatusCode(result.StatusCode, result.Message);
     }
     [HttpPost("add-member")]
-    public async Task<IActionResult> AddTeamMember(int teamId, string username)
+    public async Task<IActionResult> AddTeamMember( string username, int teamId)
     {
-      var response = await teamInterface.AddTeamMember(teamId, username);
+      var response = await teamInterface.UpdateTeamMembership(username,teamId);
       return StatusCode(response.StatusCode, response);
     }
 
     [HttpPost("remove-member")]
-    public async Task<IActionResult> RemoveTeamMember(int teamId, string username)
+    public async Task<IActionResult> RemoveTeamMember(string username)
     {
-      var response = await teamInterface.RemoveTeamMember(teamId, username);
+      var response = await teamInterface.UpdateTeamMembership(username);
       return StatusCode(response.StatusCode, response);
     }
 
-    [HttpPost("update-member")]
-    public async Task<IActionResult> UpdateTeamMember(int teamId, string username)
-    {
-      var response = await teamInterface.UpdateTeamMember(teamId, username);
-      return StatusCode(response.StatusCode, response);
-    }
     [HttpGet("withdetails")]
     public async Task<ActionResult<IEnumerable<TeamMemberDetailsDto>>> GetAllTeamsWithMembers()
     {
