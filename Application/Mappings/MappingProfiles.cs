@@ -26,7 +26,6 @@
       CreateMap<LeaveRequestDto, MyLeaveRequestDto>().ReverseMap();
       CreateMap<LeaveAllocation, EmployeeLeaveAllocationDto>().ReverseMap();
       CreateMap<Team, TeamDto>().ReverseMap();
-      CreateMap<TeamMember, TeamMemberDto>().ReverseMap();
       CreateMap<ApplicationUser, UserInfoResult>().ReverseMap();
     }
   }
