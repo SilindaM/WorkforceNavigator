@@ -1,6 +1,7 @@
 ﻿namespace Domain.Account
 {
   using Domain.Enties;
+  using Domain.Enties.TimeSheets;
   using Domain.Enums;
   using Microsoft.AspNetCore.Identity;
   using System.ComponentModel.DataAnnotations.Schema;
@@ -14,6 +15,8 @@
 
     public int? JobTitleId { get; set; }
     public JobTitle JobTitle { get; set; }
+    public int? TeamId { get; set; }
+    public Team Team { get; set; }
     public string? LineManager { get; set; }
     public Gender? Gender { get; set; }
     public decimal? Salary { get; set; }

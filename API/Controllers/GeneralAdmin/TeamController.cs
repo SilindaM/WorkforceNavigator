@@ -110,7 +110,7 @@
       return StatusCode(response.StatusCode, response);
     }
     [HttpGet("withdetails")]
-    public async Task<ActionResult<IEnumerable<TeamDto>>> GetAllTeamsWithMembers()
+    public async Task<ActionResult<IEnumerable<TeamMemberDetailsDto>>> GetAllTeamsWithMembers()
     {
       var teams = await teamInterface.GetAllTeamsWithMembersAsync();
       return Ok(teams);

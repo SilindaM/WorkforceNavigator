@@ -17,47 +17,37 @@
   using System.Text;
   using System.Threading.Tasks;
   using Microsoft.EntityFrameworkCore;
+  using Domain.Dtos.LeaveRequest;
+  using Microsoft.AspNet.Identity;
 
 
   public class TeamService : ITeamInterface
   {
     private readonly DataContext dataContext;
-    private readonly IMapper mapper;
 
-    public TeamService(DataContext dataContext,IMapper mapper)
+    public TeamService(DataContext dataContext)
     {
       this.dataContext = dataContext;
-      this.mapper = mapper;
     }
-    public async Task<GeneralServiceResponseDto> AddTeamMember(int teamId, string userId)
+    public async Task<GeneralServiceResponseDto> AddTeamMember(int teamId, string username)
     {
       try
       {
-        string assignee = dataContext.Users
-                             .Where(x => x.Id == userId)
-                             .Select(x => x.Id)
-                             .FirstOrDefault();
+        var assignee =  dataContext.Users.FirstOrDefault(x => x.UserName == username);
 
         if (assignee == null)
         {
           return ResponseHelper.CreateResponse(false, 400, "Username not Found");
         }
 
-        var newTeamMember = new TeamMemberDto
-        {
-          teamId = teamId,
-          userId = userId
-        };
+        assignee.TeamId = teamId;
 
-        var teamMemberDto = mapper.Map<TeamMember>(newTeamMember);
-        dataContext.TeamMembers.Add(teamMemberDto);
         await dataContext.SaveChangesAsync();
 
         return ResponseHelper.CreateResponse(true, 200, "Member Added Successfully");
       }
       catch (Exception ex)
       {
-        // Log the exception and return an appropriate response
         return ResponseHelper.CreateResponse(false, 500, $"An error occurred: {ex.Message}");
       }
     }
@@ -75,32 +65,43 @@
     }
 
 
-    public async Task<IEnumerable<TeamDto>> GetAllTeamsWithMembersAsync()
+    public async Task<IEnumerable<TeamMemberDetailsDto>> GetAllTeamsWithMembersAsync()
     {
-      var teamsWithMembers = await (from tm in dataContext.Teams
-                                    join tmm in dataContext.TeamMembers on tm.Id equals tmm.TeamId
-                                    join u in dataContext.Users on tmm.UserId equals u.Id
-                                    join jt in dataContext.JobTitles on u.JobTitleId equals jt.Id
-                                    select new
-                                    {
-                                      Team = tm,
-                                      Member = new MemberDetails
-                                      {
-                                        JobTitle = jt.Title,
-                                        FirstName = u.FirstName,
-                                        LastName = u.LastName
-                                      }
-                                    }).ToListAsync();
-
-      var teams = teamsWithMembers.Select(t => new TeamDto
+      try
       {
-        Id = t.Team.Id,
-        TeamName = t.Team.TeamName,
-        Members = new List<MemberDetails> { t.Member }
-      }).ToList();
+        var teamsWithMembers = (from tm in dataContext.Teams
+                                join u in dataContext.Users on tm.Id equals u.TeamId
+                                join jt in dataContext.JobTitles on u.JobTitleId equals jt.Id
+                                select new
+                                {
+                                  TeamName = tm.TeamName,
+                                  Member = new MemberDetails
+                                  {
+                                    JobTitle = jt.Title,
+                                    FirstName = u.FirstName,
+                                    LastName = u.LastName
+                                  }
+                                }).ToList();
 
-      return teams;
+        // Group by TeamName and select the first member's details for each group
+        var teams = teamsWithMembers.GroupBy(t => t.TeamName)
+                                   .Select(g => new TeamMemberDetailsDto
+                                   {
+                                     TeamName = g.Key,
+                                     MemberDetails = g.Select(m => m.Member).ToList() // Convert to list to maintain the structure
+                                   }).ToList();
+
+        return teams;
+      }
+      catch (Exception ex)
+      {
+        // Log or handle the exception
+        Console.WriteLine($"An error occurred: {ex.Message}");
+        return Enumerable.Empty<TeamMemberDetailsDto>(); // Return an empty list in case of an error
+      }
     }
 
+
   }
+
 }

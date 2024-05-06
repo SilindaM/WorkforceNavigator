@@ -19,7 +19,6 @@ namespace Persistence
         }
     public DbSet<Log> Logs { get; set; }
     public DbSet<Message> Messages { get; set; }
-    public DbSet<TeamMember> TeamMembers { get; set; }
     public DbSet<Team> Teams { get; set; }
     public DbSet<Client> Clients { get; set; }
     public DbSet<Project> Projects { get; set; }

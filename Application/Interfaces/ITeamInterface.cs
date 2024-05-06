@@ -10,10 +10,10 @@
 
   public interface ITeamInterface
   {
-    Task<GeneralServiceResponseDto> AddTeamMember(int teamId, string userId);
+    Task<GeneralServiceResponseDto> AddTeamMember(int teamId, string username);
     Task<GeneralServiceResponseDto> RemoveTeamMember(int teamId, string username);
     Task<GeneralServiceResponseDto> UpdateTeamMember(int teamId, string username);
 
-    Task<IEnumerable<TeamDto>> GetAllTeamsWithMembersAsync();
+    Task<IEnumerable<TeamMemberDetailsDto>> GetAllTeamsWithMembersAsync();
   }
 }
