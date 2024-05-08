@@ -13,11 +13,11 @@
   using System.Text;
   using System.Threading.Tasks;
 
-  public class ProjectServices : IProjectService
+  public class ProjectService : IProjectService
   {
     private readonly DataContext dataContext;
 
-    public ProjectServices(DataContext dataContext)
+    public ProjectService(DataContext dataContext)
     {
       this.dataContext = dataContext;
     }
