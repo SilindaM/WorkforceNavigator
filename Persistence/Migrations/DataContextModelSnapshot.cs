@@ -320,6 +320,50 @@ namespace Persistence.Migrations
                     b.ToTable("LeaveTypes");
                 });
 
+            modelBuilder.Entity("Domain.Enties.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProjectName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("Projects");
+                });
+
             modelBuilder.Entity("Domain.Enties.TimeSheets.Client", b =>
                 {
                     b.Property<int>("Id")
@@ -359,41 +403,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clients");
-                });
-
-            modelBuilder.Entity("Domain.Enties.TimeSheets.Project", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DeliveryTeamID")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ProjectName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("Domain.Enties.TimeSheets.Task", b =>
@@ -688,11 +697,13 @@ namespace Persistence.Migrations
                         .WithMany("Users")
                         .HasForeignKey("JobTitleId");
 
-                    b.HasOne("Domain.Enties.TimeSheets.Team", null)
+                    b.HasOne("Domain.Enties.TimeSheets.Team", "Team")
                         .WithMany("TeamMembers")
                         .HasForeignKey("TeamId");
 
                     b.Navigation("JobTitle");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Domain.Enties.JobTitle", b =>
@@ -732,6 +743,17 @@ namespace Persistence.Migrations
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("LeaveType");
+                });
+
+            modelBuilder.Entity("Domain.Enties.Project", b =>
+                {
+                    b.HasOne("Domain.Enties.TimeSheets.Client", "Client")
+                        .WithMany("Projects")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -793,6 +815,11 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Enties.JobTitle", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Domain.Enties.TimeSheets.Client", b =>
+                {
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("Domain.Enties.TimeSheets.Team", b =>

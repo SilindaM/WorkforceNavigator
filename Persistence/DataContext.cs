@@ -72,17 +72,6 @@ namespace Persistence
       });
 
 
-            builder.Entity<Project>(entity =>
-            {
-                entity.ToTable("Project", "dbo");  
-
-                entity.Property(e => e.EndDate).HasColumnType("date");
-                entity.Property(e => e.Description).HasMaxLength(200);  
-                entity.Property(e => e.StartDate).HasColumnType("date");  
-            });
-
-
-
             //entity.HasOne(d => d.Client)
             //    .WithMany(p => p.ProjectDto)
             //    .HasForeignKey(d => d.ClientId)
