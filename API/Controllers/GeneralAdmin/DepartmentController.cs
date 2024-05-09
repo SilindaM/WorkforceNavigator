@@ -48,7 +48,7 @@ namespace API.Controllers.GeneralAdmin
       }
     }
 
-    [HttpPost]
+    [HttpPost("CreateDepartment")]
     public async Task<IActionResult> CreateDepartment([FromBody] DepartmentDto DepartmentDto)
     {
       var result = await _DepartmentService.CreateAsync(DepartmentDto);
@@ -59,7 +59,7 @@ namespace API.Controllers.GeneralAdmin
       return StatusCode(result.StatusCode, result.Message);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("UpdateDepartment/{id}")]
     public async Task<IActionResult> UpdateDepartment(int id, [FromBody] DepartmentDto updateDepartmentDto)
     {
       var result = await _DepartmentService.UpdateAsync(id, updateDepartmentDto);

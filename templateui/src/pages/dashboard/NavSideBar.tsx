@@ -16,6 +16,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import FamilyRestroomIcon from '@mui/icons-material/FamilyRestroom';
 import SendIcon from '@mui/icons-material/Send';
+import ApartmentIcon from '@mui/icons-material/Apartment';
 import { PATH_DASHBOARD } from '../../routes/path';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/layout/header';
@@ -172,7 +173,22 @@ export default function NavSideBar() {
                 navigate(PATH_DASHBOARD.manageLeaves);
               }}
             >
-              Leave Management
+            Leave Management
+            </Button>
+          </Box>
+          <Box sx={{ p: 2 }}>
+            {/* Button with icon */}
+            <Button
+              variant="outlined"
+              fullWidth
+              sx={{ height: '60px' }} // Adjust the height as needed
+              startIcon={<ApartmentIcon />}
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                navigate(PATH_DASHBOARD.genericManagement);
+              }}
+            >
+            Generic Managament
             </Button>
           </Box>
         </Drawer>

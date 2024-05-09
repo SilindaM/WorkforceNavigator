@@ -31,6 +31,12 @@ import ManageLeavesPage from '../pages/dashboard/LeaveAllocations/ManageLeavesPa
 import ProcessLeaveRequestPage from '../pages/dashboard/LeaveRequests/ProcessLeaveRequestPage';
 import ManageUsersPage from '../pages/dashboard/User/ManageUsersPage';
 import UserDetails from '../pages/dashboard/User/UserDetails';
+import GenericManagementPage from '../pages/dashboard/GenericManagement/GenericManagementPage';
+import TeamsPage from '../pages/dashboard/GenericManagement/TeamsPage';
+import JobTitlesPage from '../pages/dashboard/GenericManagement/JobTitlesPage';
+import DepartmentsPage from '../pages/dashboard/GenericManagement/DepartmentsPage';
+import ClientsPage from '../pages/dashboard/GenericManagement/ClientsPage';
+import ProjectsPage from '../pages/dashboard/GenericManagement/ProjectsPage';
 
 const GlobalRouter = () => {
     return (
@@ -49,10 +55,23 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.dashboard} element={<DashboardPage />} />
             <Route path={PATH_DASHBOARD.sendMessage} element={<SendMessagePage />} />
             <Route path={PATH_DASHBOARD.manageMessage} element={<ManageMessagesPage />} />
+            <Route path={PATH_DASHBOARD.genericManagement} element={<GenericManagementPage />} />
             <Route path={PATH_DASHBOARD.manageLeaves} element={<ManageLeavesPage />} />
             <Route path={PATH_DASHBOARD.inbox} element={<InboxPage />} />
             <Route path={PATH_DASHBOARD.myLogs} element={<MyLogsPage />} />
             <Route path={PATH_DASHBOARD.user} element={<UserPage />} />
+
+            
+            <Route path={PATH_DASHBOARD.myLogs} element={<MyLogsPage />} />
+            <Route path={PATH_DASHBOARD.user} element={<UserPage />} />
+            <Route path={PATH_DASHBOARD.myLogs} element={<MyLogsPage />} />
+            <Route path={PATH_DASHBOARD.user} element={<UserPage />} />
+            
+            <Route path={PATH_DASHBOARD.departmentRequest} element={<DepartmentsPage />} />
+            <Route path={PATH_DASHBOARD.clientRequest} element={<ClientsPage />} />
+            <Route path={PATH_DASHBOARD.jobTitleRequest} element={<JobTitlesPage />} />
+            <Route path={PATH_DASHBOARD.teamRequest} element={<TeamsPage />} />
+            <Route path={PATH_DASHBOARD.projectRequest} element={<ProjectsPage />} />
 
             <Route path={PATH_DASHBOARD.allocationByLeaveName} element={<AllocationByLeaveNamePage/>} />
             <Route path={PATH_DASHBOARD.myAllocation} element={<MyLeaveAllocationsPage/>} />

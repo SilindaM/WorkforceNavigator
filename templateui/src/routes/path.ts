@@ -14,6 +14,7 @@ export const PATH_PUBLIC = {
     manageMessage: '/dashboard/manageMessages',
     manageUsers: '/dashboard/manageUsers',
     manageLeaves: '/dashboard/manageLeaves',
+    genericManagement: '/dashboard/genericManagement',
     inbox: '/dashboard/inbox',
     allMessages: '/dashboard/all-messages',
     allUsers: '/dashboard/users',
@@ -28,6 +29,11 @@ export const PATH_PUBLIC = {
     processLeaveRequest:'/dashboard/LeaveRequests',
     departmentRequest:'/dashboard/Department',
     updateUserDetails:'/dashboard/Update',
+    projectRequest :'/dashboard/Projects',
+    teamRequest : '/dashboard/Teams',
+    jobTitleRequest : '/dashboard/JobTitles',
+    clientRequest : '/dashboard/Clients',
+
 
     allocationByusername: '/dashboard/allocations/username',
     myAllocation: '/dashboard/my-allocations',
