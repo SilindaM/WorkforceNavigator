@@ -53,7 +53,9 @@ const handleOpenModal = ()=> {
   
   
   const handleDelete = (id: number) => {
+    console.log("Get Id",id);
     DeleteDepartment(id)
+    console.log("Received ",id);
   };
 
   const handleSubmit = () => {
