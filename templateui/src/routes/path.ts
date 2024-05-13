@@ -32,7 +32,7 @@ export const PATH_PUBLIC = {
     updateUserDetails:'/dashboard/Update',
     projectRequest :'/dashboard/Projects',
     teamRequest : '/dashboard/Teams',
-    jobTitleRequest : '/dashboard/JobTitles',
+    jobTitleRequest : '/dashboard/JobTitle',
     clientRequest : '/dashboard/Clients',
 
 

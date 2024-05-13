@@ -50,8 +50,13 @@ export const UPDATE_DEPARTMENT_URL = '/Department/UpdateDepartment';
 export const DELETE_DEPARTMENT_URL = '/Department/DeleteDepartment';
 export const ALL_DEPARTMENTS = '/Department';
 
+//JOB TITLE
+export const NEW_JOBTITLE_URL = '/JobTitle/CreateJobTitle';
+export const UPDATE_JOBTITLE_URL = '/JobTitle/UpdateJobTitle';
+export const DELETE_JOBTITLE_URL = '/JobTitle/DeleteJobTitle';
+export const ALL_JOB_TITLES = '/JobTitle';
+
 export const ALL_PROJECTS = '/Projects';
 export const ALL_TEAMS = '/Teams';
-export const ALL_JOB_TITLES = '/JobTitles';
 export const ALL_CLIENTS = '/Clients';
 export const GENERIC_MANAGEMENT = '/GenericManagement'

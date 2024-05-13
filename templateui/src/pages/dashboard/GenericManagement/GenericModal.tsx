@@ -96,28 +96,28 @@ interface IProps {
             <Modal.Title>{title}</Modal.Title>
           </Modal.Header>
           <Modal.Body className="d-flex justify-content-center align-items-center">
-            <Form>
-              {formFields.map((field, index) => (
-                <Form.Group key={index} className="mb-3" controlId={field.controlId}>
-                  {field.options ? (
-                    <Form.Select value={field.value} onChange={(e) => field.onChange(e.target.value)} >
-                      {field.options.map((option, index) => (
-                        <option key={index} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  ) : (
-                    <Form.Control
-                      type="text"
-                      placeholder={field.label}
-                      value={field.value}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    />
-                  )}
-                </Form.Group>
-              ))}
-            </Form>
+          <Form>
+            {formFields.map((field, index) => (
+              <Form.Group key={index} className="mb-3" controlId={field.controlId}>
+                {field.options? ( // Check if options exist
+                  <Form.Select value={field.value} onChange={(e) => field.onChange(e.target.value)}>
+                    {field.options.map((option, index) => (
+                      <option key={index} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </Form.Select>
+                ) : (
+                  <Form.Control
+                    type="text"
+                    placeholder={field.label}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                )}
+              </Form.Group>
+            ))}
+          </Form>
           </Modal.Body>
           <Modal.Footer className="justify-content-center">
             <Button variant="secondary" onClick={closeModal}>

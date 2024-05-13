@@ -9,6 +9,7 @@ interface TableFieldProps<T> {
   columns: { key: string; label: string }[];
   onEdit: (data:any) => void;
   onDelete: (id: number) => void;
+  options?: { value: any; label: string }[]; 
 }
 
 const TableField = <T,>({

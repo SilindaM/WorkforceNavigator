@@ -5,9 +5,11 @@ export const GenericCrudOperations = {
   async getAll(resourceUrl: string, setEntities: (data: any) => void, setLoading: (loading: boolean) => void) {
     try {
       setLoading(true);
+      console.log("Testing "+ setEntities);
       const response = await axiosInstance.get(resourceUrl);
       const { data } = response;
       setEntities(data);
+      console.log("DAta "+ data);
       setLoading(false);
     } catch (error) {
       toast.error("Error Occurred");
