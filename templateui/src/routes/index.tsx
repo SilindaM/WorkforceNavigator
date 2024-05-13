@@ -68,8 +68,9 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.user} element={<UserPage />} />
             
             <Route path={PATH_DASHBOARD.departmentRequest} element={<DepartmentsPage />} />
-            <Route path={PATH_DASHBOARD.clientRequest} element={<ClientsPage />} />
+            
             <Route path={PATH_DASHBOARD.jobTitleRequest} element={<JobTitlesPage />} />
+            <Route path={PATH_DASHBOARD.clientRequest} element={<ClientsPage />} />
             <Route path={PATH_DASHBOARD.teamRequest} element={<TeamsPage />} />
             <Route path={PATH_DASHBOARD.projectRequest} element={<ProjectsPage />} />
 
