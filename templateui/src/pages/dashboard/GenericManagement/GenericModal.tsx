@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useForm } from "react-hook-form";
 
 interface FormField {
   controlId: string;
@@ -27,40 +28,66 @@ interface IProps {
 }
 
   const GenericModal = ({ isOpen, closeModal, title, formFields, handleSubmit,selectedEntity,updateEntity, addEntity, mode}: IProps) => {
-   
+
+    const { register, setValue, control } = useForm();
+
     const handleSave = async () => {
-        if (mode === "edit" && updateEntity && selectedEntity) {
-             const updateData = {...selectedEntity};
-             formFields.forEach((field)=>{
-                updateData[field.controlId] = field.value;
-             });
-             await updateEntity(selectedEntity.id,updateData);
-        } 
-        else if (mode === "add" && addEntity) {
-            const newData: {[key:string]:any}={};
-            formFields.forEach((field)=>{
-                newData[field.controlId]=field.value;
-            })
-            await addEntity(newData);
-        }
-        closeModal(); // Close modal after saving
+      console.log("Selected Entity:", selectedEntity);
+      console.log("Mode:", mode); // Add this line to check the mode
+      console.log("Update Entity Function:", updateEntity); // Add this line to check the updateEntity function
+    
+      if (mode === "edit" && updateEntity && selectedEntity) {
+        console.log("Editing Entity ID:", selectedEntity.id);
+        console.log("Form Fields:", formFields);
+        
+        // Create a clean updateData object with values from formFields
+        const updateData: { [key: string]: any } = {};
+        formFields.forEach((field) => {
+          updateData[field.controlId] = field.value;
+        });
+        console.log("Updated Data:", updateData);console.log("Before updateEntity call");
+         updateEntity(selectedEntity.id, updateData);
+        console.log("After updateEntity call");
+        console.log("Checking entity",  updateData);
+        console.log("Checking id",  selectedEntity.id);
+        
+      } else if (mode === "add" && addEntity) {
+        console.log("Adding New Entity");
+        console.log("Form Fields:", formFields);
+        
+        // Create a clean newData object with values from formFields
+        const newData: { [key: string]: any } = {};
+        formFields.forEach((field) => {
+          newData[field.controlId] = field.value;
+        });
+        console.log("New Data:", newData);
+        await addEntity(newData);
+      }
+      closeModal(); // Close modal after saving
     };
+    
+    
     const initialFormData: { [key: string]: any } = {};
     formFields.forEach((field) => {
       initialFormData[field.controlId] = '';
     });
-    const [formData, setFormData] = useState(initialFormData);
     
-    useEffect(() => {
-        if (isOpen && mode === 'edit' && selectedEntity) {
-          // Populate form fields with selected entity data when in edit mode
-          const newData = { ...selectedEntity };
-          formFields.forEach((field) => {
-            newData[field.controlId] = selectedEntity[field.controlId] || '';
-          });
-          setFormData(newData);
-        } 
-      }, [isOpen, selectedEntity, mode, formFields]);
+  
+  useEffect(() => {
+    if (isOpen && mode === 'edit' && selectedEntity) {
+      // Register fields dynamically
+      formFields.forEach((field) => {
+        register(field.controlId, { required: true }); // Adjust validation rules as needed
+      });
+
+      // Set initial values for fields
+      formFields.forEach((field) => {
+        setValue(field.controlId, selectedEntity[field.controlId], { shouldValidate: true });
+      });
+    }
+  }, [isOpen, selectedEntity, mode, formFields, register, setValue]);
+    
+    
 
     return (
       <>

@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { Container, Grid, GridColumn, Header, Segment } from "semantic-ui-react";
 import TableField from "../../../components/general/TableField";
 import GenericModal from "./GenericModal";
-import { IDepartmentDto } from "../../../types/Department.type";
+import { IDepartmentDto, IUpdateDepartmentDto } from "../../../types/Department.type";
 import { GenericCrudOperations } from "../../../components/general/GenericCrudOperations";
 
 const DepartmentsPage = () => {
@@ -20,9 +20,9 @@ const DepartmentsPage = () => {
   const [departmentName, setDepartmentName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
-  const handleOpenModal = () => {
-    setIsOpen(true);
-  };
+const handleOpenModal = ()=> {
+  setIsOpen(true);
+};
 
   const handleCloseModal = () => {
     setIsOpen(false);
@@ -37,7 +37,7 @@ const DepartmentsPage = () => {
       getDepartments();
   };
   
-  const UpdateDepartment = async (id: number, updatedData: IDepartmentDto) => {
+  const UpdateDepartment = async (id: number, updatedData: IUpdateDepartmentDto) => {
     await GenericCrudOperations.update(UPDATE_DEPARTMENT_URL,id,updatedData,setLoading);
   };
 
@@ -45,10 +45,13 @@ const DepartmentsPage = () => {
     await GenericCrudOperations.remove(DELETE_DEPARTMENT_URL,id,setLoading);
   }
 
-  const handleEdit = (id: number, updatedData:IDepartmentDto) => {
-    UpdateDepartment(id,updatedData);
+  const handleEdit = (updatedData: IDepartmentDto) => {
+    console.log("Editing:", updatedData); // Check if this logs the correct data
+    setSelectedDepartment(updatedData);
+    handleOpenModal();
   };
-
+  
+  
   const handleDelete = (id: number) => {
     DeleteDepartment(id)
   };
@@ -57,11 +60,11 @@ const DepartmentsPage = () => {
     handleCloseModal();
   };
 
-  useEffect(() => {
+  useEffect(() => { 
     getDepartments();
   }, []);
 
-  const columns = [{ key: 'departmentName', label: "Department Name" }];
+  const columns = [{ key: 'departmentName', label: "Department Name" },{key: 'description', label: "Descriptuion" }];
 
   return (
     <div>
@@ -74,7 +77,7 @@ const DepartmentsPage = () => {
                   variant="outlined"
                   sx={{ height: "40px" }}
                   startIcon={<AddIcon />}
-                  onClick={handleOpenModal}
+                  onClick={() => handleOpenModal()}
                 >
                   New Leave Request
                 </Button>
@@ -97,39 +100,34 @@ const DepartmentsPage = () => {
           </GridColumn>
         </Grid>
       </Container>
-      <h2>Departments Page</h2>
-      <Button
-        variant="outlined"
-        sx={{ height: "40px" }}
-        startIcon={<AddIcon />}
-        onClick={handleOpenModal}
-      >
-        New Leave Request
-      </Button>
-      <GenericModal
-        isOpen={isOpen}
-        closeModal={handleCloseModal}
-        title="Add Client"
-        formFields={[
-          {
-            controlId: "departmentName",
-            label: "Department Name",
-            value: departmentName,
-            onChange: setDepartmentName,
-          },
-          {
-            controlId: "Description",
-            label: "Description",
-            value: description,
-            onChange: setDescription,
-          },
-        ]}
-        handleSubmit={handleSubmit}
-        mode={selectedDepartment ? "edit" : "add"}
-        selectedEntity={selectedDepartment}
-        updateEntity={UpdateDepartment}
-        addEntity={AddDepartment}
-      />
+
+<GenericModal
+  isOpen={isOpen}
+  closeModal={handleCloseModal}
+  title="Add Client"
+  formFields={[
+    {
+      controlId: "departmentName",
+      label: "Department Name",
+      value: departmentName,
+      onChange: setDepartmentName,
+    },
+    {
+      controlId: "Description",
+      label: "Description",
+      value: description,
+      onChange: setDescription,
+    },
+  ]}
+  handleSubmit={handleSubmit}
+  mode={selectedDepartment ? "edit" : "add"}
+  selectedEntity={selectedDepartment} // Check if selectedDepartment is correctly passed here
+  updateEntity={UpdateDepartment}
+  addEntity={AddDepartment}
+/>
+
+
+
     </div>
   );
 };

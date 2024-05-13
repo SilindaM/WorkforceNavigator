@@ -28,6 +28,7 @@ export const PATH_PUBLIC = {
     updateLeaveRequest:'/dashboard/LeaveRequests',
     processLeaveRequest:'/dashboard/LeaveRequests',
     departmentRequest:'/dashboard/Department',
+    updateDepartment:'/dashboard/LeaveRequests',
     updateUserDetails:'/dashboard/Update',
     projectRequest :'/dashboard/Projects',
     teamRequest : '/dashboard/Teams',

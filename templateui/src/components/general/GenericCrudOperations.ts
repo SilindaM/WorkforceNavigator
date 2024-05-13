@@ -30,25 +30,30 @@ export const GenericCrudOperations = {
     }
   },
 
-  async update(resourceUrl: string, id: any, updatedData: any, setLoading: (loading: boolean) => void) {
+  async update(resourceUrl: any, id: number, updatedData: any, setLoading: (loading: boolean) => void) {
     try {
+      // Log the id and updatedData just before making the API call
+      console.log("Get Details",resourceUrl, id, updatedData);
+  
       setLoading(true);
       const response = await axiosInstance.post(`${resourceUrl}?id=${id}`, updatedData);
       const { data } = response;
+      console.log("fika la")
       toast.success("Updated Successfully");
       setLoading(false);
       return data;
     } catch (error) {
-      toast.error("Error Occurred");
+      toast.error("Error Occurred Here");
       setLoading(false);
       throw error;
     }
   },
-
-  async remove(resourceUrl: string, id: any, setLoading: (loading: boolean) => void) {
+  
+  async remove(resourceUrl: any, id: number, setLoading: (loading: boolean) => void) {
     try {
       setLoading(true);
-      // Implement delete request
+      const response = await axiosInstance.post(`${resourceUrl}?id=${id}`);
+      const {data} =response;
       setLoading(false);
       toast.success("Deleted Successfully");
     } catch (error) {
