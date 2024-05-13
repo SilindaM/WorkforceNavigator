@@ -17,7 +17,9 @@
   {
     public MappingProfiles()
     {
+      
       CreateMap<Department, DepartmentDto>().ReverseMap();
+      CreateMap<Department, UpdateDepartmentDto>().ReverseMap();
       CreateMap<Log, GetLogDto>().ReverseMap();
       CreateMap<Message, GetMessageDto>().ReverseMap();
       CreateMap<JobTitle, JobTitleDto>().ReverseMap();

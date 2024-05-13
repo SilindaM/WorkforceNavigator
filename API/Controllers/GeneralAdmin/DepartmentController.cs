@@ -18,12 +18,13 @@ namespace API.Controllers.GeneralAdmin
   public class DepartmentController : ControllerBase
   {
     private readonly IGenericService<Department, DepartmentDto> _DepartmentService;
-   // private readonly IGenericService<Department, UpdateDepartmentDto> _DepartmentUpdateService;
+    private readonly IGenericService<Department, UpdateDepartmentDto> updateDepartmentService;
 
     public DepartmentController(
-        IGenericService<Department, DepartmentDto> DepartmentService)
+        IGenericService<Department, DepartmentDto> DepartmentService,IGenericService<Department,UpdateDepartmentDto> updateDepartmentService)
     {
       _DepartmentService = DepartmentService;
+      this.updateDepartmentService = updateDepartmentService;
     }
 
     [HttpGet]
@@ -48,7 +49,7 @@ namespace API.Controllers.GeneralAdmin
       }
     }
 
-    [HttpPost]
+    [HttpPost("CreateDepartment")]
     public async Task<IActionResult> CreateDepartment([FromBody] DepartmentDto DepartmentDto)
     {
       var result = await _DepartmentService.CreateAsync(DepartmentDto);
@@ -59,10 +60,11 @@ namespace API.Controllers.GeneralAdmin
       return StatusCode(result.StatusCode, result.Message);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateDepartment(int id, [FromBody] DepartmentDto updateDepartmentDto)
+    [HttpPost]
+    [Route("UpdateDepartment")]
+    public async Task<IActionResult> UpdateDepartment(int id, [FromBody] UpdateDepartmentDto updateDepartmentDto)
     {
-      var result = await _DepartmentService.UpdateAsync(id, updateDepartmentDto);
+      var result = await updateDepartmentService.UpdateAsync(id, updateDepartmentDto);
       if (result.IsSucceed)
       {
         return Ok(result.Message);
@@ -73,7 +75,8 @@ namespace API.Controllers.GeneralAdmin
       }
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete]
+    [Route("DeleteDepartment")]
     public async Task<IActionResult> SoftDeleteDepartment(int id)
     {
       var result = await _DepartmentService.SoftDelete(id);

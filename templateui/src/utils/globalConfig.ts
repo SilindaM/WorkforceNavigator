@@ -39,11 +39,19 @@ export const NEW_LEAVE_REQUEST_URL = '/LeaveRequest/Create';
 export const PROCESS_LEAVE_REQUEST_URL = '/LeaveRequest/ProcessLeaveRequest';
 export const ALL_LEAVE_REQUEST_URL = '/LeaveRequest/LeaveRequests';
 
-
 // Auth Routes
 export const PATH_AFTER_REGISTER = PATH_PUBLIC.login;
 export const PATH_AFTER_LOGIN = PATH_DASHBOARD.dashboard;
 export const PATH_AFTER_LOGOUT = PATH_PUBLIC.home;
 
-//DEPARTMENTS
-export const ALL_DEPARTMENTS = '/Department'
+//GENERIC MANAGEMENT
+export const NEW_DEPARTMENT_URL = '/Department/CreateDepartment';
+export const UPDATE_DEPARTMENT_URL = '/Department/UpdateDepartment';
+export const DELETE_DEPARTMENT_URL = '/Department/DeleteDepartment';
+export const ALL_DEPARTMENTS = '/Department';
+
+export const ALL_PROJECTS = '/Projects';
+export const ALL_TEAMS = '/Teams';
+export const ALL_JOB_TITLES = '/JobTitles';
+export const ALL_CLIENTS = '/Clients';
+export const GENERIC_MANAGEMENT = '/GenericManagement'
