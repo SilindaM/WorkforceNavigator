@@ -52,7 +52,7 @@ export const GenericCrudOperations = {
   async remove(resourceUrl: any, id: number, setLoading: (loading: boolean) => void) {
     try {
       setLoading(true);
-      const response = await axiosInstance.post(`${resourceUrl}?id=${id}`);
+      const response = await axiosInstance.delete(`${resourceUrl}?id=${id}`);
       const {data} =response;
       setLoading(false);
       toast.success("Deleted Successfully");
