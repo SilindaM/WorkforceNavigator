@@ -4,70 +4,126 @@ import AddIcon from "@mui/icons-material/Add";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../../../utils/axiosInstance";
 import toast from "react-hot-toast";
-import { Container, Grid, GridColumn, Header, Segment } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  GridColumn,
+  Header,
+  Segment,
+} from "semantic-ui-react";
 import TableField from "../../../components/general/TableField";
 import GenericModal from "./GenericModal";
 import { GenericCrudOperations } from "../../../components/general/GenericCrudOperations";
-import { IJobTitleDto, IUpdateJobTitleDto } from "../../../types/JobTitle.type";
-import { ALL_JOB_TITLES, DELETE_JOBTITLE_URL, NEW_JOBTITLE_URL, UPDATE_JOBTITLE_URL } from "../../../utils/globalConfig";
+import {
+  ICreateJobTitleDto,
+  IJobTitleDto,
+  IUpdateJobTitleDto,
+} from "../../../types/JobTitle.type";
+import {
+  ALL_DEPARTMENTS,
+  ALL_JOB_TITLES,
+  DELETE_JOBTITLE_URL,
+  NEW_JOBTITLE_URL,
+  UPDATE_JOBTITLE_URL,
+} from "../../../utils/globalConfig";
+import { IDepartmentDto } from "../../../types/Department.type";
+import { Seniority } from "../../../types/auth.type";
 
 const JobTitlesPage = () => {
   const { control } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(false);
   const [JobTitles, setJobTitles] = useState<IJobTitleDto[]>([]);
-  const [selectedJobTitle, setSelectedJobTitle] = useState<IJobTitleDto | null>(null);
+  const [selectedJobTitle, setSelectedJobTitle] = useState<IJobTitleDto | null>(
+    null
+  );
   const [JobTitle, setJobTitle] = useState<string>("");
-  const [Department, setDepartment] = useState<string>("");
-  const [Seniority, setSeniority] = useState<string>("");
+  const [Description, setDescription] = useState<string>("");
+  const [DepartmentId, setDepartmentId] = useState<number>();
+  const [Departments, setSelectedDepartment] = useState<IDepartmentDto[]>([]);
+  const [seniority, setSeniority] = useState<Seniority>(); // Initialize as an empty array
 
-const handleOpenModal = ()=> {
-  setIsOpen(true);
-};
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
 
   const handleCloseModal = () => {
     setIsOpen(false);
   };
 
+  const seniorityOptions = [
+    { value: "junior", label: "Junior" },
+    { value: "mid", label: "Mid" },
+    { value: "senior", label: "Senior" },
+    { value: "lead", label: "Lead" },
+  ];
+
   const getJobTitles = async () => {
-   await GenericCrudOperations.getAll(ALL_JOB_TITLES,setJobTitles,setLoading);
+    await GenericCrudOperations.getAll(
+      ALL_JOB_TITLES,
+      setJobTitles,
+      setLoading
+    );
   };
 
-  const AddJobTitle = async (newData: IJobTitleDto) => {
-      await GenericCrudOperations.add(NEW_JOBTITLE_URL, newData, setLoading);
-      getJobTitles();
-  };
-  
-  const UpdateJobTitle = async (id: number, updatedData: IUpdateJobTitleDto) => {
-    await GenericCrudOperations.update(UPDATE_JOBTITLE_URL,id,updatedData,setLoading);
+  const getDepartments = async () => {
+    await GenericCrudOperations.getAll(
+      ALL_DEPARTMENTS,
+      setSelectedDepartment,
+      setLoading
+    );
   };
 
-  const DeleteJobTitle = async(id:number)=>{
-    await GenericCrudOperations.remove(DELETE_JOBTITLE_URL,id,setLoading);
-  }
+  const AddJobTitle = async (newData: ICreateJobTitleDto) => {
+    console.log("New Job Title Data:", newData);
+    await GenericCrudOperations.add(NEW_JOBTITLE_URL, newData, setLoading);
+    getJobTitles();
+  };
+
+  const UpdateJobTitle = async (
+    id: number,
+    updatedData: IUpdateJobTitleDto
+  ) => {
+    await GenericCrudOperations.update(
+      UPDATE_JOBTITLE_URL,
+      id,
+      updatedData,
+      setLoading
+    );
+  };
+
+  const DeleteJobTitle = async (id: number) => {
+    await GenericCrudOperations.remove(DELETE_JOBTITLE_URL, id, setLoading);
+  };
 
   const handleEdit = (updatedData: IJobTitleDto) => {
-    console.log("Editing:", updatedData); // Check if this logs the correct data
     setSelectedJobTitle(updatedData);
     handleOpenModal();
   };
-  
-  
+
   const handleDelete = (id: number) => {
-    console.log("Get Id",id);
-    DeleteJobTitle(id)
-    console.log("Received ",id);
+    DeleteJobTitle(id);
   };
 
   const handleSubmit = () => {
     handleCloseModal();
   };
 
-  useEffect(() => { 
+  const handleDepartmentChange = (selectedDepartmentId: number) => {
+    setDepartmentId(selectedDepartmentId);
+    console.log("Check Id " + selectedDepartmentId);
+  };
+  
+  useEffect(() => {
     getJobTitles();
+    getDepartments();
   }, []);
 
-  const columns = [{ key: 'JobTitle', label: "JobTitle" },{key: 'Department', label: "Department" },{key: 'Seniority', label: "Seniority" }];
+  const columns = [
+    { key: "JobTitle", label: "JobTitle" },
+    { key: "Department", label: "Department" },
+    { key: "Seniority", label: "Seniority" },
+  ];
 
   return (
     <div>
@@ -104,39 +160,49 @@ const handleOpenModal = ()=> {
         </Grid>
       </Container>
 
-<GenericModal
-  isOpen={isOpen}
-  closeModal={handleCloseModal}
-  title="Add Client"
-  formFields={[
-    {
-      controlId: "JobTitle",
-      label: "JobTitle ",
-      value: JobTitle,
-      onChange: setJobTitle,
-    },
-    {
-      controlId: "Department",
-      label: "Department",
-      value: Department,
-      onChange: setDepartment,
-    },
-    {
-      controlId: "Seniority",
-      label: "Seniority",
-      value: Seniority,
-      onChange: setSeniority,
-    },
-  ]}
-  handleSubmit={handleSubmit}
-  mode={selectedJobTitle ? "edit" : "add"}
-  selectedEntity={selectedJobTitle} // Check if selectedJobTitle is correctly passed here
-  updateEntity={UpdateJobTitle}
-  addEntity={AddJobTitle}
-/>
-
-
-
+      <GenericModal
+        isOpen={isOpen}
+        closeModal={handleCloseModal}
+        title=""
+        formFields={[
+          {
+            controlId: "JobTitle",
+            label: "JobTitle ",
+            value: JobTitle,
+            onChange: setJobTitle,
+          },
+          {
+            controlId: "Description",
+            label: "Description ",
+            value: Description,
+            onChange: setDescription,
+          },
+          {
+            controlId: "Department",
+            label: "Department",
+            onChange: handleDepartmentChange,
+            options: Departments
+              ? Departments.map((department) => ({
+                  value: department.id,
+                  label: department.DepartmentName,
+                }))
+              : [],
+            value: DepartmentId, // Corrected here
+          },
+          {
+            controlId: "Seniority",
+            label: "Seniority",
+            value: seniority,
+            options: seniorityOptions,
+            onChange: setSeniority,
+          },
+        ]}
+        handleSubmit={handleSubmit}
+        mode={selectedJobTitle ? "edit" : "add"}
+        selectedEntity={selectedJobTitle}
+        updateEntity={UpdateJobTitle}
+        addEntity={AddJobTitle}
+      />
     </div>
   );
 };

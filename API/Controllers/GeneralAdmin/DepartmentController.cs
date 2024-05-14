@@ -29,7 +29,7 @@ namespace API.Controllers.GeneralAdmin
 
     [HttpGet]
     public async Task<IActionResult> GetAllDepartments()
-    {
+  {
       var result = await _DepartmentService.GetAllAsync();
 
       return Ok(result);

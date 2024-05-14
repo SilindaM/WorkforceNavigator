@@ -71,3 +71,10 @@ export enum RolesEnum {
   MANAGER = 'MANAGER',
   USER = 'USER',
 }
+
+export enum Seniority {
+  Junior = "Junior",
+  Mid = "Mid",
+  Senior = "Senior",
+  Lead = "Lead"
+}
