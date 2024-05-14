@@ -17,6 +17,7 @@
     Task<JobTitleDto> GetJobTitleForUser(string username);
 
     Task<IEnumerable<ApplicationUser>> GetUsersByJobTitle(string title);
+    Task<IEnumerable<JobTitleDto>> GetJobTitles();
 
   }
 }

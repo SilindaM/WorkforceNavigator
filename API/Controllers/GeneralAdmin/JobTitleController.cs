@@ -40,7 +40,7 @@ namespace API.Controllers.GeneralAdmin
     [HttpGet]
     public async Task<IActionResult> GetAllJobTitles()
     {
-      var result = await _JobTitleService.GetAllAsync();
+      var result = await userJobTitleService.GetJobTitles();
 
 
       return Ok(result);
