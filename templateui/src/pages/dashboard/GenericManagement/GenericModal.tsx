@@ -21,60 +21,55 @@ interface IProps {
   title: string; // Add title property
   formFields: FormField[];
   handleSubmit: () => void;
-  selectedEntity?:any;
-  updateEntity?:(id:number,data:any)=>Promise<void>;
-  addEntity?:(data:any)=>Promise<void>;
-  mode : 'edit'|'add';
+  selectedEntity?: any;
+  updateEntity?: (id: number, data: any) => Promise<void>;
+  addEntity?: (data: any) => Promise<void>;
+  mode: "edit" | "add";
 }
 
-  const GenericModal = ({ isOpen, closeModal, title, formFields, handleSubmit,selectedEntity,updateEntity, addEntity, mode}: IProps) => {
+const GenericModal = ({
+  isOpen,
+  closeModal,
+  title,
+  formFields,
+  handleSubmit,
+  selectedEntity,
+  updateEntity,
+  addEntity,
+  mode,
+}: IProps) => {
+  const { register, setValue, control } = useForm();
 
-    const { register, setValue, control } = useForm();
+  const handleSave = async () => {
 
-    const handleSave = async () => {
-      console.log("Selected Entity:", selectedEntity);
-      console.log("Mode:", mode); // Add this line to check the mode
-      console.log("Update Entity Function:", updateEntity); // Add this line to check the updateEntity function
-    
-      if (mode === "edit" && updateEntity && selectedEntity) {
-        console.log("Editing Entity ID:", selectedEntity.id);
-        console.log("Form Fields:", formFields);
-        
-        // Create a clean updateData object with values from formFields
-        const updateData: { [key: string]: any } = {};
-        formFields.forEach((field) => {
-          updateData[field.controlId] = field.value;
-        });
-        console.log("Updated Data:", updateData);console.log("Before updateEntity call");
-         updateEntity(selectedEntity.id, updateData);
-        console.log("After updateEntity call");
-        console.log("Checking entity",  updateData);
-        console.log("Checking id",  selectedEntity.id);
-        
-      } else if (mode === "add" && addEntity) {
-        console.log("Adding New Entity");
-        console.log("Form Fields:", formFields);
-        
-        // Create a clean newData object with values from formFields
-        const newData: { [key: string]: any } = {};
-        formFields.forEach((field) => {
-          newData[field.controlId] = field.value;
-        });
-        console.log("New Data:", newData);
-        await addEntity(newData);
-      }
-      closeModal(); // Close modal after saving
-    };
-    
-    
-    const initialFormData: { [key: string]: any } = {};
-    formFields.forEach((field) => {
-      initialFormData[field.controlId] = '';
-    });
-    
-  
+    if (mode === "edit" && updateEntity && selectedEntity) {
+
+      // Create a clean updateData object with values from formFields
+      const updateData: { [key: string]: any } = {};
+      formFields.forEach((field) => {
+        updateData[field.controlId] = field.value;
+      });
+      updateEntity(selectedEntity.id, updateData);
+    } 
+    else if (mode === "add" && addEntity)
+       {
+      // Create a clean newData object with values from formFields
+      const newData: { [key: string]: any } = {};
+      formFields.forEach((field) => {
+        newData[field.controlId] = field.value;
+      });
+      await addEntity(newData);
+    }
+    closeModal(); // Close modal after saving
+  };
+
+  const initialFormData: { [key: string]: any } = {};
+  formFields.forEach((field) => {
+    initialFormData[field.controlId] = "";
+  });
+
   useEffect(() => {
-    if (isOpen && mode === 'edit' && selectedEntity) {
+    if (isOpen && mode === "edit" && selectedEntity) {
       // Register fields dynamically
       formFields.forEach((field) => {
         register(field.controlId, { required: true }); // Adjust validation rules as needed
@@ -82,25 +77,32 @@ interface IProps {
 
       // Set initial values for fields
       formFields.forEach((field) => {
-        setValue(field.controlId, selectedEntity[field.controlId], { shouldValidate: true });
+        setValue(field.controlId, selectedEntity[field.controlId], {
+          shouldValidate: true,
+        });
       });
     }
   }, [isOpen, selectedEntity, mode, formFields, register, setValue]);
-    
-    
 
-    return (
-      <>
-        <Modal show={isOpen} onHide={closeModal} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>{title}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="d-flex justify-content-center align-items-center">
+  return (
+    <>
+      <Modal show={isOpen} onHide={closeModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>{title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex justify-content-center align-items-center">
           <Form>
             {formFields.map((field, index) => (
-              <Form.Group key={index} className="mb-3" controlId={field.controlId}>
-                {field.options? ( // Check if options exist
-                  <Form.Select value={field.value} onChange={(e) => field.onChange(e.target.value)}>
+              <Form.Group
+                key={index}
+                className="mb-3"
+                controlId={field.controlId}
+              >
+                {field.options ? ( // Check if options exist
+                  <Form.Select
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  >
                     {field.options.map((option, index) => (
                       <option key={index} value={option.value}>
                         {option.label}
@@ -118,18 +120,18 @@ interface IProps {
               </Form.Group>
             ))}
           </Form>
-          </Modal.Body>
-          <Modal.Footer className="justify-content-center">
-            <Button variant="secondary" onClick={closeModal}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleSave}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    );
-  };
-  
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+          <Button variant="secondary" onClick={closeModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSave}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+};
+
 export default GenericModal;

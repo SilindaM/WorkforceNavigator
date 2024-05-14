@@ -54,7 +54,7 @@ namespace API.Controllers.GeneralAdmin
       return Ok(result);
     }
 
-    [HttpPost]
+    [HttpPost("CreateJobTitle")]
     public async Task<IActionResult> CreateJobTitle([FromBody] UpdateCreateJobTitleDto JobTitleDto)
     {
       var result = await _JobTitleUpdateService.CreateAsync(JobTitleDto);

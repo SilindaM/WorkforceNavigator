@@ -44,7 +44,7 @@ export const PATH_AFTER_REGISTER = PATH_PUBLIC.login;
 export const PATH_AFTER_LOGIN = PATH_DASHBOARD.dashboard;
 export const PATH_AFTER_LOGOUT = PATH_PUBLIC.home;
 
-//GENERIC MANAGEMENT
+//DEPARTMENT
 export const NEW_DEPARTMENT_URL = '/Department/CreateDepartment';
 export const UPDATE_DEPARTMENT_URL = '/Department/UpdateDepartment';
 export const DELETE_DEPARTMENT_URL = '/Department/DeleteDepartment';

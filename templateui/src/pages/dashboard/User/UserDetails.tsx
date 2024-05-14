@@ -138,11 +138,13 @@ const UserDetails = ({ username }: IProps) => {
 
     console.log("Effect " + username);
   }, [username]);
+
   const Gender = [
     { key: "male", text: "Male", value: "male" },
     { key: "female", text: "Female", value: "female" },
   ];
   const Depar = [department];
+
   const selectedGender = userDetails
     ? Gender.find((option) => option.value === userDetails.gender)
     : null;
