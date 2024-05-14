@@ -75,7 +75,6 @@ const JobTitlesPage = () => {
   };
 
   const AddJobTitle = async (newData: ICreateJobTitleDto) => {
-    console.log("New Job Title Data:", newData);
     await GenericCrudOperations.add(NEW_JOBTITLE_URL, newData, setLoading);
     getJobTitles();
   };
@@ -166,19 +165,26 @@ const JobTitlesPage = () => {
         title=""
         formFields={[
           {
-            controlId: "JobTitle",
+            controlId: "title",
             label: "JobTitle ",
             value: JobTitle,
             onChange: setJobTitle,
           },
           {
-            controlId: "Description",
+            controlId: "description",
             label: "Description ",
             value: Description,
             onChange: setDescription,
           },
           {
-            controlId: "Department",
+            controlId: "seniority",
+            label: "Seniority",
+            value: seniority,
+            options: seniorityOptions,
+            onChange: setSeniority,
+          },
+          {
+            controlId: "departmentId",
             label: "Department",
             onChange: handleDepartmentChange,
             options: Departments
@@ -188,13 +194,6 @@ const JobTitlesPage = () => {
                 }))
               : [],
             value: DepartmentId, // Corrected here
-          },
-          {
-            controlId: "Seniority",
-            label: "Seniority",
-            value: seniority,
-            options: seniorityOptions,
-            onChange: setSeniority,
           },
         ]}
         handleSubmit={handleSubmit}
