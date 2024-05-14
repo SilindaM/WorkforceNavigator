@@ -12,7 +12,7 @@ export interface IUpdateJobTitleDto{
 
   export interface ICreateJobTitleDto{
     Title:string;
-    DepartmentId:number;
     Description:string;
     Seniority:Seniority;
+    DepartmentId:number;
   }
