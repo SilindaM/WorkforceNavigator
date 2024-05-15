@@ -26,7 +26,7 @@ import {
 import { GenericCrudOperations } from "../../../components/general/GenericCrudOperations";
 
 interface IProps {
-  selectDepartment: (departmentName: string | null) => void;
+  selectDepartment: (departmentId: number | null) => void;
 }
 
 const DepartmentsPage = ({ selectDepartment }: IProps) => {
@@ -35,6 +35,7 @@ const DepartmentsPage = ({ selectDepartment }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [departments, setDepartments] = useState<IDepartmentDto[]>([]);
   const [selectedDepartment, setSelectedDepartment] =useState<IDepartmentDto>();
+  const [selectedDepartmentId, setSelectedDepartmentId] =useState<number>();
   const [departmentName, setDepartmentName] = useState<string|null>(null);
   const [description, setDescription] = useState<string>("");
 
@@ -59,9 +60,8 @@ const DepartmentsPage = ({ selectDepartment }: IProps) => {
     getDepartments();
   };
 
-  const handleRowClick = (department: IDepartmentDto) => {
-    console.log(department);
-    setSelectedDepartment(department);
+  const handleRowClick = (departmentId: number) => {
+    setSelectedDepartmentId(departmentId);
   };
 
   const UpdateDepartment = async (
