@@ -21,7 +21,7 @@ const ManageUsersPage = () => {
         <GridColumn width={5}>
           <Segment raised>
             <Header as="h2" textAlign="center">
-              USERS
+              USERS LIST
             </Header>
             <UsersManagementPage selectedUsername={handleUserSelect}/>
           </Segment>
@@ -30,7 +30,7 @@ const ManageUsersPage = () => {
         <GridColumn width={11}>
           <Segment raised>
             <Header as="h2" textAlign="center">
-              USER DETAILS
+              USER DETAIL
             </Header>
             {selectedUser && <UserDetails username={selectedUser} />}
           </Segment>

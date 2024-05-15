@@ -31,3 +31,10 @@ export interface UserDetailsUpdateDto {
     departmentName: string;
 }
 
+export interface useDetailJobTitle{
+    firstName: string;
+    lastName: string;
+    email: string;
+    jobTitle: string;
+    team:string;
+}

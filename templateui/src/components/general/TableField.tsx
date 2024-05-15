@@ -7,22 +7,25 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 interface TableFieldProps<T> {
   rows: T[];
   columns: { key: string; label: string }[];
-  onEdit: (data:any) => void;
-  onDelete: (id: number) => void;
+  onEdit?: (data:any) => void;
+  onDelete?: (id: number) => void;
   options?: { value: any; label: string }[]; 
+  onRowClick?:(data:any)=>void;
 }
 
 const TableField = <T,>({
   rows,
   columns,
   onEdit,
-  onDelete
+  onDelete,
+  onRowClick,
 }: TableFieldProps<T>) => {
+  
   return (
     <div className="px-4 my-2 w-full">
       <Table striped bordered hover>
         <thead>
-          <tr>
+          <tr >
             {columns.map((column) => (
               <th key={column.key}>{column.label}</th>
             ))}
@@ -31,10 +34,11 @@ const TableField = <T,>({
         </thead>
         <tbody>
           {rows.map((row: any, index) => (
-            <tr key={index}>
+            <tr key={index} onClick={(onRowClick && (()=>onRowClick(row)))} >
               {columns.map((column) => (
-                <td key={column.key}>{row[column.key]}</td>
+                <td key={column.key} >{row[column.key]}</td>
               ))}
+              
               <td>
               <ButtonGroup>
                     <Button
@@ -42,7 +46,7 @@ const TableField = <T,>({
                       sx={{ height: '30px' ,width:'50%'}} // Adjust the height as needed
                       style={{ fontSize: 'medium' }}
                       startIcon={<EditIcon />}
-                      onClick={() => onEdit(row)} // Pass the row data to the edit function
+                      onClick={onEdit && (() => onEdit(row))} // Pass the row data to the edit function
                     >
                       Edit
                     </Button>
@@ -51,7 +55,7 @@ const TableField = <T,>({
                       sx={{ height: '30px' }} // Adjust the height as needed
                       style={{ fontSize: 'medium' }}
                       startIcon={<DeleteOutlineIcon />}
-                      onClick={()=>onDelete(row.id)} // Implement delete functionality if needed
+                      onClick={onDelete &&(()=>onDelete(row.id))} // Implement delete functionality if needed
                     >
                       Delete
                     </Button>
