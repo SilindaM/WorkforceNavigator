@@ -1,5 +1,6 @@
 import { Seniority } from "./auth.type";
 
+
 export interface IUpdateJobTitleDto{
     Title:string;
     Department:string;

@@ -11,6 +11,7 @@ import ProjectsPage from './ProjectsPage';
 import TeamsPage from './TeamsPage';
 import DepartmentsPage from './DepartmentsPage';
 import JobTitlesPage from './JobTitlesPage';
+import ManageDepartmentPage from './ManageDepartmentPage';
 
 const GenericManagementPage = () => {
   const { user } = useAuth(); // Assuming you have a user object from your authentication context
@@ -31,7 +32,7 @@ const GenericManagementPage = () => {
     },
     {
       menuItem: 'DEPARTMENTS',
-      pane: { key: 'tab3', content: <DepartmentsPage /> },
+      pane: { key: 'tab3', content: <ManageDepartmentPage /> },
     },
     {
       menuItem: 'JOBTITLES',
