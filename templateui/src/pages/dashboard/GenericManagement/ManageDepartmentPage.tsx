@@ -4,10 +4,11 @@ import DepartmentsPage from "./DepartmentsPage";
 import DepartmentDetails from "./DepartmentDetails";
 
 const ManageDepartmentPage = () => {
-  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
+  const [selectedDepartment, setSelectedDepartment] = useState<number | null>(null);
 
-  const handleDepartmentSelect = (departmentName: string |null) => {
-    setSelectedDepartment(departmentName);
+  const handleDepartmentSelect = (departmentId: number |null) => {
+    console.log("Selected Id ", departmentId)
+    setSelectedDepartment(departmentId);
   };
   useEffect(() => {
     return () => {

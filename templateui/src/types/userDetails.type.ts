@@ -13,6 +13,7 @@ export interface UserDetailsDto {
     seniority: string;
     joiningDate: Date;
 }
+
 export interface DepartmentDto{
     id:number;
     departmentName:string;
@@ -31,7 +32,7 @@ export interface UserDetailsUpdateDto {
     departmentName: string;
 }
 
-export interface useDetailJobTitle{
+export interface DepartmentUserJobTitleTeam{
     firstName: string;
     lastName: string;
     email: string;

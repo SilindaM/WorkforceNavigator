@@ -10,7 +10,7 @@ interface TableFieldProps<T> {
   onEdit?: (data:any) => void;
   onDelete?: (id: number) => void;
   options?: { value: any; label: string }[]; 
-  onRowClick?:(data:any)=>void;
+  onRowClick?:(id:number)=>void;
 }
 
 const TableField = <T,>({
@@ -34,7 +34,7 @@ const TableField = <T,>({
         </thead>
         <tbody>
           {rows.map((row: any, index) => (
-            <tr key={index} onClick={(onRowClick && (()=>onRowClick(row)))} >
+            <tr key={index} onClick={(onRowClick && (()=>onRowClick(row.id)))} >
               {columns.map((column) => (
                 <td key={column.key} >{row[column.key]}</td>
               ))}
