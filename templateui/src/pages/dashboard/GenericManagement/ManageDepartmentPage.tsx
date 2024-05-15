@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Grid, Segment, Container, Header, GridColumn } from "semantic-ui-react";
 import DepartmentsPage from "./DepartmentsPage";
 import DepartmentDetails from "./DepartmentDetails";
 
 const ManageDepartmentPage = () => {
-  const [selectedDepartment, setSelectedDepartment] = useState<number | null>(null);
+  const [selectedDepartmentId, setSelectedDepartmentId] = useState<number | null>(null);
 
-  const handleDepartmentSelect = (departmentId: number |null) => {
-    console.log("Selected Id ", departmentId)
-    setSelectedDepartment(departmentId);
+  const handleDepartmentSelect = (departmentId: number | null) => {
+    setSelectedDepartmentId(departmentId);
   };
-  useEffect(() => {
-    return () => {
-        setSelectedDepartment(null);
-    };
-  }, []);
-  
+
   return (
     <Container fluid className="pageTemplate3">
       <Grid columns={2}>
@@ -24,7 +18,7 @@ const ManageDepartmentPage = () => {
             <Header as="h2" textAlign="center">
                DEPARTMENTS
             </Header>
-            <DepartmentsPage selectDepartment={handleDepartmentSelect}/>
+            <DepartmentsPage selectedDepartmentId={handleDepartmentSelect}/>
           </Segment>
         </GridColumn>
 
@@ -33,7 +27,8 @@ const ManageDepartmentPage = () => {
             <Header as="h2" textAlign="center">
                 DEPARTMENT DETAILS
             </Header>
-              {selectedDepartment && <DepartmentDetails selectedDepartment={selectedDepartment}/>}
+            {/* Pass selectedDepartmentId directly */}
+            <DepartmentDetails selectedDepartmentId={selectedDepartmentId}/>
           </Segment>
         </GridColumn>
       </Grid>

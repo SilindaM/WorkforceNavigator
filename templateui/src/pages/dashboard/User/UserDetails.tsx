@@ -65,6 +65,7 @@ const UserDetails = ({ username }: IProps) => {
   };
 
   const getUserDetails = async (username: string) => {
+    console.log(username);
     await GenericCrudOperations.getDetails(USER_DETAILS_URL, username, setUserDetails, setLoading);
   };
 

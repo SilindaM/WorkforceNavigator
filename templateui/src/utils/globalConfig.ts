@@ -49,7 +49,7 @@ export const NEW_DEPARTMENT_URL = '/Department/CreateDepartment';
 export const UPDATE_DEPARTMENT_URL = '/Department/UpdateDepartment';
 export const DELETE_DEPARTMENT_URL = '/Department/DeleteDepartment';
 export const ALL_DEPARTMENTS = '/Department';
-export const DEPARTMENT_JOBTITLE_TEAM='/Department/DepartmentUserJobTitleTeam';
+export const DEPARTMENT_JOBTITLE_TEAM='/Department/DepartmentUserDetailJobTitle';
 
 //JOB TITLE
 export const NEW_JOBTITLE_URL = '/JobTitle/CreateJobTitle';
