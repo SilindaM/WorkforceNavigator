@@ -50,8 +50,9 @@ namespace API.Controllers.GeneralAdmin
         return Ok(result);
       }
     }
+
     [HttpGet]
-    [Route("DepartmentUserDetailJobTitle")]
+    [Route("DepartmentUserDetailJobTitle/{id}")]
     public async Task<IActionResult> GetDepartmentUserDetailtJobTile(int id)
     {
       var result = await departmentService.GetUserJobTitleTeamsListAsync(id);

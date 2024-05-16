@@ -19,6 +19,10 @@ const GenericManagementPage = () => {
   // Define panes excluding the "PROCESS REQUESTS" tab if the user is not an admin
   const panes = [
     {
+      menuItem: 'DEPARTMENTS',
+      pane: { key: 'tab3', content: <ManageDepartmentPage /> },
+    },
+    {
       menuItem: 'CLIENTS',
       pane: { key: 'tab1', content: <ClientsPage /> },
     },
@@ -29,10 +33,6 @@ const GenericManagementPage = () => {
     {
       menuItem: 'TEAMS',
       pane: { key: 'tab3', content: <TeamsPage /> },
-    },
-    {
-      menuItem: 'DEPARTMENTS',
-      pane: { key: 'tab3', content: <ManageDepartmentPage /> },
     },
     {
       menuItem: 'JOBTITLES',
