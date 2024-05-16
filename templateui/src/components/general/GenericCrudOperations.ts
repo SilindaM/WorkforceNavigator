@@ -67,6 +67,7 @@ export const GenericCrudOperations = {
 
   async getDetails(resourceUrl: string, id: any, setEntity: (data: any) => void, setLoading: (loading: boolean) => void) {
     try {
+      
       setLoading(true);
       console.log("Test Generic ",id);
       console.log("Test Generic ",resourceUrl);

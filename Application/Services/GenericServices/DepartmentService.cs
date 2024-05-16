@@ -21,19 +21,19 @@
 
     public async Task<IEnumerable<UserDetailJobTitle>> GetUserJobTitleTeamsListAsync(int id)
     {
-      var details =  (from u in dataContext.Users
-                           join j in dataContext.JobTitles on u.JobTitleId equals j.Id
-                           join d in dataContext.Departments on j.DepartmentId equals d.Id
-                           join t in dataContext.Teams on u.TeamId equals t.Id
-                           where d.Id == id && d.IsActive && !d.IsDeleted
-                           select new UserDetailJobTitle
-                           {
-                             FirstName = u.FirstName,
-                             LastName = u.LastName,
-                             Email = u.Email,
-                             JobTitle = j.Title,
-                             Team = t.TeamName,
-                           }).ToList();
+      var details = (from u in dataContext.Users
+                     join j in dataContext.JobTitles on u.JobTitleId equals j.Id
+                     join d in dataContext.Departments on j.DepartmentId equals d.Id
+                     join t in dataContext.Teams on u.TeamId equals t.Id
+                     where d.Id == id && d.IsActive && !d.IsDeleted
+                     select new UserDetailJobTitle
+                     {
+                       FirstName = u.FirstName,
+                       LastName = u.LastName,
+                       Email = u.Email,
+                       JobTitle = j.Title,
+                       Team = t.TeamName,
+                     }).ToList();
       return details;
     }
   }
