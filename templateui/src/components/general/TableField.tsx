@@ -11,6 +11,7 @@ interface TableFieldProps<T> {
   onDelete?: (id: number) => void;
   options?: { value: any; label: string }[]; 
   onRowClick?:(id:number)=>void;
+  showActions?:boolean;
 }
 
 const TableField = <T,>({
@@ -19,6 +20,7 @@ const TableField = <T,>({
   onEdit,
   onDelete,
   onRowClick,
+  showActions
 }: TableFieldProps<T>) => {
   
   return (
@@ -29,7 +31,9 @@ const TableField = <T,>({
             {columns.map((column) => (
               <th key={column.key}>{column.label}</th>
             ))}
+           {showActions &&(
             <th>Actions</th>
+           )} 
           </tr>
         </thead>
         <tbody>
@@ -40,26 +44,28 @@ const TableField = <T,>({
               ))}
               
               <td>
-              <ButtonGroup>
-                    <Button
-                      variant="outlined" color="warning"
-                      sx={{ height: '30px' ,width:'50%'}} // Adjust the height as needed
-                      style={{ fontSize: 'medium' }}
-                      startIcon={<EditIcon />}
-                      onClick={onEdit && (() => onEdit(row))} // Pass the row data to the edit function
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="outlined" color="error"
-                      sx={{ height: '30px' }} // Adjust the height as needed
-                      style={{ fontSize: 'medium' }}
-                      startIcon={<DeleteOutlineIcon />}
-                      onClick={onDelete &&(()=>onDelete(row.id))} // Implement delete functionality if needed
-                    >
-                      Delete
-                    </Button>
-                  </ButtonGroup>
+              {showActions &&(
+                     <ButtonGroup>
+                     <Button
+                       variant="outlined" color="warning"
+                       sx={{ height: '30px' ,width:'50%'}} // Adjust the height as needed
+                       style={{ fontSize: 'medium' }}
+                       startIcon={<EditIcon />}
+                       onClick={onEdit && (() => onEdit(row))} // Pass the row data to the edit function
+                     >
+                       Edit
+                     </Button>
+                     <Button
+                       variant="outlined" color="error"
+                       sx={{ height: '30px' }} // Adjust the height as needed
+                       style={{ fontSize: 'medium' }}
+                       startIcon={<DeleteOutlineIcon />}
+                       onClick={onDelete &&(()=>onDelete(row.id))} // Implement delete functionality if needed
+                     >
+                       Delete
+                     </Button>
+               </ButtonGroup>
+              )}
               </td>
             </tr>
           ))}

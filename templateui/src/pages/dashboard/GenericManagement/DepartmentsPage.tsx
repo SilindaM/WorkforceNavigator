@@ -125,7 +125,8 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
                 columns={columns}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
-                onRowClick={handleRowClick}/>
+                onRowClick={handleRowClick}
+                showActions={true}/>
             </Segment>
           </GridColumn>
         </Grid>
