@@ -31,6 +31,7 @@ import toast from "react-hot-toast";
 import { IMyLeaveAllocationDto } from "../../../types/leaveAllocation.type";
 import { IMyLeaveRequestDto, Status } from "../../../types/leaveRequest.type";
 import { RolesEnum } from "../../../types/auth.type";
+import { GenericCrudOperations } from "../../../components/general/GenericCrudOperations";
 
 interface IProps {
   username: string;
@@ -51,85 +52,23 @@ const UserDetails = ({ username }: IProps) => {
   const [roles, setRoles] = useState<RolesEnum[]>([]);
   const [department, setDepartments] = useState<DepartmentDto[]>([]);
 
-  const UpdateUserDetails = async (
-  updateUsername: string,
-  userDetail: UserDetailsUpdateDto
-) => {
-  try {
-    setLoading(true);
-    console.log("Retrieve");
-    const response = await axiosInstance.post<UserDetailsUpdateDto>(
-      `${UPDATE_USER_DETAILS}/${updateUsername}`, // Update the URL with username in path
-      userDetail
-    );
-    console.log("get data");
-    const { data } = response;
-    setLoading(false);
-    console.log("get data to update " + data);
-  } catch (error:any) {
-    if (error.response) {
-       // The request was made and the server responded with a status code
-       // that falls out of the range of 2xx
-       console.log("Data "+error.response.data);
-       console.log("Status "+error.response.status);
-       console.log("Headers "+error.response.headers);
-    } else if (error.request) {
-       // The request was made but no response was received
-       console.log(error.request);
-    } else {
-       // Something happened in setting up the request that triggered an Error
-       console.log('Error', error.message);
-    }
-    console.log(error.config);
-   }
-   
+  const UpdateUserDetails = async (updateUsername: string,userDetail: UserDetailsUpdateDto) => {
+    await GenericCrudOperations.update(UPDATE_USER_DETAILS,updateUsername,userDetails,setLoading);
 };
 
-  
-   
-
-  const getAllDepartments = async () => {
-    try {
-      const response = await axiosInstance.get<DepartmentDto[]>(
-        ALL_DEPARTMENTS
-      );
-      const { data } = response;
-      setDepartments(data);
-    } catch (error) {
-      toast.error("Failed to fetch depaertment");
-      setLoading(false);
-    }
+  const getAllDepartments= async()=>{
+   await GenericCrudOperations.getAll(ALL_DEPARTMENTS,setDepartments,setLoading);
   };
+  
   const getMyLeaves = async () => {
-    try {
-      setLoading(true);
-      const response = await axiosInstance.get<IMyLeaveRequestDto[]>(
-        MY_LEAVE_REQUESTS
-      );
-      const { data } = response;
-      setLeaves(data);
-      setLoading(false);
-    } catch (error) {
-      toast.error("Failed To Fetch Your Leaves");
-      setLoading(false);
-    }
+    await GenericCrudOperations.getAll(MY_LEAVE_REQUESTS,setLeaves,setLoading);
   };
 
   const getUserDetails = async (username: string) => {
-    try {
-      setLoading(true);
-      const response = await axiosInstance.get<UserDetailsDto>(
-        `${USER_DETAILS_URL}/${username}`
-      );
-      const { data } = response;
-      console.log(data);
-      setUserDetails(data);
-      setLoading(false);
-    } catch (error) {
-      toast("failed to load user Details");
-      setLoading(false);
-    }
+    console.log(username);
+    await GenericCrudOperations.getDetails(USER_DETAILS_URL, username, setUserDetails, setLoading);
   };
+
   useEffect(() => {
     getUserDetails(username);
     getMyLeaves();

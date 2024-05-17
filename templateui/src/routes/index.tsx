@@ -1,9 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from '../components/layout';
 import { PATH_DASHBOARD, PATH_PUBLIC } from './path';
-import HomePage from '../pages/public/HomePage';
 import LoginPage from '../pages/public/LoginPage';
-import RegisterPage from '../pages/public/RegisterPage';
 import UnauthorizedPage from '../pages/public/UnauthorizedPage';
 import AuthGuard from '../auth/AuthGuard';
 import { adminAccessRoles, allAccessRoles, managerAccessRoles, ownerAccessRoles } from '../auth/auth.utils';
@@ -17,16 +15,13 @@ import AdminPage from '../pages/dashboard/AdminPage';
 import SystemLogsPage from '../pages/dashboard/SystemLogsPage';
 import AllMessagesPage from '../pages/dashboard/Messages/AllMessagesPage';
 import UpdateRolePage from '../pages/dashboard/UpdateRolePage';
-import UserManagementPage from '../pages/dashboard/UserManagementPage';
 import OwnerPage from '../pages/dashboard/OwnerPage';
-import NotFoundPage from '../pages/public/NotFoundPage';
 import MyLeaveAllocationsPage from '../pages/dashboard/LeaveAllocations/MyLeaveAllocationsPage';
 import LeaveAllocationByUserNamePage from '../pages/dashboard/LeaveAllocations/LeaveAllocationByUserNamePage';
 import AllocationByLeaveNamePage from '../pages/dashboard/LeaveAllocations/AllocationByLeaveNamePage';
 import AllAllocationPage from '../pages/dashboard/LeaveAllocations/AllAllocationPage';
 import ManageMessagesPage from '../pages/dashboard/Messages/ManageMessagesPage';
 import SignUpPage from '../pages/public/SignUpPage';
-import { AppBar } from '@mui/material';
 import ManageLeavesPage from '../pages/dashboard/LeaveAllocations/ManageLeavesPage';
 import ProcessLeaveRequestPage from '../pages/dashboard/LeaveRequests/ProcessLeaveRequestPage';
 import ManageUsersPage from '../pages/dashboard/User/ManageUsersPage';
@@ -34,9 +29,9 @@ import UserDetails from '../pages/dashboard/User/UserDetails';
 import GenericManagementPage from '../pages/dashboard/GenericManagement/GenericManagementPage';
 import TeamsPage from '../pages/dashboard/GenericManagement/TeamsPage';
 import JobTitlesPage from '../pages/dashboard/GenericManagement/JobTitlesPage';
-import DepartmentsPage from '../pages/dashboard/GenericManagement/DepartmentsPage';
 import ClientsPage from '../pages/dashboard/GenericManagement/ClientsPage';
 import ProjectsPage from '../pages/dashboard/GenericManagement/ProjectsPage';
+import ManageDepartmentPage from '../pages/dashboard/GenericManagement/ManageDepartmentPage';
 
 const GlobalRouter = () => {
     return (
@@ -67,7 +62,7 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.myLogs} element={<MyLogsPage />} />
             <Route path={PATH_DASHBOARD.user} element={<UserPage />} />
             
-            <Route path={PATH_DASHBOARD.departmentRequest} element={<DepartmentsPage />} />
+            <Route path={PATH_DASHBOARD.manageDepartments} element={<ManageDepartmentPage />} />
             
             <Route path={PATH_DASHBOARD.jobTitleRequest} element={<JobTitlesPage />} />
             <Route path={PATH_DASHBOARD.clientRequest} element={<ClientsPage />} />

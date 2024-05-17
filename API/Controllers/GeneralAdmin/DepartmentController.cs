@@ -21,13 +21,16 @@ namespace API.Controllers.GeneralAdmin
     private readonly IMapper mapper;
     private readonly IGenericService<Department, DepartmentDto> _DepartmentService;
     private readonly IGenericService<Department, UpdateDepartmentDto> updateDepartmentService;
+    private readonly IDepartmentService departmentService;
 
     public DepartmentController(IMapper mapper,
         IGenericService<Department, DepartmentDto> DepartmentService, IGenericService<Department, UpdateDepartmentDto> updateDepartmentService)
+
     {
       this.mapper = mapper;
       _DepartmentService = DepartmentService;
       this.updateDepartmentService = updateDepartmentService;
+      this.departmentService = departmentService;
     }
 
     [HttpGet]
@@ -42,6 +45,21 @@ namespace API.Controllers.GeneralAdmin
     public async Task<IActionResult> GetDepartmentById(int id)
     {
       var result = await _DepartmentService.GetByIdAsync(id);
+      if (result is null)
+      {
+        return NotFound("leaveRequestId not found");
+      }
+      else
+      {
+        return Ok(result);
+      }
+    }
+
+    [HttpGet]
+    [Route("DepartmentUserDetailJobTitle/{id}")]
+    public async Task<IActionResult> GetDepartmentUserDetailtJobTile(int id)
+    {
+      var result = await departmentService.GetUserJobTitleTeamsListAsync(id);
       if (result is null)
       {
         return NotFound("leaveRequestId not found");
