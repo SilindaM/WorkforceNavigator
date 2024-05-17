@@ -1,6 +1,7 @@
 ﻿namespace Application.Interfaces.GenericInterfaces
 {
   using Domain.Dtos.General;
+  using Domain.Enties;
 
   public interface IGenericService<TEntity, TDto>
      where TEntity : class
@@ -12,5 +13,6 @@
     Task<GeneralServiceResponseDto> SoftDelete(int id);
     Task<TDto> GetByIdAsync(int id);
     Task<GeneralServiceResponseDto> UndoSoftDeleteAsync(int id); // New method
+    Task<IEnumerable<TEntity>> GetPagedAsync(int pageNumber, int pageSize);
   }
 }

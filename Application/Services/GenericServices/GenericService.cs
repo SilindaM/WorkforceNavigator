@@ -3,12 +3,16 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.Data.Entity;
   using System.Linq;
+  using System.Linq.Expressions;
+  using System.Numerics;
   using System.Threading.Tasks;
   using Application.Helpers;
   using Application.Interfaces.GenericInterfaces;
   using AutoMapper;
   using Domain.Dtos.General;
+  using Domain.Enties;
   using FluentResults;
   using Microsoft.EntityFrameworkCore;
   using Persistence;
@@ -41,24 +45,6 @@
       {
         // Log or handle the exception appropriately
         return ResponseHelper.CreateResponse(false, 400, "Failed to create entity");
-      }
-    }
-
-    public async Task<IEnumerable<TDto>> GetAllAsync()
-    {
-      try
-      {
-        var entities = await dataContext.Set<TEntity>()
-            .Where(e => EF.Property<bool>(e, "IsDeleted") == false)
-            .ToListAsync();
-
-        var dtos = mapper.Map<List<TDto>>(entities);
-        return dtos;
-      }
-      catch (Exception ex)
-      {
-        // Log or handle the exception appropriately
-        return (IEnumerable<TDto>)ResponseHelper.CreateResponse(false, 400, "Failed to get all entities");
       }
     }
 
@@ -173,6 +159,30 @@
         // Log or handle the exception appropriately
         return ResponseHelper.CreateResponse(false, 400, "Failed for ${Id}");
       }
+    }
+    public async Task<IEnumerable<TDto>> GetAllAsync()
+    {
+      try
+      {
+        var entities = await dataContext.Set<TEntity>()
+            .Where(e => EF.Property<bool>(e, "IsDeleted") == false)
+            .ToListAsync();
+
+        var dtos = mapper.Map<List<TDto>>(entities);
+        return dtos;
+      }
+      catch (Exception ex)
+      {
+        // Log or handle the exception appropriately
+        return (IEnumerable<TDto>)ResponseHelper.CreateResponse(false, 400, "Failed to get all entities");
+      }
+    }
+    public async Task<IEnumerable<TEntity>> GetPagedAsync(int pageNumber, int pageSize)
+    {
+      return  dataContext.Set<TEntity>()
+             .Skip((pageNumber - 1) * pageSize)
+             .Take(pageSize)
+             .ToList();
     }
   }
 }
