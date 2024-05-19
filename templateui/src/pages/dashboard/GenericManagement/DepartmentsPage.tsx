@@ -97,6 +97,7 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
 
   useEffect(() => {
     getDepartments();
+    setSelectedDepartment
   }, []);
 
   const columns = [
@@ -125,8 +126,7 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
                 columns={columns}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
-                onRowClick={handleRowClick}
-                showActions={true}/>
+                onRowClick={handleRowClick}/>
             </Segment>
           </GridColumn>
         </Grid>
