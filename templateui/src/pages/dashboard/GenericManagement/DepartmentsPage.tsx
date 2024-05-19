@@ -97,6 +97,7 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
 
   useEffect(() => {
     getDepartments();
+    setSelectedDepartment
   }, []);
 
   const columns = [

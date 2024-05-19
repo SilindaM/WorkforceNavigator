@@ -35,6 +35,7 @@ const DepartmentDetails = ({ selectedDepartmentId }: IProps) => {
     <TableField
       rows={departmentUserJobTitleTeam}
       columns={columns}
+      showActions={false}
     />
   );
 };
