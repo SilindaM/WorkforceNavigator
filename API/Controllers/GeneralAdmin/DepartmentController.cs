@@ -18,16 +18,14 @@ namespace API.Controllers.GeneralAdmin
   [Route("api/[controller]")]
   public class DepartmentController : ControllerBase
   {
-    private readonly IMapper mapper;
     private readonly IGenericService<Department, DepartmentDto> _DepartmentService;
     private readonly IGenericService<Department, UpdateDepartmentDto> updateDepartmentService;
     private readonly IDepartmentService departmentService;
 
-    public DepartmentController(IMapper mapper,
+    public DepartmentController(
         IGenericService<Department, DepartmentDto> DepartmentService, IGenericService<Department, UpdateDepartmentDto> updateDepartmentService)
 
     {
-      this.mapper = mapper;
       _DepartmentService = DepartmentService;
       this.updateDepartmentService = updateDepartmentService;
       this.departmentService = departmentService;
@@ -118,18 +116,6 @@ namespace API.Controllers.GeneralAdmin
       }
       return StatusCode(result.StatusCode, result.Message);
     }
-    [HttpGet("paged")]
-    public async Task<IActionResult> GetPaged(int pageNumber, int pageSize)
-    {
-      if (pageNumber < 1 || pageSize < 1)
-      {
-        return BadRequest("Page number and page size must be greater than 0.");
-      }
-
-      var departments = await _DepartmentService.GetPagedAsync(pageNumber, pageSize);
-      var departmentDtos = mapper.Map<IEnumerable<DepartmentDto>>(departments);
-
-      return Ok(departmentDtos);
-    }
+  
   }
 }

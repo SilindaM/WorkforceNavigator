@@ -164,9 +164,9 @@
     {
       try
       {
-        var entities = await dataContext.Set<TEntity>()
+        var entities =  dataContext.Set<TEntity>()
             .Where(e => EF.Property<bool>(e, "IsDeleted") == false)
-            .ToListAsync();
+            .ToList();
 
         var dtos = mapper.Map<List<TDto>>(entities);
         return dtos;
