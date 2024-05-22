@@ -8,6 +8,7 @@
   using Domain.Dtos.JobTitles;
   using Domain.Dtos.LeaveAllocation;
   using Domain.Dtos.LeaveRequest;
+  using Domain.Dtos.Timesheet;
   using Domain.Enties;
   using Domain.Enties.Leaves;
   using Domain.Enties.TimeSheets;
@@ -17,7 +18,6 @@
   {
     public MappingProfiles()
     {
-      
       CreateMap<Department, DepartmentDto>().ReverseMap();
       CreateMap<Department, UpdateDepartmentDto>().ReverseMap();
       CreateMap<Log, GetLogDto>().ReverseMap();
@@ -31,6 +31,7 @@
       CreateMap<Client, ClientDto>().ReverseMap();
       CreateMap<Project, CreateProjectDto>().ReverseMap();
       CreateMap<ApplicationUser, UserInfoResult>().ReverseMap();
+      CreateMap<TimesheetEntry, TimesheetEntryDto>().ReverseMap();
     }
   }
 }
