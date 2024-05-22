@@ -5,6 +5,7 @@ namespace API.Controllers.GeneralAdmin
   using Application.Interfaces.GenericInterfaces;
   using Application.Services.Auth;
   using Application.Services.GenericServices;
+  using AutoMapper;
   using Domain.Dtos.Account;
   using Domain.Dtos.Departments;
   using Domain.Enties;
@@ -22,7 +23,8 @@ namespace API.Controllers.GeneralAdmin
     private readonly IDepartmentService departmentService;
 
     public DepartmentController(
-        IGenericService<Department, DepartmentDto> DepartmentService,IGenericService<Department,UpdateDepartmentDto> updateDepartmentService,IDepartmentService departmentService)
+        IGenericService<Department, DepartmentDto> DepartmentService, IGenericService<Department, UpdateDepartmentDto> updateDepartmentService)
+
     {
       _DepartmentService = DepartmentService;
       this.updateDepartmentService = updateDepartmentService;
@@ -31,7 +33,7 @@ namespace API.Controllers.GeneralAdmin
 
     [HttpGet]
     public async Task<IActionResult> GetAllDepartments()
-  {
+    {
       var result = await _DepartmentService.GetAllAsync();
 
       return Ok(result);
@@ -114,5 +116,6 @@ namespace API.Controllers.GeneralAdmin
       }
       return StatusCode(result.StatusCode, result.Message);
     }
+  
   }
 }
