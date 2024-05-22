@@ -22,7 +22,7 @@ namespace API.Controllers.GeneralAdmin
     private readonly IGenericService<Department, UpdateDepartmentDto> updateDepartmentService;
     private readonly IDepartmentService departmentService;
 
-    public DepartmentController(
+    public DepartmentController(IDepartmentService departmentService,
         IGenericService<Department, DepartmentDto> DepartmentService, IGenericService<Department, UpdateDepartmentDto> updateDepartmentService)
 
     {
