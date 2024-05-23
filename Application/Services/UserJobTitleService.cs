@@ -33,7 +33,7 @@
       //assign the jobTitle id
       user.JobTitleId = assignJobTitle.jobTitleId;
       await dataContext.SaveChangesAsync();
-      return ResponseHelper.CreateResponse(true,200,"JobTitle Assigned Successfully");
+      return ResponseHelper.CreateResponse(true, 200, "JobTitle Assigned Successfully");
     }
 
 
@@ -59,7 +59,7 @@
         throw new Exception("JobTitleId is null for the user.");
       }
     }
- 
+
 
 
     //will get the jobTitle including department name

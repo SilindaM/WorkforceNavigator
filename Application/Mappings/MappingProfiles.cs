@@ -13,6 +13,7 @@
   using Domain.Enties.Leaves;
   using Domain.Enties.TimeSheets;
   using Domain.Entities;
+  using Domain.Entities.TimeSheets;
 
   public class MappingProfiles : Profile
   {
@@ -30,8 +31,13 @@
       CreateMap<Team, TeamDto>().ReverseMap();
       CreateMap<Client, ClientDto>().ReverseMap();
       CreateMap<Project, CreateProjectDto>().ReverseMap();
+      CreateMap<Project, ProjectDto>().ReverseMap();
       CreateMap<ApplicationUser, UserInfoResult>().ReverseMap();
-      CreateMap<TimesheetEntry, TimesheetEntryDto>().ReverseMap();
+      CreateMap<TimesheetEntry,TimesheetDetailDto>().ReverseMap();
+      CreateMap<TimesheetEntry,TimesheetCreateModifyDto>().ReverseMap();
+      CreateMap<TimesheetCreateModifyDto, TimesheetEntry>()
+           .ForMember(dest => dest.TimesheetDate, opt => opt.MapFrom(src => src.TimesheetDate))
+           .ForMember(dest => dest.Username, opt => opt.Ignore()).ReverseMap(); 
     }
   }
 }

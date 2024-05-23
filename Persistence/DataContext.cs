@@ -6,6 +6,7 @@ namespace Persistence
   using Domain.Enties.Leaves;
   using Domain.Enties.TimeSheets;
   using Domain.Entities;
+  using Domain.Entities.TimeSheets;
   using Microsoft.AspNetCore.Identity;
   using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
   using Microsoft.EntityFrameworkCore;

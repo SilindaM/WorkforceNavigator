@@ -3,6 +3,7 @@
   using Domain.Dtos.General;
   using Domain.Dtos.LeaveAllocation;
   using Domain.Dtos.Timesheet;
+  using Domain.Entities.TimeSheets;
   using System;
   using System.Collections.Generic;
   using System.Linq;
@@ -12,7 +13,9 @@
 
   public interface ITimesheetService
   {
-    Task<GeneralServiceResponseDto> TimesheetEntry(ClaimsPrincipal User, TimesheetEntryDto TimesheetEntry);
+    Task<GeneralServiceResponseDto> TimesheetEntry(ClaimsPrincipal User, TimesheetCreateModifyDto TimesheetEntry);
     Task<IEnumerable<LeaveAllocationDto>> GetLeaveAllocations();
+    Task<int> GetTotalTimeSpentByDate(ClaimsPrincipal User, DateTime date);
+    Task<IEnumerable<GroupedTimesheetDetailDto>> GetTimesheetEntries(ClaimsPrincipal User,DateTime date);
   }
 }
