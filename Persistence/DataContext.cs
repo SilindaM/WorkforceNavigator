@@ -6,6 +6,7 @@ namespace Persistence
   using Domain.Enties.Leaves;
   using Domain.Enties.TimeSheets;
   using Domain.Entities;
+  using Domain.Entities.TimeSheets;
   using Microsoft.AspNetCore.Identity;
   using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
   using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,7 @@ namespace Persistence
     public DbSet<LeaveRequest> LeaveRequests { get; set; }
     public DbSet<LeaveType> LeaveTypes { get; set; }
     public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
+    public DbSet<TimesheetEntry> TimesheetEntries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

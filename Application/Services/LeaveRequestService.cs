@@ -59,7 +59,6 @@
       return leaveRequests;
     }
 
-
     public async Task<GeneralServiceResponseDto> CreateLeaveRequest(ClaimsPrincipal user, CreateLeaveRequestDto createLeaveRequestDto)
     {
       // Check if the start date is before today
@@ -122,6 +121,7 @@
 
       return (GeneralServiceResponseDto)ResponseHelper.CreateResponse(true, 200, "LeaveRequestCreatedSuccessfully"); // Return the created leave request DTO
     }
+
     public async Task<GeneralServiceResponseDto> DeleteLeaveRequest(ClaimsPrincipal User, int leaveRequestId)
     {
       try
