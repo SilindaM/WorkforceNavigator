@@ -40,34 +40,43 @@
     {
       throw new NotImplementedException();
     }
-
     public async Task<IEnumerable<GroupedTimesheetDetailDto>> GetTimesheetEntries(ClaimsPrincipal User, DateTime date)
     {
+      // Assuming dataContext is properly initialized and contains the necessary data
       var timesheetEntries = (from ts in dataContext.TimesheetEntries
                               join p in dataContext.Projects
                               on ts.ProjectId equals p.Id
-                              where (ts.TimesheetDate == date) && (ts.Username == User.Identity.Name)
-                              select new TimesheetDetailDto
+                              where (ts.TimesheetDate.Date == date.Date) && (ts.Username == User.Identity.Name)
+                              select new
                               {
-                                TimesheetDate = ts.TimesheetDate,
-                                Description = ts.Description,
-                                ProjectName = p.ProjectName,
-                                TimeSpent = ts.TimeSpent,
+                                TimesheetDate = ts.TimesheetDate.Date,  // Normalize date
                                 Username = ts.Username,
+                                Detail = new TimesheetDetailDto
+                                {
+                                  Description = ts.Description,
+                                  TimeSpent = ts.TimeSpent,
+                                  ProjectName = p.ProjectName
+                                }
                               }).ToList();
 
-      if (timesheetEntries == null)
+      if (!timesheetEntries.Any())
       {
-        return null;
+        return Enumerable.Empty<GroupedTimesheetDetailDto>();
       }
-      var groupedEntries = timesheetEntries.GroupBy(x => x.Username)
-                                  .Select(g => new GroupedTimesheetDetailDto
-                                  {
-                                    Username = g.Key,
-                                    TimesheetDetails = g.ToList()
-                                  });
+
+      // Grouping by Username and normalized TimesheetDate
+      var groupedEntries = timesheetEntries.GroupBy(x => new { x.Username, x.TimesheetDate })
+                                           .Select(g => new GroupedTimesheetDetailDto
+                                           {
+                                             TimesheetDate = g.Key.TimesheetDate,
+                                             Username = g.Key.Username,
+                                             TimesheetDetails = g.Select(x => x.Detail).Where(d => d.TimeSpent > 0).ToList()  // Filter out zero time entries
+                                           });
+
       return groupedEntries;
     }
+
+
 
     public async Task<int> GetTotalTimeSpentByDate(ClaimsPrincipal user, DateTime date)
     {
