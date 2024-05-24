@@ -22,6 +22,7 @@
   using Microsoft.EntityFrameworkCore;
   using AutoMapper.QueryableExtensions;
   using System.Data.Entity;
+  using Microsoft.AspNet.Identity;
 
   public class TimesheetService : ITimesheetService
   {
@@ -42,6 +43,7 @@
     }
     public async Task<IEnumerable<GroupedTimesheetDetailDto>> GetTimesheetEntries(ClaimsPrincipal User, DateTime date)
     {
+
       // Assuming dataContext is properly initialized and contains the necessary data
       var timesheetEntries = (from ts in dataContext.TimesheetEntries
                               join p in dataContext.Projects
@@ -85,6 +87,31 @@
                              .Where(t => t.TimesheetDate.Date == date.Date && t.Username == username)
                              .Sum(t => t.TimeSpent);
       return timeSpent;
+    }
+
+    public async Task<IEnumerable<GroupedTimesheetDetailDto>> GetWeeklyTimesheetEntries(ClaimsPrincipal User)
+    {
+      // Get today's date
+      DateTime today = DateTime.Today;
+
+      // Calculate the start and end dates of the week (Monday to Friday)
+      DateTime startOfWeek = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday);
+      DateTime endOfWeek = startOfWeek.AddDays(4);
+
+      // Initialize a list to hold all timesheet entries for the week
+      List<GroupedTimesheetDetailDto> weeklyTimesheetEntries = new List<GroupedTimesheetDetailDto>();
+
+      // Iterate over each day of the week from Monday to Friday
+      for (DateTime day = startOfWeek; day <= endOfWeek; day = day.AddDays(1))
+      {
+        // Fetch timesheet entries for the current day
+        var dailyEntries = await GetTimesheetEntries(User, day);
+
+        // Directly add the daily entries to the weekly list
+        weeklyTimesheetEntries.AddRange(dailyEntries);
+      }
+
+      return weeklyTimesheetEntries;
     }
 
     public async Task<GeneralServiceResponseDto> TimesheetEntry(ClaimsPrincipal user, TimesheetCreateModifyDto timesheetEntryDto)
