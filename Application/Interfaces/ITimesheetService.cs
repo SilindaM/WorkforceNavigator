@@ -17,5 +17,6 @@
     Task<IEnumerable<LeaveAllocationDto>> GetLeaveAllocations();
     Task<int> GetTotalTimeSpentByDate(ClaimsPrincipal User, DateTime date);
     Task<IEnumerable<GroupedTimesheetDetailDto>> GetTimesheetEntries(ClaimsPrincipal User,DateTime date);
+    Task<IEnumerable<GroupedTimesheetDetailDto>> GetWeeklyTimesheetEntries(ClaimsPrincipal User);
   }
 }

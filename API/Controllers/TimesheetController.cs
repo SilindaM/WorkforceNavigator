@@ -37,7 +37,7 @@
     [Authorize]
     public async Task<ActionResult<IEnumerable<GroupedTimesheetDetailDto>>> GetTimeSheetByDate(DateTime date)
     {
-      var timesheets = await timesheetService.GetTimesheetEntries(User,date);
+      var timesheets = await timesheetService.GetTimesheetEntries(User, date);
 
       if (timesheets == null)
       {
@@ -45,5 +45,19 @@
       }
       return Ok(timesheets);
     }
-  }
+
+      [HttpGet]
+    [Route("Weekly")]  
+      [Authorize]
+      public async Task<ActionResult<IEnumerable<GroupedTimesheetDetailDto>>> GetWeeklyTimesheetEntries()
+      {
+        var timesheets = await timesheetService.GetWeeklyTimesheetEntries(User);
+
+        if (timesheets == null)
+        {
+          return NotFound(); // Return HTTP 404 Not Found if user not found
+        }
+        return Ok(timesheets);
+      }
+    }
 }
