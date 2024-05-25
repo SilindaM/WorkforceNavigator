@@ -16,6 +16,7 @@ namespace Domain.Enties
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public virtual Client Client { get; set; }
+    public virtual Client Client { get; set; }
+    public virtual Team Team { get; set; }
   }
 }

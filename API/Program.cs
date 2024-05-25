@@ -112,7 +112,22 @@ builder.Services
 
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
 var app = builder.Build();
+// Seed the database
+using (var scope = app.Services.CreateScope())
+{
+  var services = scope.ServiceProvider;
+  var context = services.GetRequiredService<DataContext>();
 
+  try
+  {
+    await ApplicationDbContextSeed.SeedAsync(context);
+  }
+  catch (Exception ex)
+  {
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error occurred seeding the DB.");
+  }
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
