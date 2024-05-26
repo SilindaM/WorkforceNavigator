@@ -57,6 +57,10 @@ export const UPDATE_JOBTITLE_URL = '/JobTitle/UpdateJobTitle';
 export const DELETE_JOBTITLE_URL = '/JobTitle/DeleteJobTitle';
 export const ALL_JOB_TITLES = '/JobTitle';
 
+//TIMESHEET
+export const MY_TIMESHEETS = '/Timesheet/Weekly';
+
+
 export const ALL_PROJECTS = '/Projects';
 export const ALL_TEAMS = '/Teams';
 export const ALL_CLIENTS = '/Clients';

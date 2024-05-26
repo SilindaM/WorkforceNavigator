@@ -1,5 +1,5 @@
 import { FaUser } from "react-icons/fa"
-import PageAccessTemplate from "../../components/pageAccess/PageAccessTemplate"
+import PageAccessTemplate from "../components/pageAccess/PageAccessTemplate"
 
 
 const UserPage = () => {
