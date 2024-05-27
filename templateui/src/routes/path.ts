@@ -34,6 +34,7 @@ export const PATH_PUBLIC = {
     teamRequest : '/dashboard/Teams',
     jobTitleRequest : '/dashboard/JobTitle',
     clientRequest : '/dashboard/Clients',
+    timesheet : '/dashboard/Timesheet',
 
 
     allocationByusername: '/dashboard/allocations/username',

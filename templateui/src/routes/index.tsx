@@ -6,9 +6,8 @@ import UnauthorizedPage from '../pages/public/UnauthorizedPage';
 import AuthGuard from '../auth/AuthGuard';
 import { adminAccessRoles, allAccessRoles, managerAccessRoles, ownerAccessRoles } from '../auth/auth.utils';
 import DashboardPage from '../pages/dashboard/DashboardPage';
-import UserPage from '../pages/dashboard/UserPage';
+import UserPage from './UserPage';
 import InboxPage from '../pages/dashboard/Messages/InboxPage';
-import MyLogsPage from '../pages/dashboard/MyLogsPage';
 import SendMessagePage from '../pages/dashboard/Messages/SendMessagePage';
 import ManagerPage from '../pages/dashboard/ManagerPage';
 import AdminPage from '../pages/dashboard/AdminPage';
@@ -32,6 +31,8 @@ import JobTitlesPage from '../pages/dashboard/GenericManagement/JobTitlesPage';
 import ClientsPage from '../pages/dashboard/GenericManagement/ClientsPage';
 import ProjectsPage from '../pages/dashboard/GenericManagement/ProjectsPage';
 import ManageDepartmentPage from '../pages/dashboard/GenericManagement/ManageDepartmentPage';
+import MyLogsPage from '../pages/dashboard/logs/MyLogsPage';
+import TimesheetPage from '../pages/dashboard/Timesheet/TimesheetPage';
 
 const GlobalRouter = () => {
     return (
@@ -72,6 +73,7 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.allocationByLeaveName} element={<AllocationByLeaveNamePage/>} />
             <Route path={PATH_DASHBOARD.myAllocation} element={<MyLeaveAllocationsPage/>} />
             <Route path={PATH_DASHBOARD.allocationByusername} element={<LeaveAllocationByUserNamePage />} />
+            <Route path={PATH_DASHBOARD.timesheet} element={<TimesheetPage />} />
           </Route>
 
           {/* Manager access roles */}
