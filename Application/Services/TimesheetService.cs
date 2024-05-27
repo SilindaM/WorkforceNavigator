@@ -37,10 +37,7 @@
       this.genericService = genericService;
     }
 
-    public Task<IEnumerable<LeaveAllocationDto>> GetLeaveAllocations()
-    {
-      throw new NotImplementedException();
-    }
+
     public async Task<IEnumerable<GroupedTimesheetDetailDto>> GetTimesheetEntries(ClaimsPrincipal User, DateTime date)
     {
 
@@ -72,6 +69,7 @@
                                            {
                                              TimesheetDate = g.Key.TimesheetDate,
                                              Username = g.Key.Username,
+                                             DayName= g.Key.TimesheetDate.DayOfWeek.ToString(),
                                              TimesheetDetails = g.Select(x => x.Detail).Where(d => d.TimeSpent > 0).ToList()  // Filter out zero time entries
                                            });
 
@@ -154,6 +152,55 @@
       {
         return ResponseHelper.CreateResponse(false, 500, ex.Message);
       }
+    }
+    public async Task<DailyProjectTotalDto> GetDailyProjectHours(ClaimsPrincipal user, DateTime date)
+    {
+      var username = user.Identity.Name;
+
+      var timesheetEntries =  dataContext.TimesheetEntries
+          .Where(t => t.TimesheetDate.Date == date.Date && t.Username == username)
+          .Select(t => new
+          {
+            t.TimeSpent,
+            t.ProjectId
+          })
+          .ToList();
+
+      var projectIds = timesheetEntries.Select(t => t.ProjectId).Distinct();
+      var projects =  dataContext.Projects
+          .Where(p => projectIds.Contains(p.Id))
+          .Select(p => new { p.Id, p.ProjectName })
+          .ToList();
+
+      var projectIdToNameMap = projects.ToDictionary(p => p.Id, p => p.ProjectName);
+
+      var totalHours = timesheetEntries.Sum(t => t.TimeSpent);
+      var projectNames = new HashSet<string>(timesheetEntries.Select(t => projectIdToNameMap[t.ProjectId]));
+
+      return new DailyProjectTotalDto
+      {
+        Date = date,
+        TotalHours = totalHours,
+        ProjectNames = projectNames,
+        DayName = date.DayOfWeek.ToString() // Set the day of the week
+      };
+    }
+
+    public async Task<IEnumerable<DailyProjectTotalDto>> GetWeeklyProjectHours(ClaimsPrincipal user, int weekOffSet)
+    {
+      DateTime today = DateTime.Today;
+      DateTime startOfWeek = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday).AddDays(7*weekOffSet);
+      DateTime endOfWeek = startOfWeek.AddDays(4);
+
+      List<DailyProjectTotalDto> weeklyProjectTotalHoursList = new List<DailyProjectTotalDto>();
+
+      for (DateTime day = startOfWeek; day <= endOfWeek; day = day.AddDays(1))
+      {
+        var dailyProjectHours = await GetDailyProjectHours(user, day);
+        weeklyProjectTotalHoursList.Add(dailyProjectHours);
+      }
+
+      return weeklyProjectTotalHoursList;
     }
   }
 }

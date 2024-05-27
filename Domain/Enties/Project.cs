@@ -3,6 +3,7 @@ namespace Domain.Enties
 {
   using Domain.Enties.TimeSheets;
   using Domain.Entities;
+  using Domain.Entities.TimeSheets;
   using System;
   using System.Collections.Generic;
   using System.Linq;
@@ -17,5 +18,7 @@ namespace Domain.Enties
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public virtual Client Client { get; set; }
+    public ICollection<TimesheetEntry> TimesheetEntries { get; set; } // Collection of timesheet entries
+
   }
 }

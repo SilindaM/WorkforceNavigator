@@ -46,18 +46,45 @@
       return Ok(timesheets);
     }
 
-      [HttpGet]
-    [Route("Weekly")]  
-      [Authorize]
-      public async Task<ActionResult<IEnumerable<GroupedTimesheetDetailDto>>> GetWeeklyTimesheetEntries()
-      {
-        var timesheets = await timesheetService.GetWeeklyTimesheetEntries(User);
+    [HttpGet]
+    [Route("Weekly")]
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<GroupedTimesheetDetailDto>>> GetWeeklyTimesheetEntries()
+    {
+      var timesheets = await timesheetService.GetWeeklyTimesheetEntries(User);
 
-        if (timesheets == null)
-        {
-          return NotFound(); // Return HTTP 404 Not Found if user not found
-        }
-        return Ok(timesheets);
+      if (timesheets == null)
+      {
+        return NotFound(); // Return HTTP 404 Not Found if user not found
       }
+      return Ok(timesheets);
     }
+    [Route("DailyHour")]
+    [HttpGet]
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<GroupedTimesheetDetailDto>>> GetDailyProjectHours(DateTime date)
+    {
+      var timesheets = await timesheetService.GetDailyProjectHours(User, date);
+
+      if (timesheets == null)
+      {
+        return NotFound(); // Return HTTP 404 Not Found if user not found
+      }
+      return Ok(timesheets);
+    }
+
+    [HttpGet]
+    [Route("WeeklyHours")]
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<GroupedTimesheetDetailDto>>> GetWeeklyProjectHours(int weekOffSet=0)
+    {
+      var timesheets = await timesheetService.GetWeeklyProjectHours(User,weekOffSet);
+
+      if (timesheets == null)
+      {
+        return NotFound(); // Return HTTP 404 Not Found if user not found
+      }
+      return Ok(timesheets);
+    }
+  }
 }
