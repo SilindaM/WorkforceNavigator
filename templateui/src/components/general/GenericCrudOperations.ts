@@ -68,11 +68,9 @@ export const GenericCrudOperations = {
   async getDetails(resourceUrl: string, id: any, setEntity: (data: any) => void, setLoading: (loading: boolean) => void) {
     try {
       setLoading(true);
-      console.log("Test Generic ",id);
-      console.log("Test Generic ",resourceUrl);
+      console.log("Test Timesheet",id + " Resouence "+resourceUrl);
       const response = await axiosInstance.get(`${resourceUrl}/${id}`);
-      console.log("Test Generic ",id);
-      console.log("After Server");
+      console.log("Test Generic ",id, "after");
       const { data } = response;
       setEntity(data);
       setLoading(false);

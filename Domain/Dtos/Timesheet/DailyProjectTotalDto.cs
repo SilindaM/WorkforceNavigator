@@ -12,5 +12,4 @@
     public string DayName { get; set; }
     public HashSet<string> ProjectNames { get; set; }
   }
-
 }

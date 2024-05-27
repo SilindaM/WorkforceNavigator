@@ -201,7 +201,7 @@ export default function NavSideBar() {
               startIcon={<CalendarMonthIcon />}
               onClick={() => {
                 window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                navigate(PATH_DASHBOARD.timesheet);
+                navigate(PATH_DASHBOARD.manageTimesheets);
               }}
             >
             Timesheet Managament
