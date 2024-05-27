@@ -14,6 +14,7 @@
   }
   public class GroupedTimesheetDetailDto
   {
+    public string DayName { get; set; }
     public DateTime TimesheetDate { get; set; }
     public string Username { get; set; }
     public List<TimesheetDetailDto> TimesheetDetails { get; set; }

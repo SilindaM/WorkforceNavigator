@@ -37,9 +37,9 @@ namespace Persistence
       base.OnModelCreating(builder);
 
       builder.Entity<JobTitle>()
-        .HasOne(x=>x.Department)
-        .WithMany(c=> c.JobTitles)
-        .HasForeignKey(x=>x.DepartmentId)
+        .HasOne(x => x.Department)
+        .WithMany(c => c.JobTitles)
+        .HasForeignKey(x => x.DepartmentId)
         .OnDelete(DeleteBehavior.Restrict);
 
 
@@ -74,13 +74,19 @@ namespace Persistence
       });
 
 
-            //entity.HasOne(d => d.Client)
-            //    .WithMany(p => p.ProjectDto)
-            //    .HasForeignKey(d => d.ClientId)
-            //    .HasConstraintName("FK_ProjectDto_Client");
+      builder.Entity<TimesheetEntry>()
+          .HasOne(te => te.Project)
+          .WithMany(p => p.TimesheetEntries)
+          .HasForeignKey(te => te.ProjectId);
+
+
+      //entity.HasOne(d => d.Client)
+      //    .WithMany(p => p.ProjectDto)
+      //    .HasForeignKey(d => d.ClientId)
+      //    .HasConstraintName("FK_ProjectDto_Client");
 
 
 
-        }
     }
+  }
 }
