@@ -13,12 +13,12 @@ import { GenericCrudOperations } from "../../../components/general/GenericCrudOp
 import { DELETE_DEPARTMENT_URL, MY_TIMESHEETS } from "../../../utils/globalConfig";
 
 interface IProps {
-  selectTimesheet: (timesheetId: number | null) => void;
+  selectedTimesheetDate: (timesheetDate: Date | null) => void;
 }
 
-const TimesheetPage = ({ selectTimesheet }: IProps) => {
-  const [timesheets, setTimesheet] = useState<TimesheetDetail[]>([]);
-  const [selectedTimesheet, setSelectedTimesheet] = useState<TimesheetDetail>();
+const TimesheetPage = ({ selectedTimesheetDate }: IProps) => {
+  const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
+  const [selectedTimesheet, setSelectedTimesheet] = useState<TimesheetDto | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -31,44 +31,43 @@ const TimesheetPage = ({ selectTimesheet }: IProps) => {
   };
 
   const getWeeklyTimesheet = async (id: number) => {
-    await GenericCrudOperations.getDetails(
-      MY_TIMESHEETS,
-      id,
-      setTimesheet,
-      setLoading
-    );
+    setLoading(true);
+    await GenericCrudOperations.getDetailed(MY_TIMESHEETS, id, setTimesheets, setLoading);
+    setLoading(false);
   };
 
-  const deleteDepartment = async (id: number) => {
+  const deleteTimesheet = async (id: number) => {
+    setLoading(true);
     await GenericCrudOperations.remove(DELETE_DEPARTMENT_URL, id, setLoading);
+    setLoading(false);
   };
 
-  const handleEdit = (updatedData: TimesheetDetail) => {
-    console.log("Editing:", updatedData); // Check if this logs the correct data
+  const handleEdit = (updatedData: TimesheetDto) => {
     setSelectedTimesheet(updatedData);
     handleOpenModal();
   };
 
-  const handleRowClick = (timesheetId: number | null) => {
-    selectTimesheet(timesheetId);
+  const handleRowClick = (timesheetDate: Date | null) => {
+    console.log("Row Clicked - Timesheet Date:", timesheetDate); // Debugging line
+    selectedTimesheetDate(timesheetDate);
   };
 
-  const handleDelete = (id: number) => {
-    console.log("Get Id", id);
-    deleteDepartment(id);
-    console.log("Received ", id);
+  const handleDelete = async (id: number) => {
+    await deleteTimesheet(id);
+    getWeeklyTimesheet(0); // Refresh the timesheets after deletion
   };
 
   const columns = [
-    { key: "Day", label: "Day" },
-    { key: "Date", label: "Date" },
-    { key: "Total Hours", label: "Total Hours" },
-    { key: "Project Name", label: "Projects Worked On" },
+    { key: "dayName", label: "Day" },
+    { key: "date", label: "Date" },
+    { key: "totalHours", label: "Total Hours" },
+    { key: "projectNames",label:"Project Names"}
   ];
 
   useEffect(() => {
     getWeeklyTimesheet(0);
-  }, []); // Empty dependency array to run only once on mount
+    setTimesheets
+  }, []);
 
   return (
     <Container fluid className="pageTemplate3">
@@ -82,7 +81,7 @@ const TimesheetPage = ({ selectTimesheet }: IProps) => {
                 startIcon={<AddIcon />}
                 onClick={handleOpenModal}
               >
-                New Leave Request
+                New Timesheet Entry
               </Button>
             </Header>
             <TableField
@@ -91,7 +90,6 @@ const TimesheetPage = ({ selectTimesheet }: IProps) => {
               onEdit={handleEdit}
               onDelete={handleDelete}
               onRowClick={handleRowClick}
-               // Pass loading state to TableField if it supports it
             />
           </Segment>
         </GridColumn>

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Segment, Container, Header, GridColumn } from "semantic-ui-react";
 import TimesheetPage from "./TimesheetPage";
 import TimesheetDetails from "./TimesheetDetails";
 
 const ManageTimesheetPage = () => {
-  const [selectedTimesheetId, setSelectedTimesheetId] = useState<number | null>(null);
+  const [selectedTimesheetDate, setSelectedTimesheetDate] = useState<Date | null>(null);
 
-  const handleDepartmentSelect = (timesheetId: number | null) => {
-    setSelectedTimesheetId(timesheetId);
+  const handleTimesheetSelect = (timesheetDate: Date | null) => {
+    setSelectedTimesheetDate(timesheetDate);
   };
 
   return (
@@ -16,19 +16,18 @@ const ManageTimesheetPage = () => {
         <GridColumn width={10}>
           <Segment raised>
             <Header as="h2" textAlign="center">
-              WEEKLY TIMESHEET
+              {/*WEEKLY TIMESHEET*/}
             </Header>
-            <TimesheetPage selectTimesheet={handleDepartmentSelect}/>
+            <TimesheetPage selectedTimesheetDate={handleTimesheetSelect} />
           </Segment>
         </GridColumn>
 
         <GridColumn width={6}>
           <Segment raised>
             <Header as="h2" textAlign="center">
-              TIMESHEET DETAILS
+           {/*   TIMESHEET DETAILS*/}
             </Header>
-            {/* Pass selectedDepartmentId directly */}
-            {selectedTimesheetId && <TimesheetDetails selectedDepartmentId={selectedTimesheetId}/>}
+            {selectedTimesheetDate && <TimesheetDetails selectedTimesheet={selectedTimesheetDate} />}
           </Segment>
         </GridColumn>
       </Grid>

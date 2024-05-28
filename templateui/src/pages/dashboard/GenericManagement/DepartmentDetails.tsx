@@ -3,13 +3,12 @@ import TableField from '../../../components/general/TableField';
 import { GenericCrudOperations } from '../../../components/general/GenericCrudOperations';
 
 interface IProps {
-  selectedTimesheetId: number | null; // Make selectedTimesheetId nullable
+  selectedDepartment: number | null; // Make selectedTimesheetId nullable
 }
 
-const TimesheetDetails = ({ selectedTimesheetId }: IProps) => {
+const DepartmentDetails = ({ selectedDepartment }: IProps) => {
   const [departmentUserJobTitleTeam, setTimesheetUserJobTitleTeam] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
 
   const columns = [
     { key: "firstName", label: "First Name" },
@@ -21,7 +20,7 @@ const TimesheetDetails = ({ selectedTimesheetId }: IProps) => {
 
   useEffect(() => {
     
-  }, [selectedTimesheetId]); // useEffect dependency
+  }, [selectedDepartment ]); // useEffect dependency
 
   return (
     <TableField
@@ -32,4 +31,4 @@ const TimesheetDetails = ({ selectedTimesheetId }: IProps) => {
   );
 };
 
-export default TimesheetDetails;
+export default DepartmentDetails;

@@ -10,7 +10,7 @@ interface TableFieldProps<T> {
   onEdit?: (data: any) => void;
   onDelete?: (id: number) => void;
   options?: { value: any; label: string }[];
-  onRowClick?: (id: number | null) => void; // Added this line
+  onRowClick?: (value: any | null) => void; // Added this line
   showActions?:boolean;
 }
 

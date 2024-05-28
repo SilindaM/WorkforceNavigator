@@ -76,13 +76,13 @@
 
     [HttpGet]
     [Authorize]
-    public async Task<ActionResult<IEnumerable<DailyProjectTotalDto>>> GetWeeklyProjectHours(int weekOffSet=0)
+    public async Task<ActionResult<IEnumerable<DailyProjectTotalDto>>> GetWeeklyProjectHours(int weekOffSet)
     {
       var timesheets = await timesheetService.GetWeeklyProjectHours(User,weekOffSet);
 
-      if (timesheets == null)
+      if (timesheets == null || !timesheets.Any())
       {
-        return NotFound(); // Return HTTP 404 Not Found if user not found
+        return NoContent(); // Return HTTP 404 Not Found if user not found
       }
       return Ok(timesheets);
     }
