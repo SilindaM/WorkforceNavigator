@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import TableField from '../../../components/general/TableField';
 import { GenericCrudOperations } from '../../../components/general/GenericCrudOperations';
-import { DepartmentUserJobTitleTeam } from '../../../types/userDetails.type';
-import { DEPARTMENT_JOBTITLE_TEAM } from '../../../utils/globalConfig';
 
 interface IProps {
-  selectedDepartmentId: number | null; // Make selectedDepartmentId nullable
+  selectedDepartment: number | null; // Make selectedTimesheetId nullable
 }
 
-const DepartmentDetails = ({ selectedDepartmentId }: IProps) => {
-  const [departmentUserJobTitleTeam, setDepartmentUserJobTitleTeam] = useState<DepartmentUserJobTitleTeam[]>([]);
+const DepartmentDetails = ({ selectedDepartment }: IProps) => {
+  const [departmentUserJobTitleTeam, setTimesheetUserJobTitleTeam] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const getUserDetailsJobTitle = async (departmentId: number) => {
-    console.log("Testing ", departmentId);
-    await GenericCrudOperations.getDetails(DEPARTMENT_JOBTITLE_TEAM, departmentId, setDepartmentUserJobTitleTeam, setLoading);
-  };
 
   const columns = [
     { key: "firstName", label: "First Name" },
@@ -26,10 +19,8 @@ const DepartmentDetails = ({ selectedDepartmentId }: IProps) => {
   ];
 
   useEffect(() => {
-    if (selectedDepartmentId !== null) { // Check if selectedDepartmentId is not null
-      getUserDetailsJobTitle(selectedDepartmentId);
-    }
-  }, [selectedDepartmentId]); // useEffect dependency
+    
+  }, [selectedDepartment ]); // useEffect dependency
 
   return (
     <TableField

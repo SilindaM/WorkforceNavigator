@@ -7,10 +7,10 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 interface TableFieldProps<T> {
   rows: T[];
   columns: { key: string; label: string }[];
-  onEdit: (data: any) => void;
-  onDelete: (id: number) => void;
+  onEdit?: (data: any) => void;
+  onDelete?: (id: number) => void;
   options?: { value: any; label: string }[];
-  onRowClick?: (id: number | null) => void; // Added this line
+  onRowClick?: (value: any | null) => void; // Added this line
   showActions?:boolean;
 }
 
@@ -65,7 +65,7 @@ const TableField = <T,>({
                     sx={{ height: '30px', width: '50%' }} // Adjust the height as needed
                     style={{ fontSize: 'medium' }}
                     startIcon={<EditIcon />}
-                    onClick={() => onEdit(row)} // Pass the row data to the edit function
+                    onClick={() => onEdit && onEdit(row)} // Pass the row data to the edit function
                   >
                     Edit
                   </Button>
@@ -74,7 +74,7 @@ const TableField = <T,>({
                     sx={{ height: '30px' }} // Adjust the height as needed
                     style={{ fontSize: 'medium' }}
                     startIcon={<DeleteOutlineIcon />}
-                    onClick={() => onDelete(row.id)} // Implement delete functionality if needed
+                    onClick={() => onDelete && onDelete(row.id)} // Implement delete functionality if needed
                   >
                     Delete
                   </Button>

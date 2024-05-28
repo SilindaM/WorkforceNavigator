@@ -28,7 +28,7 @@ const ManageDepartmentPage = () => {
                 DEPARTMENT DETAILS
             </Header>
             {/* Pass selectedDepartmentId directly */}
-            {selectedDepartmentId &&< DepartmentDetails selectedDepartmentId={selectedDepartmentId}/>}
+            {selectedDepartmentId &&< DepartmentDetails selectedDepartment={selectedDepartmentId}/>}
           </Segment>
         </GridColumn>
       </Grid>

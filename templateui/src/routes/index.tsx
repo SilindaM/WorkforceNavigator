@@ -32,7 +32,7 @@ import ClientsPage from '../pages/dashboard/GenericManagement/ClientsPage';
 import ProjectsPage from '../pages/dashboard/GenericManagement/ProjectsPage';
 import ManageDepartmentPage from '../pages/dashboard/GenericManagement/ManageDepartmentPage';
 import MyLogsPage from '../pages/dashboard/logs/MyLogsPage';
-import TimesheetPage from '../pages/dashboard/Timesheet/TimesheetPage';
+import ManageTimesheetPage from '../pages/dashboard/Timesheet/ManageTimesheetPage';
 
 const GlobalRouter = () => {
     return (
@@ -73,7 +73,7 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.allocationByLeaveName} element={<AllocationByLeaveNamePage/>} />
             <Route path={PATH_DASHBOARD.myAllocation} element={<MyLeaveAllocationsPage/>} />
             <Route path={PATH_DASHBOARD.allocationByusername} element={<LeaveAllocationByUserNamePage />} />
-            <Route path={PATH_DASHBOARD.timesheet} element={<TimesheetPage />} />
+            <Route path={PATH_DASHBOARD.manageTimesheets} element={<ManageTimesheetPage />} />
           </Route>
 
           {/* Manager access roles */}

@@ -34,6 +34,7 @@
     }
 
     [HttpGet]
+    [Route("DAte")]
     [Authorize]
     public async Task<ActionResult<IEnumerable<GroupedTimesheetDetailDto>>> GetTimeSheetByDate(DateTime date)
     {
@@ -62,7 +63,7 @@
     [Route("DailyHour")]
     [HttpGet]
     [Authorize]
-    public async Task<ActionResult<IEnumerable<GroupedTimesheetDetailDto>>> GetDailyProjectHours(DateTime date)
+    public async Task<ActionResult<IEnumerable<DailyProjectTotalDto>>> GetDailyProjectHours(DateTime date)
     {
       var timesheets = await timesheetService.GetDailyProjectHours(User, date);
 
@@ -74,15 +75,14 @@
     }
 
     [HttpGet]
-    [Route("WeeklyHours")]
     [Authorize]
-    public async Task<ActionResult<IEnumerable<GroupedTimesheetDetailDto>>> GetWeeklyProjectHours(int weekOffSet=0)
+    public async Task<ActionResult<IEnumerable<DailyProjectTotalDto>>> GetWeeklyProjectHours(int weekOffSet)
     {
       var timesheets = await timesheetService.GetWeeklyProjectHours(User,weekOffSet);
 
-      if (timesheets == null)
+      if (timesheets == null || !timesheets.Any())
       {
-        return NotFound(); // Return HTTP 404 Not Found if user not found
+        return NoContent(); // Return HTTP 404 Not Found if user not found
       }
       return Ok(timesheets);
     }
