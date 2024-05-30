@@ -13,7 +13,7 @@ import { GenericCrudOperations } from "../../../components/general/GenericCrudOp
 import { DELETE_DEPARTMENT_URL, MY_TIMESHEETS } from "../../../utils/globalConfig";
 
 interface IProps {
-  selectedTimesheetDate: (timesheetDate: Date | null) => void;
+  selectedTimesheetDate: (timesheetDate: Date) => void;
 }
 
 const TimesheetPage = ({ selectedTimesheetDate }: IProps) => {
@@ -32,7 +32,7 @@ const TimesheetPage = ({ selectedTimesheetDate }: IProps) => {
 
   const getWeeklyTimesheet = async (id: number) => {
     setLoading(true);
-    await GenericCrudOperations.getDetailed(MY_TIMESHEETS, id, setTimesheets, setLoading);
+    await GenericCrudOperations.getDetailed(MY_TIMESHEETS, {id}, setTimesheets, setLoading);
     setLoading(false);
   };
 
@@ -47,10 +47,11 @@ const TimesheetPage = ({ selectedTimesheetDate }: IProps) => {
     handleOpenModal();
   };
 
-  const handleRowClick = (timesheetDate: Date | null) => {
-    console.log("Row Clicked - Timesheet Date:", timesheetDate); // Debugging line
-    selectedTimesheetDate(timesheetDate);
+  const handleRowClick = (timesheet: TimesheetDto) => {
+    selectedTimesheetDate(timesheet.date);
+    console.log("F",timesheet.date)
   };
+  
 
   const handleDelete = async (id: number) => {
     await deleteTimesheet(id);
@@ -66,8 +67,8 @@ const TimesheetPage = ({ selectedTimesheetDate }: IProps) => {
 
   useEffect(() => {
     getWeeklyTimesheet(0);
-    setTimesheets
-  }, []);
+    //setTimesheets
+  }, [undefined]);
 
   return (
     <Container fluid className="pageTemplate3">

@@ -3,6 +3,7 @@ import { Table, ButtonGroup } from "react-bootstrap";
 import { Button, TableHead, TablePagination } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { format } from 'date-fns';
 
 interface TableFieldProps<T> {
   rows: T[];
@@ -10,7 +11,7 @@ interface TableFieldProps<T> {
   onEdit?: (data: any) => void;
   onDelete?: (id: number) => void;
   options?: { value: any; label: string }[];
-  onRowClick?: (value: any | null) => void; // Added this line
+  onRowClick?: (value: any ) => void; // Added this line
   showActions?:boolean;
 }
 
@@ -38,6 +39,15 @@ const TableField = <T,>({
 
   const slicedRows = rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
+  const formatDate = (date: Date) => {
+    try {
+      return format(date, 'yyyy-MM-dd');
+    } catch (error) {
+      console.error('Invalid date format', date);
+      return date.toString();
+    }
+  };
+
   return (
     <div className="px-4 my-2 w-full">
       <Table striped bordered hover>
@@ -52,10 +62,14 @@ const TableField = <T,>({
         </thead>
         <tbody>
           {slicedRows.map((row: any, index) => (
-            <tr key={index} onClick={() => onRowClick && onRowClick(row.id)}> {/* Add onClick handler */}
+            <tr key={index} onClick={() => onRowClick && onRowClick(row)}> {/* Add onClick handler */}
               {columns.map((column) => (
-                <td key={column.key}>{row[column.key]}</td>
-              ))}
+  <td key={column.key}>
+    {console.log(column.key)} {/* Log column key for debugging */}
+        {column.key === 'date' ? formatDate((row as any)[column.key]) : (row as any)[column.key]}
+  </td>
+))}
+
               <td>
                 
               {showActions &&(

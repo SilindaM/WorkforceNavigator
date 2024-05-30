@@ -4,9 +4,9 @@ import TimesheetPage from "./TimesheetPage";
 import TimesheetDetails from "./TimesheetDetails";
 
 const ManageTimesheetPage = () => {
-  const [selectedTimesheetDate, setSelectedTimesheetDate] = useState<Date | null>(null);
+  const [selectedTimesheetDate, setSelectedTimesheetDate] = useState<Date>();
 
-  const handleTimesheetSelect = (timesheetDate: Date | null) => {
+  const handleTimesheetSelect = (timesheetDate: Date ) => {
     setSelectedTimesheetDate(timesheetDate);
   };
 

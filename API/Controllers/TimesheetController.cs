@@ -8,6 +8,7 @@
   using Microsoft.AspNetCore.Authorization;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
+  using System;
 
   [Route("api/[controller]")]
   [ApiController]
@@ -38,7 +39,9 @@
     [Authorize]
     public async Task<ActionResult<IEnumerable<GroupedTimesheetDetailDto>>> GetTimeSheetByDate(DateTime date)
     {
-      var timesheets = await timesheetService.GetTimesheetEntries(User, date);
+        
+      DateTime dates = date.Date;
+      var timesheets = await timesheetService.GetTimesheetEntries(User, dates);
 
       if (timesheets == null)
       {

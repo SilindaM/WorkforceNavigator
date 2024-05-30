@@ -1,9 +1,7 @@
 type WeekDay = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday";
-function toMidnight(date: Date): Date {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-}
+
 interface TimesheetDto{
-    date: string;
+    date: Date;
     dayName: WeekDay;
     totalhours: number;
     projectNames: Set<string>;
