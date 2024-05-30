@@ -47,22 +47,11 @@ const TimesheetPage = ({ selectedTimesheetDate }: IProps) => {
     handleOpenModal();
   };
 
-  const handleRowClick = (timesheet: Date) => {
-    const dateObject = new Date(timesheet);
-    selectedTimesheetDate(dateObject);
-    console.log("F",timesheet)
+  const handleRowClick = (timesheet: TimesheetDto) => {
+    selectedTimesheetDate(timesheet.date);
+    console.log("F",timesheet.date)
   };
   
- /* const handleRowClicdk = (timesheet: any) => {
-    const dateObject = new Date(timesheet.date);
-    const year = dateObject.getFullYear();
-    const month = String(dateObject.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObject.getDate()).padStart(2, '0');
-    const dateWithoutTime = `${year}-${month}-${day}`;
-    selectedTimesheetDate(dateWithoutTime);
-    console.log("Date without time:", dateWithoutTime);
-  };
-  */
 
   const handleDelete = async (id: number) => {
     await deleteTimesheet(id);

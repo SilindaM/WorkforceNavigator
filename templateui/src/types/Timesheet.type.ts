@@ -1,7 +1,7 @@
 type WeekDay = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday";
 
 interface TimesheetDto{
-    date: String;
+    date: Date;
     dayName: WeekDay;
     totalhours: number;
     projectNames: Set<string>;

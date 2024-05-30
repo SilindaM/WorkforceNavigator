@@ -39,7 +39,7 @@
     [Authorize]
     public async Task<ActionResult<IEnumerable<GroupedTimesheetDetailDto>>> GetTimeSheetByDate(DateTime date)
     {
-
+        
       DateTime dates = date.Date;
       var timesheets = await timesheetService.GetTimesheetEntries(User, dates);
 

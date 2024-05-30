@@ -15,7 +15,7 @@ const TimesheetDetails = ({ selectedTimesheet }: IProps) => {
   
   const getDayTimesheet = async (date: Date) => {
     setLoading(true);
-    await GenericCrudOperations.getDetailed(TIMESHEET_DAY_DETAILS, date, setTimesheetDetail, setLoading);
+    await GenericCrudOperations.getDetailed(TIMESHEET_DAY_DETAILS, {date}, setTimesheetDetail, setLoading);
     setLoading(false);
   };
 
@@ -26,8 +26,9 @@ const TimesheetDetails = ({ selectedTimesheet }: IProps) => {
   ];
 
   useEffect(() => {
-    getDayTimesheet(selectedTimesheet)
-  }, []); // useEffect dependency
+    getDayTimesheet(selectedTimesheet),
+    setTimesheetDetail
+  }, []); 
 
   return (
     <TableField
