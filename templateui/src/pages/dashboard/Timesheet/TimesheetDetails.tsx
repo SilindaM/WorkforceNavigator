@@ -5,7 +5,7 @@ import { DepartmentUserJobTitleTeam } from '../../../types/userDetails.type';
 import { DEPARTMENT_JOBTITLE_TEAM, TIMESHEET_DAY_DETAILS } from '../../../utils/globalConfig';
 
 interface IProps {
-  selectedTimesheet: Date | null; // Make selectedDepartmentId nullable
+  selectedTimesheet: Date ;
 }
 
 const TimesheetDetails = ({ selectedTimesheet }: IProps) => {
@@ -13,9 +13,9 @@ const TimesheetDetails = ({ selectedTimesheet }: IProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   
-  const getDayTimesheet = async (Date: string) => {
+  const getDayTimesheet = async (date: Date) => {
     setLoading(true);
-    await GenericCrudOperations.getDetailed(TIMESHEET_DAY_DETAILS, Date, setTimesheetDetail, setLoading);
+    await GenericCrudOperations.getDetailed(TIMESHEET_DAY_DETAILS, date, setTimesheetDetail, setLoading);
     setLoading(false);
   };
 
@@ -26,8 +26,8 @@ const TimesheetDetails = ({ selectedTimesheet }: IProps) => {
   ];
 
   useEffect(() => {
-    
-  }, [selectedTimesheet]); // useEffect dependency
+    getDayTimesheet(selectedTimesheet)
+  }, []); // useEffect dependency
 
   return (
     <TableField

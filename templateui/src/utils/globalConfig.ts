@@ -59,7 +59,7 @@ export const ALL_JOB_TITLES = '/JobTitle';
 
 //TIMESHEET
 export const MY_TIMESHEETS = '/Timesheet';
-export const TIMESHEET_DAY_DETAILS = '/Timesheet';
+export const TIMESHEET_DAY_DETAILS = '/Timesheet/DAte';
 
 
 export const ALL_PROJECTS = '/Projects';
