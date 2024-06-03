@@ -1,13 +1,13 @@
 type WeekDay = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday";
 
-interface TimesheetDto{
+export interface TimesheetDto{
     date: Date;
     dayName: WeekDay;
     totalhours: number;
     projectNames: Set<string>;
 }
 
-interface TimesheetDetailsDto{
+export interface TimesheetDetailsDto{
   description:string;
   timeSpent:number;
   projectName:string;

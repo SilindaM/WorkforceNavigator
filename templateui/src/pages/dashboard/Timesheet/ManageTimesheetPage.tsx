@@ -4,13 +4,12 @@ import TimesheetPage from "./TimesheetPage";
 import TimesheetDetails from "./TimesheetDetails";
 
 const ManageTimesheetPage = () => {
-  const [selectedTimesheetDate, setSelectedTimesheetDate] = useState<Date>();
+  const [selectedTimesheetDate, setSelectedTimesheetDate] = useState<Date | null>(null);
 
-  const handleTimesheetSelect = (timesheetDate: Date ) => {
+  const handleTimesheetSelect = (timesheetDate: Date) => {
+    console.log("Selected Timesheet Date in ManageTimesheetPage:", timesheetDate); // Add this line
     setSelectedTimesheetDate(timesheetDate);
   };
-
-  
 
   return (
     <Container fluid className="pageTemplate3">
@@ -18,7 +17,7 @@ const ManageTimesheetPage = () => {
         <GridColumn width={10}>
           <Segment raised>
             <Header as="h2" textAlign="center">
-              {/*WEEKLY TIMESHEET*/}
+              {/* WEEKLY TIMESHEET */}
             </Header>
             <TimesheetPage selectedTimesheetDate={handleTimesheetSelect} />
           </Segment>
@@ -27,7 +26,7 @@ const ManageTimesheetPage = () => {
         <GridColumn width={6}>
           <Segment raised>
             <Header as="h2" textAlign="center">
-           {/*   TIMESHEET DETAILS*/}
+              {/* TIMESHEET DETAILS */}
             </Header>
             {selectedTimesheetDate && <TimesheetDetails selectedTimesheet={selectedTimesheetDate} />}
           </Segment>

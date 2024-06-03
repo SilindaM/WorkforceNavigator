@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import TableField from '../../../components/general/TableField';
 import { GenericCrudOperations } from '../../../components/general/GenericCrudOperations';
 import { DEPARTMENT_JOBTITLE_TEAM } from '../../../utils/globalConfig';
+import { IDepartmentTeamJobTitle } from '../../../types/Department.type';
 
 interface IProps {
   selectedDepartment: number;
 }
 
 const DepartmentDetails = ({ selectedDepartment }: IProps) => {
-  const [departmentUserJobTitleTeam, setDepartmentUserJobTitleTeam] = useState([]);
+  const [departmentUserJobTitleTeam, setDepartmentUserJobTitleTeam] = useState<IDepartmentTeamJobTitle[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getDepartmentDetails = async (id: number) => {
@@ -29,8 +30,8 @@ const DepartmentDetails = ({ selectedDepartment }: IProps) => {
 
   return (
     <TableField
+    rows={departmentUserJobTitleTeam}
     columns={columns}
-      rows={departmentUserJobTitleTeam}
       showActions={false}
     />
   );
