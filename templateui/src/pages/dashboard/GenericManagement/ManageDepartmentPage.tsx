@@ -16,19 +16,17 @@ const ManageDepartmentPage = () => {
         <GridColumn width={8}>
           <Segment raised>
             <Header as="h2" textAlign="center">
-               DEPARTMENTS
+              DEPARTMENTS
             </Header>
-            <DepartmentsPage selectedDepartmentId={handleDepartmentSelect}/>
+            <DepartmentsPage selectedDepartmentId={handleDepartmentSelect} />
           </Segment>
         </GridColumn>
-
         <GridColumn width={8}>
           <Segment raised>
             <Header as="h2" textAlign="center">
-                DEPARTMENT DETAILS
+              DEPARTMENT DETAILS
             </Header>
-            {/* Pass selectedDepartmentId directly */}
-            {selectedDepartmentId &&< DepartmentDetails selectedDepartment={selectedDepartmentId}/>}
+            {selectedDepartmentId && <DepartmentDetails selectedDepartment={selectedDepartmentId} />}
           </Segment>
         </GridColumn>
       </Grid>

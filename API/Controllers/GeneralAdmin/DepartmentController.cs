@@ -8,6 +8,7 @@ namespace API.Controllers.GeneralAdmin
   using AutoMapper;
   using Domain.Dtos.Account;
   using Domain.Dtos.Departments;
+  using Domain.Dtos.GeneralAdmin;
   using Domain.Enties;
   using Domain.Enties.Leaves;
   using FluentResults;
@@ -55,17 +56,15 @@ namespace API.Controllers.GeneralAdmin
 
     [HttpGet]
     [Route("DepartmentUserDetailJobTitle/{id}")]
-    public async Task<IActionResult> GetDepartmentUserDetailtJobTile(int id)
+    public async Task<ActionResult<List<UserDetailJobTitle>>> GetDepartmentUserDetailJobTitle(int id)
     {
       var result = await departmentService.GetUserJobTitleTeamsListAsync(id);
-      if (result is null)
+      if (result == null || !result.Any())
       {
-        return NotFound("leaveRequestId not found");
+        return NotFound($"No details found for departmentId: {id}");
       }
-      else
-      {
-        return Ok(result);
-      }
+
+      return Ok(result);
     }
 
     [HttpPost("CreateDepartment")]

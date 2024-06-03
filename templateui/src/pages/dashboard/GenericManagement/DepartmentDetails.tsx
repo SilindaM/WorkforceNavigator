@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import TableField from '../../../components/general/TableField';
 import { GenericCrudOperations } from '../../../components/general/GenericCrudOperations';
+import { DEPARTMENT_JOBTITLE_TEAM } from '../../../utils/globalConfig';
 
 interface IProps {
-  selectedDepartment: number | null; // Make selectedTimesheetId nullable
+  selectedDepartment: number;
 }
 
 const DepartmentDetails = ({ selectedDepartment }: IProps) => {
-  const [departmentUserJobTitleTeam, setTimesheetUserJobTitleTeam] = useState<[]>([]);
+  const [departmentUserJobTitleTeam, setDepartmentUserJobTitleTeam] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const getDepartmentDetails = async (id: number) => {
+    await GenericCrudOperations.getDetails(DEPARTMENT_JOBTITLE_TEAM, id, setDepartmentUserJobTitleTeam, setLoading);
+  };
 
   const columns = [
     { key: "firstName", label: "First Name" },
@@ -19,13 +24,13 @@ const DepartmentDetails = ({ selectedDepartment }: IProps) => {
   ];
 
   useEffect(() => {
-    
-  }, [selectedDepartment ]); // useEffect dependency
+      getDepartmentDetails(selectedDepartment);
+  }, [selectedDepartment]);
 
   return (
     <TableField
+    columns={columns}
       rows={departmentUserJobTitleTeam}
-      columns={columns}
       showActions={false}
     />
   );

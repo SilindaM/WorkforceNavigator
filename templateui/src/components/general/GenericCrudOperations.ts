@@ -68,11 +68,8 @@ export const GenericCrudOperations = {
   async getDetails(resourceUrl: string, id: any, setEntity: (data: any) => void, setLoading: (loading: boolean) => void) {
     try {
       setLoading(true);
-      console.log("Endpoint URL:", `${resourceUrl}/${id}`); // Add this line to check the formed URL
       const response = await axiosInstance.get(`${resourceUrl}/${id}`);
-      console.log("Response:", response); // Add this line to log the response object
       const { data } = response;
-      console.log("Data:", data); // Add this line to log the data extracted from the response
       setEntity(data);
       setLoading(false);
     } catch (error) {
