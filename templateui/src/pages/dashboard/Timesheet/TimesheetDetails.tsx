@@ -1,41 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import TableField from '../../../components/general/TableField';
 import { GenericCrudOperations } from '../../../components/general/GenericCrudOperations';
-import { DepartmentUserJobTitleTeam } from '../../../types/userDetails.type';
-import { DEPARTMENT_JOBTITLE_TEAM, TIMESHEET_DAY_DETAILS } from '../../../utils/globalConfig';
+import { TIMESHEET_DAY_DETAILS } from '../../../utils/globalConfig';
+import { TimesheetDetailsDto } from '../../../types/Timesheet.type';
 
 interface IProps {
   selectedTimesheet: Date ;
 }
 
 const TimesheetDetails = ({ selectedTimesheet }: IProps) => {
-  const [timesheetDetail, setTimesheetDetail] = useState<[]>([]);
+  const [timesheetDetail, setTimesheetDetail] = useState<TimesheetDetailsDto[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  
   const getDayTimesheet = async (date: Date) => {
     setLoading(true);
-    await GenericCrudOperations.getDetailed(TIMESHEET_DAY_DETAILS, {date}, setTimesheetDetail, setLoading);
+    console.log("Fetching timesheet details for date:", date);
+    try {
+      const response = await GenericCrudOperations.getDetailed(TIMESHEET_DAY_DETAILS, { date }, setTimesheetDetail, setLoading);
+      console.log("Timesheet details fetched:", response);
+      console.log("Fetched Timesheet Detail:", timesheetDetail); // Add this line
+    } catch (error) {
+      console.error("Error fetching timesheet details:", error); // Log any errors
+    }
     setLoading(false);
   };
 
   const columns = [
-    { key: "description", label: "Description" },
-    { key: "timeSpent", label: "Time Spent" },
     { key: "projectName", label: "Project Name" },
+    { key: "timeSpent", label: "Time Spent" },
+    { key: "description", label: "Description" },
   ];
 
   useEffect(() => {
-    getDayTimesheet(selectedTimesheet),
-    setTimesheetDetail
-  }, []); 
+    console.log("Selected Timesheet Date:", selectedTimesheet); // Add this line
+    getDayTimesheet(selectedTimesheet);
+  }, [selectedTimesheet]);
+
+  useEffect(() => {
+    console.log("Updated Timesheet Detail:", timesheetDetail); // Log state updates
+  }, [timesheetDetail]);
 
   return (
-    <TableField
-      rows={timesheetDetail}
-      columns={columns}
-      showActions={false}
-    />
+    <>
+      {loading && <div>Loading...</div>}
+      {!loading && timesheetDetail.length > 0 ? (
+        <TableField
+          rows={timesheetDetail}
+          columns={columns}
+          showActions={false}
+        />
+      ) : (
+        <div>No timesheet details available.</div>
+      )}
+    </>
   );
 };
 

@@ -6,8 +6,7 @@ export interface IDepartmentDto extends IUpdateDepartmentDto{
   id:number;
 }
 
-interface IDepartmentTeamJobTitle {
-  id:number;
+export interface IDepartmentTeamJobTitle {
   FirstName: string;
   LastName: string;
   Email: string;
