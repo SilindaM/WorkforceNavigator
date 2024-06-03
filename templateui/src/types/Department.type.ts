@@ -5,3 +5,12 @@ export interface IUpdateDepartmentDto{
 export interface IDepartmentDto extends IUpdateDepartmentDto{
   id:number;
 }
+
+interface IDepartmentTeamJobTitle {
+  id:number;
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  JobTitle: string;
+  Team: string;
+}

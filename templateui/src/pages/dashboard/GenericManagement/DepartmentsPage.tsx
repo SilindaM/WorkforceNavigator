@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useForm } from "react-hook-form";
-
 import {
   ALL_DEPARTMENTS,
   DELETE_DEPARTMENT_URL,
   NEW_DEPARTMENT_URL,
   UPDATE_DEPARTMENT_URL,
 } from "../../../utils/globalConfig";
-
 import {
   Container,
   Grid,
@@ -34,8 +32,8 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(false);
   const [departments, setDepartments] = useState<IDepartmentDto[]>([]);
-  const [selectedDepartment, setSelectedDepartment] =useState<IDepartmentDto>();
-  const [departmentName, setDepartmentName] = useState<string|null>(null);
+  const [selectedDepartment, setSelectedDepartment] = useState<IDepartmentDto | null>(null);
+  const [departmentName, setDepartmentName] = useState<string | null>(null);
   const [description, setDescription] = useState<string>("");
 
   const handleOpenModal = () => {
@@ -59,8 +57,9 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
     getDepartments();
   };
 
-  const handleRowClick = (departmentId: number|null) => {
-    selectedDepartmentId(departmentId);
+  const handleRowClick = (department: IDepartmentDto) => {
+    selectedDepartmentId(department.id);
+    console.log("Selected Department ID:", department.id); // Debug log
   };
 
   const UpdateDepartment = async (
@@ -97,7 +96,6 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
 
   useEffect(() => {
     getDepartments();
-    setSelectedDepartment
   }, []);
 
   const columns = [
@@ -126,7 +124,7 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
                 columns={columns}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
-                onRowClick={handleRowClick}/>
+                onRowClick={handleRowClick} />
             </Segment>
           </GridColumn>
         </Grid>
@@ -152,7 +150,7 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
         ]}
         handleSubmit={handleSubmit}
         mode={selectedDepartment ? "edit" : "add"}
-        selectedEntity={selectedDepartment} // Check if selectedDepartment is correctly passed here
+        selectedEntity={selectedDepartment}
         updateEntity={UpdateDepartment}
         addEntity={AddDepartment}
       />

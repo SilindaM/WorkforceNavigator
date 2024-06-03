@@ -49,7 +49,6 @@ const TimesheetPage = ({ selectedTimesheetDate }: IProps) => {
 
   const handleRowClick = (timesheet: TimesheetDto) => {
     selectedTimesheetDate(timesheet.date);
-    console.log("F",timesheet.date)
   };
   
 
@@ -68,7 +67,7 @@ const TimesheetPage = ({ selectedTimesheetDate }: IProps) => {
   useEffect(() => {
     getWeeklyTimesheet(0);
     //setTimesheets
-  }, [undefined]);
+  }, []);
 
   return (
     <Container fluid className="pageTemplate3">

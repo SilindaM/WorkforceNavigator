@@ -87,6 +87,7 @@ const UserDetails = ({ username }: IProps) => {
   const selectedGender = userDetails
     ? Gender.find((option) => option.value === userDetails.gender)
     : null;
+    
   const selectedDepartment = userDetails
     ? department.find(
         (option) => option.departmentName === userDetails.department

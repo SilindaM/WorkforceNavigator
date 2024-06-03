@@ -25,7 +25,7 @@
                      join j in dataContext.JobTitles on u.JobTitleId equals j.Id
                      join d in dataContext.Departments on j.DepartmentId equals d.Id
                      join t in dataContext.Teams on u.TeamId equals t.Id
-                     where d.Id == id && d.IsActive && !d.IsDeleted
+                     where d.Id == id
                      select new UserDetailJobTitle
                      {
                        FirstName = u.FirstName,
