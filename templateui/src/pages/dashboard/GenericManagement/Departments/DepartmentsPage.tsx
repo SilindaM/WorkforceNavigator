@@ -1,27 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useForm } from "react-hook-form";
-import {
-  ALL_DEPARTMENTS,
-  DELETE_DEPARTMENT_URL,
-  NEW_DEPARTMENT_URL,
-  UPDATE_DEPARTMENT_URL,
-} from "../../../utils/globalConfig";
-import {
-  Container,
-  Grid,
-  GridColumn,
-  Header,
-  Segment,
-} from "semantic-ui-react";
-import TableField from "../../../components/general/TableField";
-import GenericModal from "./GenericModal";
-import {
-  IDepartmentDto,
-  IUpdateDepartmentDto,
-} from "../../../types/Department.type";
-import { GenericCrudOperations } from "../../../components/general/GenericCrudOperations";
+import { GridColumn, Segment, Header, Container } from "semantic-ui-react";
+import { GenericCrudOperations } from "../../../../components/general/GenericCrudOperations";
+import TableField from "../../../../components/general/TableField";
+import { IDepartmentDto, IUpdateDepartmentDto } from "../../../../types/Department.type";
+import { ALL_DEPARTMENTS, NEW_DEPARTMENT_URL, UPDATE_DEPARTMENT_URL, DELETE_DEPARTMENT_URL } from "../../../../utils/globalConfig";
+import GenericModal from "../GenericModal";
 
 interface IProps {
   selectedDepartmentId: (departmentId: number | null) => void;

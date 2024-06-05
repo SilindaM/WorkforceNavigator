@@ -61,8 +61,16 @@ export const ALL_JOB_TITLES = '/JobTitle';
 export const MY_TIMESHEETS = '/Timesheet';
 export const TIMESHEET_DAY_DETAILS = '/Timesheet/DAte';
 
+//CLIENTS
+export const NEW_CLIENT_URL = '/Client/CreateClient';
+export const UPDATE_CLIENT_URL = '/Client/UpdateClient';
+export const DELETE_CLIENT_URL = '/Client/DeleteClient';
+export const ALL_CLIENTS = '/Client';
+export const CLIENT_DETAILS = '/Client/ClientProjectDetails';
 
+
+
+//OTHERS
 export const ALL_PROJECTS = '/Projects';
 export const ALL_TEAMS = '/Teams';
-export const ALL_CLIENTS = '/Clients';
 export const GENERIC_MANAGEMENT = '/GenericManagement'

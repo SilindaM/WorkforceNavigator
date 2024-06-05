@@ -6,12 +6,12 @@ import useAuth from '../../../hooks/useAuth.hook';
 import AllAllocationPage from '../LeaveAllocations/AllAllocationPage';
 import MyLeaveAllocationsPage from '../LeaveAllocations/MyLeaveAllocationsPage';
 import MyLeaveRequestPage from '../LeaveRequests/MyLeaveRequestPage';
-import ClientsPage from './ClientsPage';
+import ClientsPage from './Clients/ClientsPage';
 import ProjectsPage from './ProjectsPage';
 import TeamsPage from './TeamsPage';
-import DepartmentsPage from './DepartmentsPage';
 import JobTitlesPage from './JobTitlesPage';
-import ManageDepartmentPage from './ManageDepartmentPage';
+import ManageClientPage from './Clients/ManageClientPage';
+import ManageDepartmentPage from './Departments/ManageDepartmentPage';
 
 const GenericManagementPage = () => {
   const { user } = useAuth(); // Assuming you have a user object from your authentication context
@@ -24,7 +24,7 @@ const GenericManagementPage = () => {
     },
     {
       menuItem: 'CLIENTS',
-      pane: { key: 'tab1', content: <ClientsPage /> },
+      pane: { key: 'tab1', content: <ManageClientPage /> },
     },
     {
       menuItem: 'PROJECTS',

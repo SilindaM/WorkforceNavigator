@@ -19,12 +19,15 @@
   public class ClientController : ControllerBase
   {
     private readonly IGenericService<Client, ClientDto> _ClientService;
-    // private readonly IGenericService<Client, UpdateClientDto> _ClientUpdateService;
+    private readonly IClientService clientService;
 
     public ClientController(
-        IGenericService<Client, ClientDto> ClientService)
+        IGenericService<Client, ClientDto> ClientService,
+        IClientService clientService)
+        
     {
       _ClientService = ClientService;
+      this.clientService = clientService;
     }
 
     [HttpGet]
@@ -94,6 +97,19 @@
         return Ok(result.Message);
       }
       return StatusCode(result.StatusCode, result.Message);
+    }
+
+    [HttpGet]
+    [Route("ClientProjectDetails/{id}")]
+    public async Task<ActionResult<List<ClientDetailDto>>> GetClientProject(int id)
+    {
+      var result = await clientService.GetClientProjectAsync(id);
+      if (result == null || !result.Any())
+      {
+        return NotFound($"No details found for departmentId: {id}");
+      }
+
+      return Ok(result);
     }
   }
 }
