@@ -28,11 +28,10 @@ import UserDetails from '../pages/dashboard/User/UserDetails';
 import GenericManagementPage from '../pages/dashboard/GenericManagement/GenericManagementPage';
 import TeamsPage from '../pages/dashboard/GenericManagement/TeamsPage';
 import JobTitlesPage from '../pages/dashboard/GenericManagement/JobTitlesPage';
-import ClientsPage from '../pages/dashboard/GenericManagement/ClientsPage';
 import ProjectsPage from '../pages/dashboard/GenericManagement/ProjectsPage';
-import ManageDepartmentPage from '../pages/dashboard/GenericManagement/ManageDepartmentPage';
 import MyLogsPage from '../pages/dashboard/logs/MyLogsPage';
 import ManageTimesheetPage from '../pages/dashboard/Timesheet/ManageTimesheetPage';
+import ManageDepartmentPage from '../pages/dashboard/GenericManagement/Departments/ManageDepartmentPage';
 
 const GlobalRouter = () => {
     return (
@@ -66,7 +65,6 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.manageDepartments} element={<ManageDepartmentPage />} />
             
             <Route path={PATH_DASHBOARD.jobTitleRequest} element={<JobTitlesPage />} />
-            <Route path={PATH_DASHBOARD.clientRequest} element={<ClientsPage />} />
             <Route path={PATH_DASHBOARD.teamRequest} element={<TeamsPage />} />
             <Route path={PATH_DASHBOARD.projectRequest} element={<ProjectsPage />} />
 

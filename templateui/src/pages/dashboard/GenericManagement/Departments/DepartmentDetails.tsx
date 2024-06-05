@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import TableField from '../../../components/general/TableField';
-import { GenericCrudOperations } from '../../../components/general/GenericCrudOperations';
-import { DEPARTMENT_JOBTITLE_TEAM } from '../../../utils/globalConfig';
-import { IDepartmentTeamJobTitle } from '../../../types/Department.type';
+import { GenericCrudOperations } from '../../../../components/general/GenericCrudOperations';
+import TableField from '../../../../components/general/TableField';
+import { IDepartmentTeamJobTitle } from '../../../../types/Department.type';
+import { DEPARTMENT_JOBTITLE_TEAM } from '../../../../utils/globalConfig';
 
 interface IProps {
   selectedDepartment: number;
