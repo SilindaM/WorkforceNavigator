@@ -13,7 +13,7 @@ const ManageClientPage = () => {
   return (
     <Container fluid className="pageTemplate3">
       <Grid columns={2}>
-        <GridColumn width={8}>
+        <GridColumn width={11}>
           <Segment raised>
             <Header as="h2" textAlign="center">
               CLIENTS
@@ -21,7 +21,7 @@ const ManageClientPage = () => {
             <ClientsPage selectedClientId={handleClientSelect} />
           </Segment>
         </GridColumn>
-        <GridColumn width={8}>
+        <GridColumn width={5}>
           <Segment raised>
             <Header as="h2" textAlign="center">
               CLIENT DETAILS
