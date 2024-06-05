@@ -16,13 +16,14 @@ interface FormField {
 interface IProps {
   isOpen: boolean;
   closeModal: () => void;
-  title: string; // Add title property
+  title: string; 
   formFields: FormField[];
   handleSubmit: () => void;
   selectedEntity?: any;
   updateEntity?: (id: number, data: any) => Promise<void>;
   addEntity?: (data: any) => Promise<void>;
   mode: "edit" | "add";
+  initialValues?: { [key: string]: any } | null;
 }
 
 const GenericModal = ({
@@ -35,13 +36,12 @@ const GenericModal = ({
   updateEntity,
   addEntity,
   mode,
+  initialValues
 }: IProps) => {
   const { register, setValue, control } = useForm();
 
   const handleSave = async () => {
-
     if (mode === "edit" && updateEntity && selectedEntity) {
-
       // Create a clean updateData object with values from formFields
       const updateData: { [key: string]: any } = {};
       formFields.forEach((field) => {
@@ -49,6 +49,7 @@ const GenericModal = ({
       });
       updateEntity(selectedEntity.id, updateData);
     } 
+
     else if (mode === "add" && addEntity)
        {
       // Create a clean newData object with values from formFields
@@ -67,20 +68,35 @@ const GenericModal = ({
   });
 
   useEffect(() => {
-    if (isOpen && mode === "edit" && selectedEntity) {
-      // Register fields dynamically
+    console.log("selectedEntity:", selectedEntity);
+    console.log("initialValues:", initialValues);
+  
+    if (mode === "edit" && selectedEntity) {
+      // Register fields dynamically and set initial values
       formFields.forEach((field) => {
         register(field.controlId, { required: true }); // Adjust validation rules as needed
+  
+        // Check if the field exists in the selectedEntity
+        if (selectedEntity.hasOwnProperty(field.controlId)) {
+          // Set initial value directly from selectedEntity
+          setValue(field.controlId, selectedEntity[field.controlId], {
+            shouldValidate: true,
+          });
+        }
       });
-
-      // Set initial values for fields
+    } else if (mode === "edit" && initialValues) {
+      // If initial values are provided but selectedEntity is not present (perhaps when creating a new entity)
       formFields.forEach((field) => {
-        setValue(field.controlId, selectedEntity[field.controlId], {
-          shouldValidate: true,
-        });
+        setValue(field.controlId, initialValues[field.controlId]);
+      });
+    } else {
+      // If not in edit mode and no initial values provided, reset all form fields to their initial state
+      formFields.forEach((field) => {
+        setValue(field.controlId, "");
       });
     }
-  }, [isOpen, selectedEntity, mode, formFields, register, setValue]);
+  }, [isOpen, selectedEntity, mode, formFields, register, setValue, initialValues]);
+  
 
   return (
     <>
@@ -98,7 +114,7 @@ const GenericModal = ({
               >
                 {field.options ? ( // Check if options exist
                   <Form.Select
-                    value={field.value}
+                    defaultValue={field.value}
                     onChange={(e) => field.onChange(e.target.value)}
                   >
                     {field.options.map((option, index) => (
@@ -109,11 +125,11 @@ const GenericModal = ({
                   </Form.Select>
                 ) : (
                   <Form.Control
-                    type="text"
-                    placeholder={field.label}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
+                  type="text"
+                  placeholder={field.label}
+                  defaultValue={mode === 'edit' ? initialValues?.[field.controlId] : field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />                             
                 )}
               </Form.Group>
             ))}
