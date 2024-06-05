@@ -68,9 +68,15 @@ export const DELETE_CLIENT_URL = '/Client/DeleteClient';
 export const ALL_CLIENTS = '/Client';
 export const CLIENT_DETAILS = '/Client/ClientProjectDetails';
 
+// PROJECTS
+export const NEW_PROJECT_URL = '/Project/CreateProject';
+export const UPDATE_PROJECT_URL = '/Project/UpdateProject';
+export const DELETE_PROJECT_URL = '/Project/DeleteProject';
+export const ALL_PROJECTS = '/Project';
+export const PROJECT_DETAILS = '/Project/ProjectDetails';
+
 
 
 //OTHERS
-export const ALL_PROJECTS = '/Projects';
 export const ALL_TEAMS = '/Teams';
 export const GENERIC_MANAGEMENT = '/GenericManagement'

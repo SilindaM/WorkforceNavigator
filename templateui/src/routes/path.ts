@@ -35,6 +35,7 @@ export const PATH_PUBLIC = {
     jobTitleRequest : '/dashboard/JobTitle',
     clientRequest : '/dashboard/Clients',
     manageTimesheets : 'dashboard/Timesheet',
+    manageProjects:'dashboard/Project',
 
 
     allocationByusername: '/dashboard/allocations/username',
