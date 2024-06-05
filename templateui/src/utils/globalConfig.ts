@@ -75,8 +75,14 @@ export const DELETE_PROJECT_URL = '/Project/DeleteProject';
 export const ALL_PROJECTS = '/Project';
 export const PROJECT_DETAILS = '/Project/ProjectDetails';
 
+// TEAM
+export const NEW_TEAM_URL = '/Team/CreateTeam';
+export const UPDATE_TEAM_URL = '/Team/UpdateTeam';
+export const DELETE_TEAM_URL = '/Team/DeleteTeam';
+export const ALL_TEAMS = '/Team';
+export const TEAM_DETAILS = '/Team/TeamUserDetailJobTitle';
+
 
 
 //OTHERS
-export const ALL_TEAMS = '/Teams';
 export const GENERIC_MANAGEMENT = '/GenericManagement'
