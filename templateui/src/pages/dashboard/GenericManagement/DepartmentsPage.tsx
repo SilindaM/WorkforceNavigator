@@ -38,6 +38,9 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
 
   const handleOpenModal = () => {
     setIsOpen(true);
+    setSelectedDepartment(null); // Reset selectedDepartment to null
+    setDepartmentName(null); // Reset form fields to empty
+    setDescription("");
   };
 
   const handleCloseModal = () => {
@@ -59,7 +62,7 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
 
   const handleRowClick = (department: IDepartmentDto) => {
     selectedDepartmentId(department.id);
-    console.log("Selected Department ID:", department.id); // Debug log
+    setSelectedDepartment(department);
   };
 
   const UpdateDepartment = async (
@@ -79,15 +82,14 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
   };
 
   const handleEdit = (updatedData: IDepartmentDto) => {
-    console.log("Editing:", updatedData); // Check if this logs the correct data
     setSelectedDepartment(updatedData);
+    setDepartmentName(updatedData.departmentName|| "");
+    setDescription(updatedData.description||"");
     handleOpenModal();
   };
 
   const handleDelete = (id: number) => {
-    console.log("Get Id", id);
     DeleteDepartment(id);
-    console.log("Received ", id);
   };
 
   const handleSubmit = () => {
@@ -99,10 +101,16 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
   }, []);
 
   const columns = [
-    { key: "departmentName", label: "Department Name" },
-    { key: "description", label: "Description" },
-  ];
+    { key: "departmentName", label: "Department Name"},
+    { key: "description", label: "Description"},
+    ];
 
+    const initialValues = {
+      id: selectedDepartment?.id || null,
+      departmentName: selectedDepartment?.departmentName || "",
+      description: selectedDepartment?.description || "",
+    };    
+    
   return (
     <div>
       <Container fluid className="pageTemplate3">
@@ -116,34 +124,36 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
                   startIcon={<AddIcon />}
                   onClick={() => handleOpenModal()}
                 >
-                  New Leave Request
+                  New
                 </Button>
               </Header>
               <TableField
-                rows={departments}
                 columns={columns}
+                rows={departments}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
-                onRowClick={handleRowClick} />
+                onRowClick={handleRowClick} 
+                showActions={true}
+                />
             </Segment>
           </GridColumn>
         </Grid>
       </Container>
 
-      <GenericModal
+        <GenericModal
         isOpen={isOpen}
         closeModal={handleCloseModal}
-        title="Add Client"
+        title="Add"
         formFields={[
           {
             controlId: "departmentName",
-            label: "Department Name",
+            label: "department Name",
             value: departmentName,
             onChange: setDepartmentName,
           },
           {
-            controlId: "Description",
-            label: "Description",
+            controlId: "description",
+            label: "description",
             value: description,
             onChange: setDescription,
           },
@@ -153,6 +163,7 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
         selectedEntity={selectedDepartment}
         updateEntity={UpdateDepartment}
         addEntity={AddDepartment}
+        initialValues={initialValues}
       />
     </div>
   );

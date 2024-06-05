@@ -120,6 +120,7 @@ const UserDetails = ({ username }: IProps) => {
       })
     );
   };
+
   const handleUpdate = () => {
     const updateData: UserDetailsUpdateDto = {
       email,
@@ -133,6 +134,7 @@ const UserDetails = ({ username }: IProps) => {
     };
     UpdateUserDetails(username, updateData);
   };
+  
   return (
     <div style={{ padding: "20px" }}>
       <Segment>
