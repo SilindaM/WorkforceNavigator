@@ -26,7 +26,7 @@ import ProcessLeaveRequestPage from '../pages/dashboard/LeaveRequests/ProcessLea
 import ManageUsersPage from '../pages/dashboard/User/ManageUsersPage';
 import UserDetails from '../pages/dashboard/User/UserDetails';
 import GenericManagementPage from '../pages/dashboard/GenericManagement/GenericManagementPage';
-import TeamsPage from '../pages/dashboard/GenericManagement/TeamsPage';
+import TeamsPage from '../pages/dashboard/GenericManagement/Teams/TeamsPage';
 import JobTitlesPage from '../pages/dashboard/GenericManagement/JobTitlesPage';
 import ProjectsPage from '../pages/dashboard/GenericManagement/Projects/ProjectsPage';
 import MyLogsPage from '../pages/dashboard/logs/MyLogsPage';
