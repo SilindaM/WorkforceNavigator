@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,10 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240606135307_Dataseeding")]
+    partial class Dataseeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,102 +158,102 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9939),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5616),
                             DepartmentName = "Department 1",
                             Description = "Description for Department 1",
                             IsActive = true,
                             IsDeleted = false,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9939)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5617)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9951),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5627),
                             DepartmentName = "Department 2",
                             Description = "Description for Department 2",
                             IsActive = true,
                             IsDeleted = false,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9952)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5627)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9959),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5636),
                             DepartmentName = "Department 3",
                             Description = "Description for Department 3",
                             IsActive = true,
                             IsDeleted = false,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9960)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5636)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9967),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5643),
                             DepartmentName = "Department 4",
                             Description = "Description for Department 4",
                             IsActive = true,
                             IsDeleted = false,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9968)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5644)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9975),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5651),
                             DepartmentName = "Department 5",
                             Description = "Description for Department 5",
                             IsActive = true,
                             IsDeleted = false,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9976)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5651)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9985),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5659),
                             DepartmentName = "Department 6",
                             Description = "Description for Department 6",
                             IsActive = true,
                             IsDeleted = false,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9985)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5660)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(64),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5667),
                             DepartmentName = "Department 7",
                             Description = "Description for Department 7",
                             IsActive = true,
                             IsDeleted = false,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(65)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5667)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(75),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5675),
                             DepartmentName = "Department 8",
                             Description = "Description for Department 8",
                             IsActive = true,
                             IsDeleted = false,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(75)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5675)
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(83),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5682),
                             DepartmentName = "Department 9",
                             Description = "Description for Department 9",
                             IsActive = true,
                             IsDeleted = false,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(83)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5683)
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(93),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5691),
                             DepartmentName = "Department 10",
                             Description = "Description for Department 10",
                             IsActive = true,
                             IsDeleted = false,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(94)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5692)
                         });
                 });
 
@@ -299,122 +301,122 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(110),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5705),
                             DepartmentId = 1,
                             Description = "Description for Job Title 1",
                             IsActive = true,
                             IsDeleted = false,
                             Seniority = 0,
                             Title = "Job Title 1",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(111)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5706)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(122),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5715),
                             DepartmentId = 2,
                             Description = "Description for Job Title 2",
                             IsActive = true,
                             IsDeleted = false,
                             Seniority = 1,
                             Title = "Job Title 2",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(122)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5715)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(130),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5722),
                             DepartmentId = 3,
                             Description = "Description for Job Title 3",
                             IsActive = true,
                             IsDeleted = false,
                             Seniority = 2,
                             Title = "Job Title 3",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(130)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5723)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(137),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5730),
                             DepartmentId = 4,
                             Description = "Description for Job Title 4",
                             IsActive = true,
                             IsDeleted = false,
                             Seniority = 3,
                             Title = "Job Title 4",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(138)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5730)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(146),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5737),
                             DepartmentId = 5,
                             Description = "Description for Job Title 5",
                             IsActive = true,
                             IsDeleted = false,
                             Seniority = 0,
                             Title = "Job Title 5",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(146)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5738)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(155),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5779),
                             DepartmentId = 6,
                             Description = "Description for Job Title 6",
                             IsActive = true,
                             IsDeleted = false,
                             Seniority = 1,
                             Title = "Job Title 6",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(156)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5779)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(164),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5787),
                             DepartmentId = 7,
                             Description = "Description for Job Title 7",
                             IsActive = true,
                             IsDeleted = false,
                             Seniority = 2,
                             Title = "Job Title 7",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(164)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5787)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(171),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5794),
                             DepartmentId = 8,
                             Description = "Description for Job Title 8",
                             IsActive = true,
                             IsDeleted = false,
                             Seniority = 3,
                             Title = "Job Title 8",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(172)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5794)
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(179),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5801),
                             DepartmentId = 9,
                             Description = "Description for Job Title 9",
                             IsActive = true,
                             IsDeleted = false,
                             Seniority = 0,
                             Title = "Job Title 9",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(179)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5802)
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(188),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5810),
                             DepartmentId = 10,
                             Description = "Description for Job Title 10",
                             IsActive = true,
                             IsDeleted = false,
                             Seniority = 1,
                             Title = "Job Title 10",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(189)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5810)
                         });
                 });
 
@@ -458,111 +460,111 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(476),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6070),
                             IsActive = true,
                             IsDeleted = false,
                             LeaveTypeId = 1,
                             NumberOfDays = 20,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(476),
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6071),
                             Username = "John"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(485),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6078),
                             IsActive = true,
                             IsDeleted = false,
                             LeaveTypeId = 2,
                             NumberOfDays = 20,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(485),
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6078),
                             Username = "Jane"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(491),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6084),
                             IsActive = true,
                             IsDeleted = false,
                             LeaveTypeId = 3,
                             NumberOfDays = 20,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(492),
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6084),
                             Username = "Mike"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(497),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6090),
                             IsActive = true,
                             IsDeleted = false,
                             LeaveTypeId = 1,
                             NumberOfDays = 20,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(498),
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6090),
                             Username = "Sarah"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(503),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6096),
                             IsActive = true,
                             IsDeleted = false,
                             LeaveTypeId = 2,
                             NumberOfDays = 20,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(504),
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6096),
                             Username = "David"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(546),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6103),
                             IsActive = true,
                             IsDeleted = false,
                             LeaveTypeId = 3,
                             NumberOfDays = 20,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(546),
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6103),
                             Username = "Emily"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(552),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6109),
                             IsActive = true,
                             IsDeleted = false,
                             LeaveTypeId = 1,
                             NumberOfDays = 20,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(553),
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6109),
                             Username = "Ryan"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(558),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6114),
                             IsActive = true,
                             IsDeleted = false,
                             LeaveTypeId = 2,
                             NumberOfDays = 20,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(559),
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6115),
                             Username = "Lisa"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(564),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6120),
                             IsActive = true,
                             IsDeleted = false,
                             LeaveTypeId = 3,
                             NumberOfDays = 20,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(565),
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6121),
                             Username = "Chris"
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(594),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6147),
                             IsActive = true,
                             IsDeleted = false,
                             LeaveTypeId = 1,
                             NumberOfDays = 20,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(595),
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6148),
                             Username = "Jessica"
                         });
                 });
@@ -659,32 +661,32 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(199),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5821),
                             DefaultDays = 10,
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Sick",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(199)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5821)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(201),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5822),
                             DefaultDays = 20,
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Annual",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(202)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5823)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(203),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5824),
                             DefaultDays = 5,
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Family",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(203)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5824)
                         });
                 });
 
@@ -741,7 +743,7 @@ namespace Persistence.Migrations
                         {
                             Id = 1,
                             ClientId = 1,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(371),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5940),
                             Description = "Description of Project 1",
                             EndDate = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
@@ -749,13 +751,13 @@ namespace Persistence.Migrations
                             ProjectName = "Project 1",
                             StartDate = new DateTime(2024, 6, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             TeamId = 1,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(371)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5941)
                         },
                         new
                         {
                             Id = 2,
                             ClientId = 2,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(385),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5951),
                             Description = "Description of Project 2",
                             EndDate = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
@@ -763,13 +765,13 @@ namespace Persistence.Migrations
                             ProjectName = "Project 2",
                             StartDate = new DateTime(2024, 6, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             TeamId = 2,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(385)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5951)
                         },
                         new
                         {
                             Id = 3,
                             ClientId = 3,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(395),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5960),
                             Description = "Description of Project 3",
                             EndDate = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
@@ -777,13 +779,13 @@ namespace Persistence.Migrations
                             ProjectName = "Project 3",
                             StartDate = new DateTime(2024, 6, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             TeamId = 3,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(395)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5960)
                         },
                         new
                         {
                             Id = 4,
                             ClientId = 4,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(404),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6002),
                             Description = "Description of Project 4",
                             EndDate = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
@@ -791,13 +793,13 @@ namespace Persistence.Migrations
                             ProjectName = "Project 4",
                             StartDate = new DateTime(2024, 6, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             TeamId = 4,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(404)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6002)
                         },
                         new
                         {
                             Id = 5,
                             ClientId = 5,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(413),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6011),
                             Description = "Description of Project 5",
                             EndDate = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
@@ -805,13 +807,13 @@ namespace Persistence.Migrations
                             ProjectName = "Project 5",
                             StartDate = new DateTime(2024, 6, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             TeamId = 5,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(414)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6012)
                         },
                         new
                         {
                             Id = 6,
                             ClientId = 6,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(424),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6022),
                             Description = "Description of Project 6",
                             EndDate = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
@@ -819,13 +821,13 @@ namespace Persistence.Migrations
                             ProjectName = "Project 6",
                             StartDate = new DateTime(2024, 6, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             TeamId = 6,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(425)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6022)
                         },
                         new
                         {
                             Id = 7,
                             ClientId = 7,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(434),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6030),
                             Description = "Description of Project 7",
                             EndDate = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
@@ -833,13 +835,13 @@ namespace Persistence.Migrations
                             ProjectName = "Project 7",
                             StartDate = new DateTime(2024, 6, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             TeamId = 7,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(434)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6031)
                         },
                         new
                         {
                             Id = 8,
                             ClientId = 8,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(443),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6039),
                             Description = "Description of Project 8",
                             EndDate = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
@@ -847,13 +849,13 @@ namespace Persistence.Migrations
                             ProjectName = "Project 8",
                             StartDate = new DateTime(2024, 6, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             TeamId = 8,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(444)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6040)
                         },
                         new
                         {
                             Id = 9,
                             ClientId = 9,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(453),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6049),
                             Description = "Description of Project 9",
                             EndDate = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
@@ -861,13 +863,13 @@ namespace Persistence.Migrations
                             ProjectName = "Project 9",
                             StartDate = new DateTime(2024, 6, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             TeamId = 9,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(454)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6049)
                         },
                         new
                         {
                             Id = 10,
                             ClientId = 10,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(464),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6059),
                             Description = "Description of Project 10",
                             EndDate = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             IsActive = true,
@@ -875,7 +877,7 @@ namespace Persistence.Migrations
                             ProjectName = "Project 10",
                             StartDate = new DateTime(2024, 6, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             TeamId = 10,
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(465)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(6060)
                         });
                 });
 
@@ -924,121 +926,121 @@ namespace Persistence.Migrations
                         {
                             Id = 1,
                             ClientName = "Eskom Holdings SOC Ltd",
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9711),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5439),
                             Email = "info@EskomHoldingsSOCLtd.com",
                             Fax = "+27 11 123 4560",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "+27 11 123 4560",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9729)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5449)
                         },
                         new
                         {
                             Id = 2,
                             ClientName = "Sasol Limited",
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9827),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5476),
                             Email = "info@SasolLimited.com",
                             Fax = "+27 11 123 4561",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "+27 11 123 4561",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9828)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5476)
                         },
                         new
                         {
                             Id = 3,
                             ClientName = "MTN Group Limited",
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9840),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5487),
                             Email = "info@MTNGroupLimited.com",
                             Fax = "+27 11 123 4562",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "+27 11 123 4562",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9840)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5487)
                         },
                         new
                         {
                             Id = 4,
                             ClientName = "Naspers Limited",
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9850),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5496),
                             Email = "info@NaspersLimited.com",
                             Fax = "+27 11 123 4563",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "+27 11 123 4563",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9850)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5497)
                         },
                         new
                         {
                             Id = 5,
                             ClientName = "Standard Bank Group Limited",
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9861),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5507),
                             Email = "info@StandardBankGroupLimited.com",
                             Fax = "+27 11 123 4564",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "+27 11 123 4564",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9861)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5508)
                         },
                         new
                         {
                             Id = 6,
                             ClientName = "Shoprite Holdings Limited",
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9876),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5519),
                             Email = "info@ShopriteHoldingsLimited.com",
                             Fax = "+27 11 123 4565",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "+27 11 123 4565",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9876)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5520)
                         },
                         new
                         {
                             Id = 7,
                             ClientName = "Absa Group Limited",
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9886),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5528),
                             Email = "info@AbsaGroupLimited.com",
                             Fax = "+27 11 123 4566",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "+27 11 123 4566",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9886)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5529)
                         },
                         new
                         {
                             Id = 8,
                             ClientName = "Sibanye Stillwater Limited",
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9896),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5578),
                             Email = "info@SibanyeStillwaterLimited.com",
                             Fax = "+27 11 123 4567",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "+27 11 123 4567",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9897)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5579)
                         },
                         new
                         {
                             Id = 9,
                             ClientName = "Anglo American Platinum Limited",
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9907),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5590),
                             Email = "info@AngloAmericanPlatinumLimited.com",
                             Fax = "+27 11 123 4568",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "+27 11 123 4568",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9907)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5590)
                         },
                         new
                         {
                             Id = 10,
                             ClientName = "Vodacom Group Limited",
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9918),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5601),
                             Email = "info@VodacomGroupLimited.com",
                             Fax = "+27 11 123 4569",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "+27 11 123 4569",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 920, DateTimeKind.Local).AddTicks(9919)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5601)
                         });
                 });
 
@@ -1110,102 +1112,102 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(227),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5841),
                             Description = "Description for Team 1",
                             IsActive = true,
                             IsDeleted = false,
                             TeamName = "Team 1",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(227)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5841)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(238),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5851),
                             Description = "Description for Team 2",
                             IsActive = true,
                             IsDeleted = false,
                             TeamName = "Team 2",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(238)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5851)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(245),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5859),
                             Description = "Description for Team 3",
                             IsActive = true,
                             IsDeleted = false,
                             TeamName = "Team 3",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(246)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5860)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(254),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5867),
                             Description = "Description for Team 4",
                             IsActive = true,
                             IsDeleted = false,
                             TeamName = "Team 4",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(254)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5867)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(297),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5875),
                             Description = "Description for Team 5",
                             IsActive = true,
                             IsDeleted = false,
                             TeamName = "Team 5",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(297)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5875)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(308),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5883),
                             Description = "Description for Team 6",
                             IsActive = true,
                             IsDeleted = false,
                             TeamName = "Team 6",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(309)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5884)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(317),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5891),
                             Description = "Description for Team 7",
                             IsActive = true,
                             IsDeleted = false,
                             TeamName = "Team 7",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(317)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5892)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(325),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5899),
                             Description = "Description for Team 8",
                             IsActive = true,
                             IsDeleted = false,
                             TeamName = "Team 8",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(325)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5899)
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(332),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5906),
                             Description = "Description for Team 9",
                             IsActive = true,
                             IsDeleted = false,
                             TeamName = "Team 9",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(333)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5907)
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(342),
+                            CreatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5916),
                             Description = "Description for Team 10",
                             IsActive = true,
                             IsDeleted = false,
                             TeamName = "Team 10",
-                            UpdatedAt = new DateTime(2024, 6, 6, 16, 1, 3, 921, DateTimeKind.Local).AddTicks(343)
+                            UpdatedAt = new DateTime(2024, 6, 6, 15, 53, 7, 60, DateTimeKind.Local).AddTicks(5917)
                         });
                 });
 

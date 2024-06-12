@@ -144,26 +144,26 @@ using Domain.Enties;
         );
       }
 
-      ////// Projects
-      ////for (int i = 0; i < 10; i++)
-      ////{
-      ////  modelBuilder.Entity<Project>().HasData(
-      ////      new Project
-      ////      {
-      ////        Id = i + 1,
-      ////        ClientId = (i % 10) + 1, // Assuming it's tied to a South African Client with corresponding id
-      ////        TeamId = (i % 10) + 1, // Assuming it's tied to a local team with corresponding id
-      ////        ProjectName = $"Project {i + 1}",
-      ////        Description = $"Description of Project {i + 1}",
-      ////        StartDate = DateTime.Today,
-      ////        EndDate = DateTime.Today.AddDays(30),
-      ////        CreatedAt = DateTime.Now,
-      ////        UpdatedAt = DateTime.Now,
-      ////        IsActive = true,
-      ////        IsDeleted = false
-      ////      }
-      ////  );
-      ////}
+      // Projects
+      for (int i = 0; i < 10; i++)
+      {
+        modelBuilder.Entity<Project>().HasData(
+            new Project
+            {
+              Id = i + 1,
+              ClientId = (i % 10) + 1, // Assuming it's tied to a South African Client with corresponding id
+              TeamId = (i % 10) + 1, // Assuming it's tied to a local team with corresponding id
+              ProjectName = $"Project {i + 1}",
+              Description = $"Description of Project {i + 1}",
+              StartDate = DateTime.Today,
+              EndDate = DateTime.Today.AddDays(30),
+              CreatedAt = DateTime.Now,
+              UpdatedAt = DateTime.Now,
+              IsActive = true,
+              IsDeleted = false
+            }
+        );
+      }
 
       // Leave Allocations
       for (int i = 0; i < 10; i++)
