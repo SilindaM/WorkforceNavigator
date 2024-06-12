@@ -32,7 +32,7 @@ export const GenericCrudOperations = {
     }
   },
 
-  async update(resourceUrl: any, id: number, updatedData: any, setLoading: (loading: boolean) => void) {
+  async update(resourceUrl: any, id: any, updatedData: any, setLoading: (loading: boolean) => void) {
     try {
       // Log the id and updatedData just before making the API call
       console.log("Get Details",resourceUrl, id, updatedData);
@@ -65,5 +65,30 @@ export const GenericCrudOperations = {
     }
   },
 
-  
+  async getDetails(resourceUrl: string, id: any, setEntity: (data: any) => void, setLoading: (loading: boolean) => void) {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get(`${resourceUrl}/${id}`);
+      const { data } = response;
+      setEntity(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error:", error); // Add this line to log any errors
+      toast.error("Error Occurred");
+      setLoading(false);
+    }
+  },  
+
+  async getDetailed(resourceUrl: string, queryParams: any, setEntity: (data: any) => void, setLoading: (loading: boolean) => void) {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get(resourceUrl, { params: queryParams });
+      const { data } = response;
+      setEntity(data);
+      setLoading(false);
+    } catch (error) {
+      toast.error("Error Occurred");
+      setLoading(false);
+    }
+  }
 }

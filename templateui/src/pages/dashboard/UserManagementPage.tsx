@@ -10,6 +10,7 @@ import UsersTableSection from '../../components/dashboard/usermanagement/UsersTa
 import { IAuthUser } from '../../types/auth.type';
 import { TableContainer, TableHead } from '@mui/material';
 import { Table, TableRow, TableCell, TableBody } from 'semantic-ui-react';
+import { GenericCrudOperations } from '../../components/general/GenericCrudOperations';
 
 interface IProps{
   selectedUsername :(username:string|null) =>void;
@@ -20,16 +21,7 @@ const UsersManagementPage = ({selectedUsername}:IProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const getUsersList = async () => {
-    try {
-      setLoading(true);
-      const response = await axiosInstance.get<IAuthUser[]>(USERS_LIST_URL);
-      const { data } = response;
-      setUsers(data);
-      setLoading(false);
-    } catch (error) {
-      toast.error('An error occurred. Please contact admins.');
-      setLoading(false);
-    }
+    await GenericCrudOperations.getAll(USERS_LIST_URL,setUsers,setLoading);
   };
 
   useEffect(() => {
@@ -47,7 +39,6 @@ const UsersManagementPage = ({selectedUsername}:IProps) => {
   const handleSelectedUser = (username:string | null) => {
     selectedUsername(username);
   }
-
 
   return (
     <div className='pageTemplate2'>

@@ -6,11 +6,14 @@ import useAuth from '../../../hooks/useAuth.hook';
 import AllAllocationPage from '../LeaveAllocations/AllAllocationPage';
 import MyLeaveAllocationsPage from '../LeaveAllocations/MyLeaveAllocationsPage';
 import MyLeaveRequestPage from '../LeaveRequests/MyLeaveRequestPage';
-import ClientsPage from './ClientsPage';
-import ProjectsPage from './ProjectsPage';
-import TeamsPage from './TeamsPage';
-import DepartmentsPage from './DepartmentsPage';
+import ClientsPage from './Clients/ClientsPage';
+import ProjectsPage from './Projects/ProjectsPage';
+import TeamsPage from './Teams/TeamsPage';
 import JobTitlesPage from './JobTitlesPage';
+import ManageClientPage from './Clients/ManageClientPage';
+import ManageDepartmentPage from './Departments/ManageDepartmentPage';
+import ManageProjectPage from './Projects/ManageProjectPage';
+import ManageTeamPage from './Teams/ManageTeamPage';
 
 const GenericManagementPage = () => {
   const { user } = useAuth(); // Assuming you have a user object from your authentication context
@@ -18,20 +21,20 @@ const GenericManagementPage = () => {
   // Define panes excluding the "PROCESS REQUESTS" tab if the user is not an admin
   const panes = [
     {
+      menuItem: 'DEPARTMENTS',
+      pane: { key: 'tab3', content: <ManageDepartmentPage /> },
+    },
+    {
       menuItem: 'CLIENTS',
-      pane: { key: 'tab1', content: <ClientsPage /> },
+      pane: { key: 'tab1', content: <ManageClientPage /> },
     },
     {
       menuItem: 'PROJECTS',
-      pane: { key: 'tab2', content: <ProjectsPage />, textAlign: 'center' },
+      pane: { key: 'tab2', content: <ManageProjectPage />, textAlign: 'center' },
     },
     {
       menuItem: 'TEAMS',
-      pane: { key: 'tab3', content: <TeamsPage /> },
-    },
-    {
-      menuItem: 'DEPARTMENTS',
-      pane: { key: 'tab3', content: <DepartmentsPage /> },
+      pane: { key: 'tab3', content: <ManageTeamPage /> },
     },
     {
       menuItem: 'JOBTITLES',

@@ -49,6 +49,7 @@ export const NEW_DEPARTMENT_URL = '/Department/CreateDepartment';
 export const UPDATE_DEPARTMENT_URL = '/Department/UpdateDepartment';
 export const DELETE_DEPARTMENT_URL = '/Department/DeleteDepartment';
 export const ALL_DEPARTMENTS = '/Department';
+export const DEPARTMENT_JOBTITLE_TEAM='/Department/DepartmentUserDetailJobTitle';
 
 //JOB TITLE
 export const NEW_JOBTITLE_URL = '/JobTitle/CreateJobTitle';
@@ -56,7 +57,32 @@ export const UPDATE_JOBTITLE_URL = '/JobTitle/UpdateJobTitle';
 export const DELETE_JOBTITLE_URL = '/JobTitle/DeleteJobTitle';
 export const ALL_JOB_TITLES = '/JobTitle';
 
-export const ALL_PROJECTS = '/Projects';
-export const ALL_TEAMS = '/Teams';
-export const ALL_CLIENTS = '/Clients';
+//TIMESHEET
+export const MY_TIMESHEETS = '/Timesheet';
+export const TIMESHEET_DAY_DETAILS = '/Timesheet/DAte';
+
+//CLIENTS
+export const NEW_CLIENT_URL = '/Client/CreateClient';
+export const UPDATE_CLIENT_URL = '/Client/UpdateClient';
+export const DELETE_CLIENT_URL = '/Client/DeleteClient';
+export const ALL_CLIENTS = '/Client';
+export const CLIENT_DETAILS = '/Client/ClientProjectDetails';
+
+// PROJECTS
+export const NEW_PROJECT_URL = '/Project/CreateProject';
+export const UPDATE_PROJECT_URL = '/Project/UpdateProject';
+export const DELETE_PROJECT_URL = '/Project/DeleteProject';
+export const ALL_PROJECTS = '/Project';
+export const PROJECT_DETAILS = '/Project/ProjectDetails';
+
+// TEAM
+export const NEW_TEAM_URL = '/Team/CreateTeam';
+export const UPDATE_TEAM_URL = '/Team/UpdateTeam';
+export const DELETE_TEAM_URL = '/Team/DeleteTeam';
+export const ALL_TEAMS = '/Team';
+export const TEAM_DETAILS = '/Team/TeamUserDetailJobTitle';
+
+
+
+//OTHERS
 export const GENERIC_MANAGEMENT = '/GenericManagement'

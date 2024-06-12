@@ -1,42 +1,38 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from '../components/layout';
 import { PATH_DASHBOARD, PATH_PUBLIC } from './path';
-import HomePage from '../pages/public/HomePage';
 import LoginPage from '../pages/public/LoginPage';
-import RegisterPage from '../pages/public/RegisterPage';
 import UnauthorizedPage from '../pages/public/UnauthorizedPage';
 import AuthGuard from '../auth/AuthGuard';
 import { adminAccessRoles, allAccessRoles, managerAccessRoles, ownerAccessRoles } from '../auth/auth.utils';
 import DashboardPage from '../pages/dashboard/DashboardPage';
-import UserPage from '../pages/dashboard/UserPage';
+import UserPage from './UserPage';
 import InboxPage from '../pages/dashboard/Messages/InboxPage';
-import MyLogsPage from '../pages/dashboard/MyLogsPage';
 import SendMessagePage from '../pages/dashboard/Messages/SendMessagePage';
 import ManagerPage from '../pages/dashboard/ManagerPage';
 import AdminPage from '../pages/dashboard/AdminPage';
 import SystemLogsPage from '../pages/dashboard/SystemLogsPage';
 import AllMessagesPage from '../pages/dashboard/Messages/AllMessagesPage';
 import UpdateRolePage from '../pages/dashboard/UpdateRolePage';
-import UserManagementPage from '../pages/dashboard/UserManagementPage';
 import OwnerPage from '../pages/dashboard/OwnerPage';
-import NotFoundPage from '../pages/public/NotFoundPage';
 import MyLeaveAllocationsPage from '../pages/dashboard/LeaveAllocations/MyLeaveAllocationsPage';
 import LeaveAllocationByUserNamePage from '../pages/dashboard/LeaveAllocations/LeaveAllocationByUserNamePage';
 import AllocationByLeaveNamePage from '../pages/dashboard/LeaveAllocations/AllocationByLeaveNamePage';
 import AllAllocationPage from '../pages/dashboard/LeaveAllocations/AllAllocationPage';
 import ManageMessagesPage from '../pages/dashboard/Messages/ManageMessagesPage';
 import SignUpPage from '../pages/public/SignUpPage';
-import { AppBar } from '@mui/material';
 import ManageLeavesPage from '../pages/dashboard/LeaveAllocations/ManageLeavesPage';
 import ProcessLeaveRequestPage from '../pages/dashboard/LeaveRequests/ProcessLeaveRequestPage';
 import ManageUsersPage from '../pages/dashboard/User/ManageUsersPage';
 import UserDetails from '../pages/dashboard/User/UserDetails';
 import GenericManagementPage from '../pages/dashboard/GenericManagement/GenericManagementPage';
-import TeamsPage from '../pages/dashboard/GenericManagement/TeamsPage';
+import TeamsPage from '../pages/dashboard/GenericManagement/Teams/TeamsPage';
 import JobTitlesPage from '../pages/dashboard/GenericManagement/JobTitlesPage';
-import DepartmentsPage from '../pages/dashboard/GenericManagement/DepartmentsPage';
-import ClientsPage from '../pages/dashboard/GenericManagement/ClientsPage';
-import ProjectsPage from '../pages/dashboard/GenericManagement/ProjectsPage';
+import ProjectsPage from '../pages/dashboard/GenericManagement/Projects/ProjectsPage';
+import MyLogsPage from '../pages/dashboard/logs/MyLogsPage';
+import ManageTimesheetPage from '../pages/dashboard/Timesheet/ManageTimesheetPage';
+import ManageDepartmentPage from '../pages/dashboard/GenericManagement/Departments/ManageDepartmentPage';
+import ManageProjectPage from '../pages/dashboard/GenericManagement/Projects/ManageProjectPage';
 
 const GlobalRouter = () => {
     return (
@@ -67,16 +63,16 @@ const GlobalRouter = () => {
             <Route path={PATH_DASHBOARD.myLogs} element={<MyLogsPage />} />
             <Route path={PATH_DASHBOARD.user} element={<UserPage />} />
             
-            <Route path={PATH_DASHBOARD.departmentRequest} element={<DepartmentsPage />} />
+            <Route path={PATH_DASHBOARD.manageDepartments} element={<ManageDepartmentPage />} />
             
             <Route path={PATH_DASHBOARD.jobTitleRequest} element={<JobTitlesPage />} />
-            <Route path={PATH_DASHBOARD.clientRequest} element={<ClientsPage />} />
             <Route path={PATH_DASHBOARD.teamRequest} element={<TeamsPage />} />
-            <Route path={PATH_DASHBOARD.projectRequest} element={<ProjectsPage />} />
 
             <Route path={PATH_DASHBOARD.allocationByLeaveName} element={<AllocationByLeaveNamePage/>} />
             <Route path={PATH_DASHBOARD.myAllocation} element={<MyLeaveAllocationsPage/>} />
             <Route path={PATH_DASHBOARD.allocationByusername} element={<LeaveAllocationByUserNamePage />} />
+            <Route path={PATH_DASHBOARD.manageTimesheets} element={<ManageTimesheetPage />} />
+            <Route path={PATH_DASHBOARD.manageProjects} element={<ManageProjectPage />} />
           </Route>
 
           {/* Manager access roles */}

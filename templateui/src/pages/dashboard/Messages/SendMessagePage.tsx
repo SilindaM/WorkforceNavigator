@@ -127,10 +127,3 @@ const SendMessagePage = () => {
 };
 
 export default SendMessagePage;
-
-/*
-Phumula gardens secondary
-Lee Mofokeng
-Qwaqwa...Seotlong.Bekker school 
-Ingqaizivele Secondary School
-0101401415*/

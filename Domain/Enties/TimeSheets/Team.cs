@@ -12,7 +12,7 @@
   {
     public string TeamName { get; set; }
     public string Description { get; set; }
+    public IEnumerable<Project> Project { get; set; }
     public IEnumerable<ApplicationUser> TeamMembers { get; set; }
-      
   }
 }

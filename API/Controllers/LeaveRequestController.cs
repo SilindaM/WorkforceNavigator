@@ -46,6 +46,7 @@ namespace API.Controllers
       }
       return StatusCode(result.StatusCode, result.Message);
     }
+
     [HttpGet]
     [Route("LeaveRequests")]
     [Authorize]
@@ -54,6 +55,7 @@ namespace API.Controllers
       var leaveRequests = await leaveRequestService.GetAllLeaveRequests();
       return Ok(leaveRequests);
     }
+
     [HttpGet]
     [Route("LeaveRequestsByUsereName")]
     public async Task<ActionResult<IEnumerable<EmployeeLeaveAllocationDto>>> GetUserAllocationByUserNamesync(string userName)
@@ -67,6 +69,7 @@ namespace API.Controllers
 
       return Ok(leaveRequests); // Return HTTP 200 OK with the allocations
     }
+
     [HttpGet]
     [Route("MyLeaveRequests")]
     [Authorize]
@@ -82,6 +85,7 @@ namespace API.Controllers
 
       return Ok(mappr); // Return HTTP 200 OK with the allocations
     }
+
     [HttpGet]
     [Route("LeaveRequest/{requestId}")]
     public async Task<ActionResult<LeaveRequestDto>> GetLeaveRequestById([FromRoute] int requestId)
@@ -96,6 +100,7 @@ namespace API.Controllers
         return Ok(leaveRequests);
       }
     }
+
     [HttpPost]
     [Route("UpdateLeaveRequest")]
     [Authorize(Roles = StaticUserRoles.ADMIN)]
@@ -111,6 +116,7 @@ namespace API.Controllers
         return StatusCode(updateLeaveRequest.StatusCode, updateLeaveRequest.Message);
       }
     }
+
     [HttpPost]
     [Route("ProcessLeaveRequest")]
     [Authorize(Roles = StaticUserRoles.ADMIN)]
@@ -126,6 +132,7 @@ namespace API.Controllers
         return StatusCode(processLeaveRequest.StatusCode, processLeaveRequest.Message);
       }
     }
+
     [HttpGet("UpcomingLeaveRequest")]
     [Authorize]
     public async Task<ActionResult<IEnumerable<LeaveRequestDto>>> GetUpcomingLeaves()
@@ -144,6 +151,7 @@ namespace API.Controllers
         return StatusCode(500, $"Internal server error: {ex.Message}");
       }
     }
+
     [HttpPost]
     [Route("deleteLeaveRequest")]
     [Authorize(Roles = StaticUserRoles.ADMIN)]

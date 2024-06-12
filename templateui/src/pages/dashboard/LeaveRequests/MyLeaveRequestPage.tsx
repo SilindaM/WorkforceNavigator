@@ -13,7 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import LeaveRequestModal from "./LeaveRequestModal";
 import { MY_LEAVE_REQUESTS, NEW_LEAVE_REQUEST_URL, UPDATE_LEAVE_REQUEST_URL } from "../../../utils/globalConfig";
 
-const MyLeaveRequestPage = () => {
+const   MyLeaveRequestPage = () => {
   const { user } = useAuth();
   const [requests, setLeaveRequests] = useState<IMyLeaveRequestDto[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -106,7 +106,7 @@ const MyLeaveRequestPage = () => {
         startIcon={<AddIcon />}
         onClick={handleAdd}
       >
-        New Leave Request
+        New T
       </Button>
         <Table size="small" bordered>
           <Table.Header>

@@ -18,6 +18,7 @@ import FamilyRestroomIcon from '@mui/icons-material/FamilyRestroom';
 import SendIcon from '@mui/icons-material/Send';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import { PATH_DASHBOARD } from '../../routes/path';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/layout/header';
 import { boolean } from 'yup';
@@ -189,6 +190,21 @@ export default function NavSideBar() {
               }}
             >
             Generic Managament
+            </Button>
+          </Box>
+          <Box sx={{ p: 2 }}>
+            {/* Button with icon */}
+            <Button
+              variant="outlined"
+              fullWidth
+              sx={{ height: '60px' }} // Adjust the height as needed
+              startIcon={<CalendarMonthIcon />}
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                navigate(PATH_DASHBOARD.manageTimesheets);
+              }}
+            >
+            Timesheet Managament
             </Button>
           </Box>
         </Drawer>

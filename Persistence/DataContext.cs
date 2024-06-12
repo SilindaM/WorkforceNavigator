@@ -1,4 +1,3 @@
-
 namespace Persistence
 {
   using Domain.Account;
@@ -6,6 +5,7 @@ namespace Persistence
   using Domain.Enties.Leaves;
   using Domain.Enties.TimeSheets;
   using Domain.Entities;
+  using Domain.Entities.TimeSheets;
   using Microsoft.AspNetCore.Identity;
   using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
   using Microsoft.EntityFrameworkCore;
@@ -28,18 +28,19 @@ namespace Persistence
     public DbSet<LeaveRequest> LeaveRequests { get; set; }
     public DbSet<LeaveType> LeaveTypes { get; set; }
     public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
+    public DbSet<TimesheetEntry> TimesheetEntries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
 
+      builder.SeedData();
       base.OnModelCreating(builder);
 
       builder.Entity<JobTitle>()
-        .HasOne(x=>x.Department)
-        .WithMany(c=> c.JobTitles)
-        .HasForeignKey(x=>x.DepartmentId)
+        .HasOne(x => x.Department)
+        .WithMany(c => c.JobTitles)
+        .HasForeignKey(x => x.DepartmentId)
         .OnDelete(DeleteBehavior.Restrict);
-
 
       builder.Entity<LeaveRequest>()
        .HasKey(lr => lr.Id); // Assuming 'Id' is the primary key property
@@ -71,14 +72,15 @@ namespace Persistence
         e.ToTable("RoleClaims");
       });
 
+      builder.Entity<TimesheetEntry>()
+          .HasOne(te => te.Project)
+          .WithMany(p => p.TimesheetEntries)
+          .HasForeignKey(te => te.ProjectId);
 
-            //entity.HasOne(d => d.Client)
-            //    .WithMany(p => p.ProjectDto)
-            //    .HasForeignKey(d => d.ClientId)
-            //    .HasConstraintName("FK_ProjectDto_Client");
-
-
-
-        }
+      //entity.HasOne(d => d.Client)
+      //    .WithMany(p => p.ProjectDto)
+      //    .HasForeignKey(d => d.ClientId)
+      //    .HasConstraintName("FK_ProjectDto_Client");
     }
+  }
 }

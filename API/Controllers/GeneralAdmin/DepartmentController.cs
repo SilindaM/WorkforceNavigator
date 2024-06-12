@@ -5,8 +5,10 @@ namespace API.Controllers.GeneralAdmin
   using Application.Interfaces.GenericInterfaces;
   using Application.Services.Auth;
   using Application.Services.GenericServices;
+  using AutoMapper;
   using Domain.Dtos.Account;
   using Domain.Dtos.Departments;
+  using Domain.Dtos.GeneralAdmin;
   using Domain.Enties;
   using Domain.Enties.Leaves;
   using FluentResults;
@@ -19,17 +21,20 @@ namespace API.Controllers.GeneralAdmin
   {
     private readonly IGenericService<Department, DepartmentDto> _DepartmentService;
     private readonly IGenericService<Department, UpdateDepartmentDto> updateDepartmentService;
+    private readonly IDepartmentService departmentService;
 
-    public DepartmentController(
-        IGenericService<Department, DepartmentDto> DepartmentService,IGenericService<Department,UpdateDepartmentDto> updateDepartmentService)
+    public DepartmentController(IDepartmentService departmentService,
+        IGenericService<Department, DepartmentDto> DepartmentService, IGenericService<Department, UpdateDepartmentDto> updateDepartmentService)
+
     {
       _DepartmentService = DepartmentService;
       this.updateDepartmentService = updateDepartmentService;
+      this.departmentService = departmentService;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAllDepartments()
-  {
+    {
       var result = await _DepartmentService.GetAllAsync();
 
       return Ok(result);
@@ -47,6 +52,19 @@ namespace API.Controllers.GeneralAdmin
       {
         return Ok(result);
       }
+    }
+
+    [HttpGet]
+    [Route("DepartmentUserDetailJobTitle/{id}")]
+    public async Task<ActionResult<List<UserDetailJobTitle>>> GetDepartmentUserDetailJobTitle(int id)
+    {
+      var result = await departmentService.GetUserJobTitleTeamsListAsync(id);
+      if (result == null || !result.Any())
+      {
+        return NotFound($"No details found for departmentId: {id}");
+      }
+
+      return Ok(result);
     }
 
     [HttpPost("CreateDepartment")]
@@ -97,5 +115,6 @@ namespace API.Controllers.GeneralAdmin
       }
       return StatusCode(result.StatusCode, result.Message);
     }
+  
   }
 }
