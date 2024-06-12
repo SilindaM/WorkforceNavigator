@@ -97,7 +97,6 @@ const GenericModal = ({
     }
   }, [isOpen, selectedEntity, mode, formFields, register, setValue, initialValues]);
   
-
   return (
     <>
       <Modal show={isOpen} onHide={closeModal} centered>

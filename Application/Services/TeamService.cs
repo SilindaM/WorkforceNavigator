@@ -97,8 +97,6 @@
       }
       catch (Exception ex)
       {
-        // Log or handle the exception
-        Console.WriteLine($"An error occurred: {ex.Message}");
         return Enumerable.Empty<TeamMemberDetailsDto>(); // Return an empty list in case of an error
       }
     }

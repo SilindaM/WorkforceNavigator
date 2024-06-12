@@ -51,12 +51,6 @@ export const DELETE_DEPARTMENT_URL = '/Department/DeleteDepartment';
 export const ALL_DEPARTMENTS = '/Department';
 export const DEPARTMENT_JOBTITLE_TEAM='/Department/DepartmentUserDetailJobTitle';
 
-//JOB TITLE
-export const NEW_JOBTITLE_URL = '/JobTitle/CreateJobTitle';
-export const UPDATE_JOBTITLE_URL = '/JobTitle/UpdateJobTitle';
-export const DELETE_JOBTITLE_URL = '/JobTitle/DeleteJobTitle';
-export const ALL_JOB_TITLES = '/JobTitle';
-
 //TIMESHEET
 export const MY_TIMESHEETS = '/Timesheet';
 export const TIMESHEET_DAY_DETAILS = '/Timesheet/DAte';
@@ -82,6 +76,12 @@ export const DELETE_TEAM_URL = '/Team/DeleteTeam';
 export const ALL_TEAMS = '/Team';
 export const TEAM_DETAILS = '/Team/TeamUserDetailJobTitle';
 
+// JOBTITLE
+export const NEW_JOBTITLE_URL = '/JobTitle/CreateJobTitle';
+export const UPDATE_JOBTITLE_URL = '/JobTitle/UpdateJobTitle';
+export const DELETE_JOBTITLE_URL = '/JobTitle/DeleteJobTitle';
+export const ALL_JOBTITLES = '/JobTitle';
+export const JOBTITLE_DETAILS = '/JobTitle/JobTitleUserDetailJobTitle';
 
 
 //OTHERS

@@ -75,5 +75,21 @@
                       Seniority = jobTitle.Seniority.ToString() // Assuming Seniority is an enum
                     }).FirstOrDefaultAsync();
     }
+
+    public async Task<IEnumerable<JobTitleDto>> GetJobTitles()
+    {
+
+      var jobTitlesWithDepartments = await dataContext.JobTitles
+      .Include(jt => jt.Department)
+      .Select(jt => new JobTitleDto
+      {
+        Title = jt.Title,
+        DepartmentName = jt.Department.DepartmentName,
+        Description = jt.Description,
+        Seniority = jt.Seniority.ToString()
+      })
+      .ToListAsync();
+      return jobTitlesWithDepartments;
+    }
   }
 }
