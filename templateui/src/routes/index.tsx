@@ -27,12 +27,13 @@ import ManageUsersPage from '../pages/dashboard/User/ManageUsersPage';
 import UserDetails from '../pages/dashboard/User/UserDetails';
 import GenericManagementPage from '../pages/dashboard/GenericManagement/GenericManagementPage';
 import TeamsPage from '../pages/dashboard/GenericManagement/Teams/TeamsPage';
-import JobTitlesPage from '../pages/dashboard/GenericManagement/JobTitlesPage';
 import ProjectsPage from '../pages/dashboard/GenericManagement/Projects/ProjectsPage';
 import MyLogsPage from '../pages/dashboard/logs/MyLogsPage';
 import ManageTimesheetPage from '../pages/dashboard/Timesheet/ManageTimesheetPage';
 import ManageDepartmentPage from '../pages/dashboard/GenericManagement/Departments/ManageDepartmentPage';
 import ManageProjectPage from '../pages/dashboard/GenericManagement/Projects/ManageProjectPage';
+import ManageJobTitlePage from '../pages/dashboard/GenericManagement/JobTitles/ManageJobTitlePage';
+import ManageTeamPage from '../pages/dashboard/GenericManagement/Teams/ManageTeamPage';
 
 const GlobalRouter = () => {
     return (
@@ -65,8 +66,8 @@ const GlobalRouter = () => {
             
             <Route path={PATH_DASHBOARD.manageDepartments} element={<ManageDepartmentPage />} />
             
-            <Route path={PATH_DASHBOARD.jobTitleRequest} element={<JobTitlesPage />} />
-            <Route path={PATH_DASHBOARD.teamRequest} element={<TeamsPage />} />
+            <Route path={PATH_DASHBOARD.jobTitleRequest} element={<ManageJobTitlePage />} />
+            <Route path={PATH_DASHBOARD.teamRequest} element={<ManageTeamPage />} />
 
             <Route path={PATH_DASHBOARD.allocationByLeaveName} element={<AllocationByLeaveNamePage/>} />
             <Route path={PATH_DASHBOARD.myAllocation} element={<MyLeaveAllocationsPage/>} />
