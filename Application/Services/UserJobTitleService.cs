@@ -83,6 +83,7 @@
       .Include(jt => jt.Department)
       .Select(jt => new JobTitleDto
       {
+        Id= jt.Id,
         Title = jt.Title,
         DepartmentName = jt.Department.DepartmentName,
         Description = jt.Description,
@@ -90,6 +91,21 @@
       })
       .ToListAsync();
       return jobTitlesWithDepartments;
+    }
+
+    public async Task<IEnumerable<UserJobTitle>> GetJobTitleUserList(int id)
+    {
+      var usersWithJobTitle = await dataContext.Users
+          .Where(u => u.JobTitleId == id)
+          .Select(u => new UserJobTitle
+          {
+            FirstName = u.FirstName,
+            LastName = u.LastName,
+            From = u.CreatedAt // Assuming CreatedDate is the date from which the user holds this job title
+          })
+          .ToListAsync();
+
+      return usersWithJobTitle;
     }
   }
 }

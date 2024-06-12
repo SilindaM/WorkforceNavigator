@@ -54,6 +54,14 @@ namespace API.Controllers.GeneralAdmin
       return Ok(result);
     }
 
+    [HttpGet("JobTitleUser/{id}")]
+    public async Task<IActionResult> GetJobTitleUserList(int id)
+    {
+      var result = await userJobTitleService.GetJobTitleUserList(id);
+
+      return Ok(result);
+    }
+
     [HttpPost("CreateJobTitle")]
     public async Task<IActionResult> CreateJobTitle([FromBody] UpdateCreateJobTitleDto JobTitleDto)
     {
@@ -100,7 +108,6 @@ namespace API.Controllers.GeneralAdmin
       return StatusCode(result.StatusCode, result.Message);
     }
     [HttpGet("JobTitleUse")]
-
     public async Task<JobTitleDto> GetUserJobTitle(string userName)
     {
       var jobTitle = await userJobTitleService.GetJobTitleForUser(userName);
@@ -117,5 +124,6 @@ namespace API.Controllers.GeneralAdmin
       return StatusCode(result.StatusCode, result.Message);
 
     }
+
   }
 }

@@ -81,7 +81,7 @@ export const NEW_JOBTITLE_URL = '/JobTitle/CreateJobTitle';
 export const UPDATE_JOBTITLE_URL = '/JobTitle/UpdateJobTitle';
 export const DELETE_JOBTITLE_URL = '/JobTitle/DeleteJobTitle';
 export const ALL_JOBTITLES = '/JobTitle';
-export const JOBTITLE_DETAILS = '/JobTitle/JobTitleUserDetailJobTitle';
+export const JOBTITLE_DETAILS = '/JobTitle/JobTitleUser';
 
 
 //OTHERS

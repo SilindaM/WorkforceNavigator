@@ -11,7 +11,7 @@ import GenericModal from "../GenericModal";
 import { Seniority } from "../../../../types/auth.type";
 
 interface IProps {
-  selectedJobTitleId: (departmentId: number | null) => void;
+  selectedJobTitleId: (jobTitleId: number | null) => void;
 }
 
 const JobTitlesPage = ({ selectedJobTitleId }: IProps) => {
@@ -20,7 +20,7 @@ const JobTitlesPage = ({ selectedJobTitleId }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [jobTitles, setJobTitles] = useState<IJobTitleDto[]>([]);
   const [selectedJobTitle, setSelectedJobTitle] = useState<IJobTitleDto | null>(null);
-  const [departmentName, setJobTitleName] = useState<string | null>(null);
+  const [jobTitleName, setJobTitleName] = useState<string | null>(null);
   const [description, setDescription] = useState<string>("");
 
   const handleOpenModal = () => {
@@ -47,9 +47,11 @@ const JobTitlesPage = ({ selectedJobTitleId }: IProps) => {
     getJobTitles();
   };
 
-  const handleRowClick = (department: IJobTitleDto) => {
-    selectedJobTitleId(department.id);
-    setSelectedJobTitle(department);
+  const handleRowClick = (jobTitle: IJobTitleDto) => {
+    console.log("get id"+jobTitle.id);
+    selectedJobTitleId(jobTitle.id);
+    setSelectedJobTitle(jobTitle);
+    console.log("item "+jobTitle);
   };
 
   const UpdateJobTitle = async (
@@ -89,14 +91,14 @@ const JobTitlesPage = ({ selectedJobTitleId }: IProps) => {
 
   const columns = [
     { key: "title", label: "Title"},
-    { key: "departmentName", label: "Department"},
+    { key: "jobTitleName", label: "Department"},
     { key: "seniority", label: "Seniority"},
     { key: "description", label: "Description"},
     ];
 
     const initialValues = {
       id: selectedJobTitle?.id || null,
-      departmentName: selectedJobTitle?.description || "",
+      jobTitleName: selectedJobTitle?.description || "",
       description: selectedJobTitle?.description || "",
       title: selectedJobTitle?.title || "",
       seniority: selectedJobTitle?.seniority || "",
@@ -137,9 +139,9 @@ const JobTitlesPage = ({ selectedJobTitleId }: IProps) => {
         title="Add"
         formFields={[
           {
-            controlId: "departmentName",
-            label: "department Name",
-            value: departmentName,
+            controlId: "jobTitleName",
+            label: "jobTitle Name",
+            value: jobTitleName,
             onChange: setJobTitleName,
           },
           {

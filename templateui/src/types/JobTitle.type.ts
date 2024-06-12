@@ -11,6 +11,11 @@ export interface IUpdateJobTitleDto{
     id:number;
   }
 
+  export interface IJobTitleUserDto{
+    firstName : string;
+    lastName :string;
+    joiningDate:string;
+  }
   export interface ICreateJobTitleDto{
     title:string;
     description:string;

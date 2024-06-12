@@ -18,6 +18,6 @@
 
     Task<IEnumerable<ApplicationUser>> GetUsersByJobTitle(string title);
     Task<IEnumerable<JobTitleDto>> GetJobTitles();
-
+    Task<IEnumerable<UserJobTitle>> GetJobTitleUserList(int id);
   }
 }
