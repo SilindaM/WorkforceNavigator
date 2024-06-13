@@ -1,5 +1,6 @@
 ﻿namespace Application.Interfaces
 {
+  using Domain.Dtos.General;
   using Domain.Dtos.GeneralAdmin;
   using System;
   using System.Collections.Generic;
@@ -10,5 +11,6 @@
   public interface IProjectService
   {
     Task<IEnumerable<ProjectDto>> GetAllProjectsWithClientsAsync();
+    Task<GeneralServiceResponseDto> CreateProjectAsync(CreateProjectDto projectDto);
   }
 }

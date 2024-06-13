@@ -42,11 +42,11 @@ namespace API.Controllers.Auth
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(TimesheetEntry), 201)] // Define the response type for successful creation
+    [ProducesResponseType(typeof(Project), 201)] // Define the response type for successful creation
     [ProducesResponseType(typeof(IDictionary<string, string[]>), 400)] // Define the response type for validation errors
     public async Task<IActionResult> CreateNewProject([FromBody] CreateProjectDto projectDto)
     {
-      var result = await genericService.CreateAsync(projectDto);
+      var result = await projectService.CreateProjectAsync(projectDto);
       if (result.IsSucceed)
       {
         return Ok(result.Message);
