@@ -23,22 +23,19 @@
     }
     public async Task<IEnumerable<ProjectDto>> GetAllProjectsWithClientsAsync()
     {
-      var projects =  dataContext.Projects
-          .Join(dataContext.Clients, // Join projects with clients
-              project => project.ClientId,
-              client => client.Id,
-              (project, client) => new ProjectDto
-              {
-                ProjectName = project.ProjectName,
-                Description = project.Description,
-                StartDate = project.StartDate,
-                EndDate = project.EndDate,
-                ClientName = client.ClientName // Select ClientName from the join
-              })
-          .ToList();
-
+      var projects =  (from project in dataContext.Projects
+                            join client in dataContext.Clients on project.ClientId equals client.Id
+                            join team in dataContext.Teams on project.TeamId equals team.Id
+                            select new ProjectDto
+                            {
+                              ProjectName = project.ProjectName,
+                              Description = project.Description,
+                              StartDate = project.StartDate,
+                              EndDate = project.EndDate,
+                              ClientName = client.ClientName,
+                              TeamName = team.TeamName
+                            }).ToList();
       return projects;
     }
-
   }
 }

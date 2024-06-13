@@ -89,6 +89,8 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   const columns = [
     { key: "projectName", label: "Project Name" },
     { key: "description", label: "Description" },
+    { key: "clientName", label: "Client Name" },
+    { key: "teamName", label: "Team Name" },
     { key: "startDate", label: "Start Date" },
     { key: "endDate", label: "End Date" },
   ];
@@ -96,7 +98,9 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   const initialValues = {
     id: selectedProject?.id || null,
     projectName: selectedProject?.projectName || "",
-    description: selectedProject?.clientName || "",
+    description: selectedProject?.description || "",
+    clientName: selectedProject?.clientName || "",
+    teamName: selectedProject?.teamName || "",
     startDate: selectedProject?.startDate || null,
     endDate: selectedProject?.endDate || null,
   };
@@ -170,5 +174,4 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
     </div>
   );
 };
-
 export default ProjectsPage;
