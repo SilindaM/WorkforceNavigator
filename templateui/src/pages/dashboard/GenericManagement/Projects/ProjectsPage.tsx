@@ -7,7 +7,9 @@ import { GenericCrudOperations } from "../../../../components/general/GenericCru
 import TableField from "../../../../components/general/TableField";
 import GenericModal from "../GenericModal";
 import { IProjectDto, IUpdateProjectDto } from "../../../../types/Project.type";
-import { ALL_PROJECTS, DELETE_PROJECT_URL, NEW_PROJECT_URL, UPDATE_PROJECT_URL } from "../../../../utils/globalConfig";
+import { ALL_CLIENTS, ALL_PROJECTS, ALL_TEAMS, DELETE_PROJECT_URL, NEW_PROJECT_URL, UPDATE_PROJECT_URL } from "../../../../utils/globalConfig";
+import { ITeamDto } from "../../../../types/Team.type";
+import { IClientDto } from "../../../../types/Client.type";
 
 interface IProps {
   selectedProjectId: (projectId: number | null) => void;
@@ -18,15 +20,21 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(false);
   const [projects, setProjects] = useState<IProjectDto[]>([]);
+  const [teams, setTeams] = useState<ITeamDto[]>([]);
+  const [clients, setClients] = useState<IClientDto[]>([]);
   const [selectedProject, setSelectedProject] = useState<IProjectDto | null>(null);
   const [projectName, setProjectName] = useState<string | null>(null);
   const [description, setDescription] = useState<string>("");
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   const handleOpenModal = () => {
     setIsOpen(true);
     setSelectedProject(null); // Reset selectedProject to null
     setProjectName(null); // Reset form fields to empty
     setDescription("");
+    setStartDate(null);
+    setEndDate(null);
   };
 
   const handleCloseModal = () => {
@@ -36,7 +44,22 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   const getProjects = async () => {
     await GenericCrudOperations.getAll(
       ALL_PROJECTS,
+      setTeams,
+      setLoading
+    );
+  };
+  const getTeams = async () => {
+    await GenericCrudOperations.getAll(
+      ALL_TEAMS,
       setProjects,
+      setLoading
+    );
+  };
+
+  const getClients = async () => {
+    await GenericCrudOperations.getAll(
+      ALL_CLIENTS,
+      setClients,
       setLoading
     );
   };
@@ -70,7 +93,9 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   const handleEdit = (updatedData: IProjectDto) => {
     setSelectedProject(updatedData);
     setProjectName(updatedData.projectName || "");
-    setDescription(updatedData.clientName || "");
+    setDescription(updatedData.description || "");
+    setStartDate(new Date(updatedData.startDate));
+    setEndDate(new Date(updatedData.endDate));
     handleOpenModal();
   };
 
@@ -84,6 +109,8 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
 
   useEffect(() => {
     getProjects();
+    getTeams();
+    getClients();
   }, []);
 
   const columns = [
@@ -152,16 +179,34 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
             onChange: setDescription,
           },
           {
+            controlId: "teamId",
+            label: "Team",
+            value: selectedProject?.teamName || "",
+            onChange: (value: any) => {/* Handle change */},
+            options: teams.map(team => ({ value: team.id, label: team.teamName })),
+            type: "select",
+          },
+          {
+            controlId: "Client",
+            label: "Team",
+            value: selectedProject?.clientName || "",
+            onChange: (value: any) => {/* Handle change */},
+            options: clients.map(client => ({ value: client.id, label: client.clientName })),
+            type: "select",
+          },
+          {
             controlId: "startDate",
             label: "Start Date",
-            value: initialValues.startDate,
-            onChange: () => {}, // Add the onChange handler if needed
+            value: startDate,
+            onChange: setStartDate,
+            type: "date",
           },
           {
             controlId: "endDate",
             label: "End Date",
-            value: initialValues.endDate,
-            onChange: () => {}, // Add the onChange handler if needed
+            value: endDate,
+            onChange: setEndDate,
+            type: "date",
           },
         ]}
         handleSubmit={handleSubmit}
@@ -174,4 +219,5 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
     </div>
   );
 };
+
 export default ProjectsPage;
