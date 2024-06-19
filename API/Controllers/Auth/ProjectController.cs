@@ -41,7 +41,7 @@ namespace API.Controllers.Auth
       }
     }
 
-    [HttpPost]
+    [HttpPost("CreateProject")]
     [ProducesResponseType(typeof(Project), 201)] // Define the response type for successful creation
     [ProducesResponseType(typeof(IDictionary<string, string[]>), 400)] // Define the response type for validation errors
     public async Task<IActionResult> CreateNewProject([FromBody] CreateProjectDto projectDto)
