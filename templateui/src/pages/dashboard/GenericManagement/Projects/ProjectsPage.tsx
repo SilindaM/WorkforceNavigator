@@ -29,16 +29,9 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [selectedTeamId, setSelectedTeamId] = useState<number | null>(null);
   const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
-  
+
   const handleOpenModal = () => {
     setIsOpen(true);
-    setSelectedProject(null); // Reset selectedProject to null
-    setProjectName(null); // Reset form fields to empty
-    setDescription("");
-    setStartDate(null);
-    setEndDate(null);
-    setSelectedClientId(null);
-    setSelectedTeamId(null);
   };
 
   const handleCloseModal = () => {
@@ -46,48 +39,30 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   };
 
   const getProjects = async () => {
-    await GenericCrudOperations.getAll(
-      ALL_PROJECTS,
-      setProjects,
-      setLoading
-    );
+    await GenericCrudOperations.getAll(ALL_PROJECTS, setProjects, setLoading);
   };
 
   const getTeams = async () => {
-    await GenericCrudOperations.getAll(
-      ALL_TEAMS,
-      setTeams,
-      setLoading
-    );
+    await GenericCrudOperations.getAll(ALL_TEAMS, setTeams, setLoading);
   };
 
   const getClients = async () => {
-    await GenericCrudOperations.getAll(
-      ALL_CLIENTS,
-      setClients,
-      setLoading
-    );
+    await GenericCrudOperations.getAll(ALL_CLIENTS, setClients, setLoading);
   };
 
   const AddProject = async (newData: ICreateProjectDto) => {
-    console.log("check data",newData);
     await GenericCrudOperations.add(NEW_PROJECT_URL, newData, setLoading);
+    await getProjects(); // Refresh projects list
   };
 
-  const UpdateProject = async (
-    id: number,
-    updatedData: IUpdateProjectDto
-  ) => {
-    await GenericCrudOperations.update(
-      UPDATE_PROJECT_URL,
-      id,
-      updatedData,
-      setLoading
-    );
+  const UpdateProject = async (id: number, updatedData: IUpdateProjectDto) => {
+    await GenericCrudOperations.update(UPDATE_PROJECT_URL, id, updatedData, setLoading);
+    await getProjects(); // Refresh projects list
   };
 
   const DeleteProject = async (id: number) => {
     await GenericCrudOperations.remove(DELETE_PROJECT_URL, id, setLoading);
+    await getProjects(); // Refresh projects list
   };
 
   const handleEdit = (updatedData: IProjectDto) => {
@@ -127,12 +102,12 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
 
   const initialValues = {
     id: selectedProject?.id || null,
-    projectName: selectedProject?.projectName || "",
-    clientName: selectedProject?.clientName || "",
-    teamName: selectedProject?.teamName || "",
-    description: selectedProject?.description || "",
-    startDate: selectedProject?.startDate || null,
-    endDate: selectedProject?.endDate || null,
+    projectName: projectName || "",
+    clientId: selectedClientId || null,
+    teamId: selectedTeamId || null,
+    description: description || "",
+    startDate: startDate || null,
+    endDate: endDate || null,
   };
   
   return (
@@ -146,10 +121,7 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
                   variant="outlined"
                   sx={{ height: "40px" }}
                   startIcon={<AddIcon />}
-                  onClick={() => {
-                    handleOpenModal()
-                    
-                  }}
+                  onClick={() => handleOpenModal()}
                 >
                   New
                 </Button>
@@ -169,7 +141,7 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
       <GenericModal
         isOpen={isOpen}
         closeModal={handleCloseModal}
-        title="Add"
+        title={selectedProject ? "Edit Project" : "Add Project"}
         formFields={[
           {
             controlId: "projectName",
