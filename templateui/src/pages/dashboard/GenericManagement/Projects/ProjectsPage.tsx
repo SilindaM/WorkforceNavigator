@@ -31,6 +31,7 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
 
   const handleOpenModal = () => {
+    setSelectedProject(null);
     setIsOpen(true);
   };
 
@@ -64,6 +65,18 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
     await GenericCrudOperations.remove(DELETE_PROJECT_URL, id, setLoading);
     await getProjects(); // Refresh projects list
   };
+
+  const handleOpenForAdd = () => {
+    setSelectedProject(null);
+    setProjectName("");
+    setDescription("");
+    setStartDate(null);
+    setEndDate(null);
+    setSelectedTeamId(null);
+    setSelectedClientId(null);
+    handleOpenModal();
+  };
+  
 
   const handleEdit = (updatedData: IProjectDto) => {
     setSelectedProject(updatedData);
@@ -121,7 +134,7 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
                   variant="outlined"
                   sx={{ height: "40px" }}
                   startIcon={<AddIcon />}
-                  onClick={() => handleOpenModal()}
+                  onClick={() => handleOpenForAdd()}
                 >
                   New
                 </Button>
