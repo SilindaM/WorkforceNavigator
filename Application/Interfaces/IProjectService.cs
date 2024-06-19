@@ -12,5 +12,6 @@
   {
     Task<IEnumerable<ProjectDto>> GetAllProjectsWithClientsAsync();
     Task<GeneralServiceResponseDto> CreateProjectAsync(CreateProjectDto projectDto);
+    Task<GeneralServiceResponseDto> UpdateProjectAsync(CreateProjectDto projectDto);
   }
 }

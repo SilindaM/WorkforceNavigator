@@ -69,6 +69,55 @@
         throw new Exception("Failed to create project.", ex);
       }
     }
+    public async Task<GeneralServiceResponseDto> UpdateProjectAsync(int projectId, CreateProjectDto projectDto)
+    {
+      try
+      {
+        // Check if the project exists
+        var existingProject = await dataContext.Projects.FindAsync(projectId);
+        if (existingProject == null)
+        {
+          return ResponseHelper.CreateResponse(false, 404, $"Project with ID {projectId} does not exist.");
+        }
+
+        // Check if ClientId exists
+        if (!await ClientExistsAsync(projectDto.ClientId))
+        {
+          return ResponseHelper.CreateResponse(false, 400, $"Client with ID {projectDto.ClientId} does not exist.");
+        }
+
+        // Check if TeamId exists
+        if (!await TeamExistsAsync(projectDto.TeamId))
+        {
+          return ResponseHelper.CreateResponse(false, 400, $"Team with ID {projectDto.TeamId} does not exist.");
+        }
+
+        // Check if EndDate is after StartDate
+        if (!IsEndDateAfterStartDate(projectDto.StartDate, projectDto.EndDate))
+        {
+          return ResponseHelper.CreateResponse(false, 400, "End Date must be after Start Date.");
+        }
+
+        // Update the project properties
+        existingProject.ProjectName = projectDto.ProjectName;
+        existingProject.ClientId = projectDto.ClientId;
+        existingProject.Description = projectDto.Description;
+        existingProject.StartDate = projectDto.StartDate;
+        existingProject.EndDate = projectDto.EndDate;
+        existingProject.TeamId = projectDto.TeamId;
+
+        // Save changes to the database
+        dataContext.Projects.Update(existingProject);
+        await dataContext.SaveChangesAsync();
+
+        return ResponseHelper.CreateResponse(true, 200, "Project Updated Successfully");
+      }
+      catch (Exception ex)
+      {
+        // Handle exceptions or rethrow as needed
+        throw new Exception("Failed to update project.", ex);
+      }
+    }
 
     public async Task<IEnumerable<ProjectDto>> GetAllProjectsWithClientsAsync()
     {
@@ -104,5 +153,9 @@
       return endDate > startDate;
     }
 
+    public Task<GeneralServiceResponseDto> UpdateProjectAsync(CreateProjectDto projectDto)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

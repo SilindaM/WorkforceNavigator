@@ -54,6 +54,28 @@ namespace API.Controllers.Auth
       return StatusCode(result.StatusCode, result.Message);
     }
 
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(Project), 200)] // Define the response type for successful update
+    [ProducesResponseType(typeof(IDictionary<string, string[]>), 400)] // Define the response type for validation errors
+    [ProducesResponseType(404)] // Define the response type for not found
+    public async Task<IActionResult> UpdateProject(int id, [FromBody] CreateProjectDto projectDto)
+    {
+      try
+      {
+        var updatedProject = await genericService.UpdateAsync(id, projectDto);
+        if (updatedProject == null)
+        {
+          return NotFound("Project not found");
+        }
+
+        return Ok(updatedProject);
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, $"An error occurred while updating project: {ex.Message}");
+      }
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProjectById(int id)
     {
