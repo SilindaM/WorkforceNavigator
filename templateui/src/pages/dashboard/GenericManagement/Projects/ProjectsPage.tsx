@@ -6,7 +6,7 @@ import { GridColumn, Segment, Header, Container } from "semantic-ui-react";
 import { GenericCrudOperations } from "../../../../components/general/GenericCrudOperations";
 import TableField from "../../../../components/general/TableField";
 import GenericModal from "../GenericModal";
-import { IProjectDto, IUpdateProjectDto } from "../../../../types/Project.type";
+import { ICreateProjectDto, IProjectDto, IUpdateProjectDto } from "../../../../types/Project.type";
 import { ALL_CLIENTS, ALL_PROJECTS, ALL_TEAMS, DELETE_PROJECT_URL, NEW_PROJECT_URL, UPDATE_PROJECT_URL } from "../../../../utils/globalConfig";
 import { ITeamDto } from "../../../../types/Team.type";
 import { IClientDto } from "../../../../types/Client.type";
@@ -27,7 +27,9 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   const [description, setDescription] = useState<string>("");
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-
+  const [selectedTeamId, setSelectedTeamId] = useState<number | null>(null);
+  const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
+  
   const handleOpenModal = () => {
     setIsOpen(true);
     setSelectedProject(null); // Reset selectedProject to null
@@ -35,6 +37,8 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
     setDescription("");
     setStartDate(null);
     setEndDate(null);
+    setSelectedClientId(null);
+    setSelectedTeamId(null);
   };
 
   const handleCloseModal = () => {
@@ -44,14 +48,15 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   const getProjects = async () => {
     await GenericCrudOperations.getAll(
       ALL_PROJECTS,
-      setTeams,
+      setProjects,
       setLoading
     );
   };
+
   const getTeams = async () => {
     await GenericCrudOperations.getAll(
       ALL_TEAMS,
-      setProjects,
+      setTeams,
       setLoading
     );
   };
@@ -64,14 +69,9 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
     );
   };
 
-  const AddProject = async (newData: IProjectDto) => {
+  const AddProject = async (newData: ICreateProjectDto) => {
+    console.log("check data",newData);
     await GenericCrudOperations.add(NEW_PROJECT_URL, newData, setLoading);
-    getProjects();
-  };
-
-  const handleRowClick = (project: IProjectDto) => {
-    selectedProjectId(project.id);
-    setSelectedProject(project);
   };
 
   const UpdateProject = async (
@@ -96,6 +96,9 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
     setDescription(updatedData.description || "");
     setStartDate(new Date(updatedData.startDate));
     setEndDate(new Date(updatedData.endDate));
+    setSelectedTeamId(teams.find(team => team.teamName === updatedData.teamName)?.id || null);
+    setSelectedClientId(clients.find(client => client.clientName === updatedData.clientName)?.id || null);
+  
     handleOpenModal();
   };
 
@@ -115,9 +118,9 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
 
   const columns = [
     { key: "projectName", label: "Project Name" },
-    { key: "description", label: "Description" },
     { key: "clientName", label: "Client Name" },
     { key: "teamName", label: "Team Name" },
+    { key: "description", label: "Description" },
     { key: "startDate", label: "Start Date" },
     { key: "endDate", label: "End Date" },
   ];
@@ -125,13 +128,13 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   const initialValues = {
     id: selectedProject?.id || null,
     projectName: selectedProject?.projectName || "",
-    description: selectedProject?.description || "",
     clientName: selectedProject?.clientName || "",
     teamName: selectedProject?.teamName || "",
+    description: selectedProject?.description || "",
     startDate: selectedProject?.startDate || null,
     endDate: selectedProject?.endDate || null,
   };
-
+  
   return (
     <div>
       <Container fluid className="pageTemplate3">
@@ -143,7 +146,10 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
                   variant="outlined"
                   sx={{ height: "40px" }}
                   startIcon={<AddIcon />}
-                  onClick={() => handleOpenModal()}
+                  onClick={() => {
+                    handleOpenModal()
+                    
+                  }}
                 >
                   New
                 </Button>
@@ -153,7 +159,6 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
                 rows={projects}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
-                onRowClick={handleRowClick}
                 showActions={true}
               />
             </Segment>
@@ -173,26 +178,32 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
             onChange: setProjectName,
           },
           {
+            controlId: "teamId",
+            label: "Team",
+            value: selectedTeamId || "",
+            onChange: (value: any) => setSelectedTeamId(Number(value)),
+            options: teams.map(team => ({
+              value: team.id,
+              label: team.teamName
+            })),
+            type: "select",
+          },
+          {
+            controlId: "clientId",
+            label: "Client",
+            value: selectedClientId || "",
+            onChange: (value: any) => setSelectedClientId(Number(value)),
+            options: clients.map(client => ({
+              value: client.id,
+              label: client.clientName
+            })),
+            type: "select",
+          },
+          {
             controlId: "description",
             label: "Description",
             value: description,
             onChange: setDescription,
-          },
-          {
-            controlId: "teamId",
-            label: "Team",
-            value: selectedProject?.teamName || "",
-            onChange: (value: any) => {/* Handle change */},
-            options: teams.map(team => ({ value: team.id, label: team.teamName })),
-            type: "select",
-          },
-          {
-            controlId: "Client",
-            label: "Team",
-            value: selectedProject?.clientName || "",
-            onChange: (value: any) => {/* Handle change */},
-            options: clients.map(client => ({ value: client.id, label: client.clientName })),
-            type: "select",
           },
           {
             controlId: "startDate",

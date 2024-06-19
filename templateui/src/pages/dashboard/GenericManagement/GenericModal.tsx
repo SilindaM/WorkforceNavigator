@@ -12,7 +12,7 @@ interface FormField {
   value: any;
   onChange: (value: any) => void;
   disabled?: boolean;
-  options?: { value: any; label: string }[];
+  options?: { value: number; label: string }[];
   type?: string; // Add type field for different input types
 }
 

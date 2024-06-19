@@ -2,6 +2,7 @@ export interface IUpdateTeamDto{
     teamName:string;
     description:string;
   }
+  
   export interface ITeamDto extends IUpdateTeamDto{
     id:number;
   }
