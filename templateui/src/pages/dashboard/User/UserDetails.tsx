@@ -87,8 +87,6 @@ const UserDetails = ({ username }: IProps) => {
     { key: "female", text: "Female", value: "female" },
   ];
 
-  const selectedGender = userDetails ? Gender.find((option) => option.value === userDetails.gender) : null;
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const { name, value } = event.target;
