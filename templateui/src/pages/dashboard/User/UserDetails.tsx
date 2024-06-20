@@ -22,8 +22,8 @@ import {
 import axiosInstance from "../../../utils/axiosInstance";
 import {
   ALL_DEPARTMENTS,
+  ALL_JOBTITLES,
   MY_LEAVE_REQUESTS,
-  UPCOMNG_LEAVE_REQUESTS,
   UPDATE_USER_DETAILS,
   USER_DETAILS_URL,
 } from "../../../utils/globalConfig";
@@ -32,6 +32,7 @@ import { IMyLeaveAllocationDto } from "../../../types/leaveAllocation.type";
 import { IMyLeaveRequestDto, Status } from "../../../types/leaveRequest.type";
 import { RolesEnum } from "../../../types/auth.type";
 import { GenericCrudOperations } from "../../../components/general/GenericCrudOperations";
+import { IJobTitleDto } from "../../../types/JobTitle.type";
 
 interface IProps {
   username: string;
@@ -50,22 +51,26 @@ const UserDetails = ({ username }: IProps) => {
   const [jobTitle, setJobtitle] = useState<string>("");
   const [departmentName, setdepartmentName] = useState<string>("");
   const [roles, setRoles] = useState<RolesEnum[]>([]);
-  const [department, setDepartments] = useState<DepartmentDto[]>([]);
+  const [departments, setDepartments] = useState<DepartmentDto[]>([]);
+  const [jobTitles, setJobTitles] = useState<IJobTitleDto[]>([]);
 
-  const UpdateUserDetails = async (updateUsername: string,userDetail: UserDetailsUpdateDto) => {
-    await GenericCrudOperations.update(UPDATE_USER_DETAILS,updateUsername,userDetails,setLoading);
-};
-
-  const getAllDepartments= async()=>{
-   await GenericCrudOperations.getAll(ALL_DEPARTMENTS,setDepartments,setLoading);
+  const UpdateUserDetails = async (updateUsername: string, userDetail: UserDetailsUpdateDto) => {
+    await GenericCrudOperations.update(UPDATE_USER_DETAILS, updateUsername, userDetails, setLoading);
   };
-  
+
+  const getJobTitles = async () => {
+    await GenericCrudOperations.getAll(ALL_JOBTITLES, setJobTitles, setLoading);
+  };
+
+  const getAllDepartments = async () => {
+    await GenericCrudOperations.getAll(ALL_DEPARTMENTS, setDepartments, setLoading);
+  };
+
   const getMyLeaves = async () => {
-    await GenericCrudOperations.getAll(MY_LEAVE_REQUESTS,setLeaves,setLoading);
+    await GenericCrudOperations.getAll(MY_LEAVE_REQUESTS, setLeaves, setLoading);
   };
 
   const getUserDetails = async (username: string) => {
-    console.log(username);
     await GenericCrudOperations.getDetails(USER_DETAILS_URL, username, setUserDetails, setLoading);
   };
 
@@ -73,26 +78,16 @@ const UserDetails = ({ username }: IProps) => {
     getUserDetails(username);
     getMyLeaves();
     getAllDepartments();
+    getJobTitles();
     setUserDetails(undefined);
-
-    console.log("Effect " + username);
   }, [username]);
 
   const Gender = [
     { key: "male", text: "Male", value: "male" },
     { key: "female", text: "Female", value: "female" },
   ];
-  const Depar = [department];
 
-  const selectedGender = userDetails
-    ? Gender.find((option) => option.value === userDetails.gender)
-    : null;
-    
-  const selectedDepartment = userDetails
-    ? department.find(
-        (option) => option.departmentName === userDetails.department
-      )
-    : null;
+  const selectedGender = userDetails ? Gender.find((option) => option.value === userDetails.gender) : null;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -134,7 +129,7 @@ const UserDetails = ({ username }: IProps) => {
     };
     UpdateUserDetails(username, updateData);
   };
-  
+
   return (
     <div style={{ padding: "20px" }}>
       <Segment>
@@ -147,10 +142,9 @@ const UserDetails = ({ username }: IProps) => {
             <Form.Field>
               <label>Last Name</label>
               <input type="text" defaultValue={userDetails?.lastName} />
-            </Form.Field>{" "}
+            </Form.Field>
             <Form.Field>
               <label>Gender</label>
-              <input type="text" defaultValue={userDetails?.gender} />
               <Dropdown
                 selection
                 options={Gender}
@@ -167,34 +161,20 @@ const UserDetails = ({ username }: IProps) => {
               <label>Email</label>
               <input type="email" defaultValue={userDetails?.email} />
             </Form.Field>
-            <Form.Field>
-              <label>Cellphone</label>
-              <input type="text" defaultValue={userDetails?.email} />
-            </Form.Field>
           </Form.Group>
           <Form.Group widths="equal">
             <Form.Field>
               <label>Career Manager</label>
-              <input
-                placeholder="Career Manager"
-                type="text"
-                defaultValue={userDetails?.lineManager}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Department</label>
-              <input type="text" defaultValue={userDetails?.department} />
               <Dropdown
                 selection
-                options={department.map((dept) => ({
+                options={departments.map((dept) => ({
                   key: dept.id,
                   text: dept.departmentName,
                   value: dept.departmentName,
-                }))} // Map department names as options
-                defaultValue={userDetails?.department} // Use selectedGender value if available
+                }))}
+                defaultValue={userDetails?.lineManager}
               />
             </Form.Field>
-
             <Form.Field>
               <label>Level</label>
               <input
@@ -222,9 +202,7 @@ const UserDetails = ({ username }: IProps) => {
                 type="date"
                 value={
                   userDetails?.joiningDate
-                    ? new Date(userDetails.joiningDate)
-                        .toISOString()
-                        .substring(0, 10)
+                    ? new Date(userDetails.joiningDate).toISOString().substring(0, 10)
                     : ""
                 }
                 disabled
@@ -232,13 +210,14 @@ const UserDetails = ({ username }: IProps) => {
             </Form.Field>
             <Form.Field>
               <label>Job Title</label>
-              <input type="text" defaultValue={userDetails?.jobTitle} />
               <Dropdown
                 selection
-                options={Gender}
-                defaultValue={
-                  selectedGender ? selectedGender.value : userDetails?.jobTitle
-                } // Use selectedGender value if available
+                options={jobTitles.map((title) => ({
+                  key: title.id,
+                  text: title.title,
+                  value: title.title,
+                }))}
+                defaultValue={userDetails?.jobTitle}
               />
             </Form.Field>
           </Form.Group>
@@ -259,30 +238,20 @@ const UserDetails = ({ username }: IProps) => {
             </TableRow>
           </Table.Header>
           <TableBody>
-            {leaves.filter((row) => row.status === Status.Approved).length >
-            0 ? (
-              // Render approved leave requests if there are any
+            {leaves.filter((row) => row.status === Status.Approved).length > 0 ? (
               leaves
                 .filter((row) => row.status === Status.Approved)
                 .map((row) => (
                   <TableRow key={row.id}>
-                    {/* Table cells */}
-                    <Table.Cell>
-                      {new Date(row.startDate).toLocaleDateString()}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {new Date(row.endDate).toLocaleDateString()}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {new Date(row.requestedDate).toLocaleDateString()}
-                    </Table.Cell>
+                    <Table.Cell>{new Date(row.startDate).toLocaleDateString()}</Table.Cell>
+                    <Table.Cell>{new Date(row.endDate).toLocaleDateString()}</Table.Cell>
+                    <Table.Cell>{new Date(row.requestedDate).toLocaleDateString()}</Table.Cell>
                     <Table.Cell>{row.numberOfDays}</Table.Cell>
                     <Table.Cell>{row.leaveName}</Table.Cell>
                     <Table.Cell>{row.status}</Table.Cell>
                   </TableRow>
                 ))
             ) : (
-              // Render "No upcoming leave requests" if there are no approved leaves
               <TableRow>
                 <Table.Cell colSpan={6} textAlign="center">
                   No upcoming leave requests
