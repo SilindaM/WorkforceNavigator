@@ -2,6 +2,7 @@ export interface IUpdateDepartmentDto{
   departmentName:string;
   description:string;
 }
+
 export interface IDepartmentDto extends IUpdateDepartmentDto{
   id:number;
 }

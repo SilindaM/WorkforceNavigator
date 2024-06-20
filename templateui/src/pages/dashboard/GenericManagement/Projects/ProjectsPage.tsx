@@ -6,8 +6,19 @@ import { GridColumn, Segment, Header, Container } from "semantic-ui-react";
 import { GenericCrudOperations } from "../../../../components/general/GenericCrudOperations";
 import TableField from "../../../../components/general/TableField";
 import GenericModal from "../GenericModal";
-import { ICreateProjectDto, IProjectDto, IUpdateProjectDto } from "../../../../types/Project.type";
-import { ALL_CLIENTS, ALL_PROJECTS, ALL_TEAMS, DELETE_PROJECT_URL, NEW_PROJECT_URL, UPDATE_PROJECT_URL } from "../../../../utils/globalConfig";
+import {
+  ICreateProjectDto,
+  IProjectDto,
+  IUpdateProjectDto,
+} from "../../../../types/Project.type";
+import {
+  ALL_CLIENTS,
+  ALL_PROJECTS,
+  ALL_TEAMS,
+  DELETE_PROJECT_URL,
+  NEW_PROJECT_URL,
+  UPDATE_PROJECT_URL,
+} from "../../../../utils/globalConfig";
 import { ITeamDto } from "../../../../types/Team.type";
 import { IClientDto } from "../../../../types/Client.type";
 
@@ -31,12 +42,12 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
 
   const handleOpenModal = () => {
-    setSelectedProject(null);
     setIsOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsOpen(false);
+    setSelectedProject(null); // Reset selected project after closing modal
   };
 
   const getProjects = async () => {
@@ -57,7 +68,12 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
   };
 
   const UpdateProject = async (id: number, updatedData: IUpdateProjectDto) => {
-    await GenericCrudOperations.update(UPDATE_PROJECT_URL, id, updatedData, setLoading);
+    await GenericCrudOperations.update(
+      UPDATE_PROJECT_URL,
+      id,
+      updatedData,
+      setLoading
+    );
     await getProjects(); // Refresh projects list
   };
 
@@ -76,7 +92,6 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
     setSelectedClientId(null);
     handleOpenModal();
   };
-  
 
   const handleEdit = (updatedData: IProjectDto) => {
     setSelectedProject(updatedData);
@@ -84,9 +99,8 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
     setDescription(updatedData.description || "");
     setStartDate(new Date(updatedData.startDate));
     setEndDate(new Date(updatedData.endDate));
-    setSelectedTeamId(teams.find(team => team.teamName === updatedData.teamName)?.id || null);
-    setSelectedClientId(clients.find(client => client.clientName === updatedData.clientName)?.id || null);
-  
+    setSelectedTeamId(teams.find((team) => team.teamName === updatedData.teamName)?.id || null);
+    setSelectedClientId(clients.find((client) => client.clientName === updatedData.clientName)?.id || null);
     handleOpenModal();
   };
 
@@ -122,7 +136,7 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
     startDate: startDate || null,
     endDate: endDate || null,
   };
-  
+
   return (
     <div>
       <Container fluid className="pageTemplate3">
@@ -167,9 +181,9 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
             label: "Team",
             value: selectedTeamId || "",
             onChange: (value: any) => setSelectedTeamId(Number(value)),
-            options: teams.map(team => ({
+            options: teams.map((team) => ({
               value: team.id,
-              label: team.teamName
+              label: team.teamName,
             })),
             type: "select",
           },
@@ -178,9 +192,9 @@ const ProjectsPage = ({ selectedProjectId }: IProps) => {
             label: "Client",
             value: selectedClientId || "",
             onChange: (value: any) => setSelectedClientId(Number(value)),
-            options: clients.map(client => ({
+            options: clients.map((client) => ({
               value: client.id,
-              label: client.clientName
+              label: client.clientName,
             })),
             type: "select",
           },
