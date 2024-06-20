@@ -8,7 +8,6 @@ import TableField from "../../../../components/general/TableField";
 import { IJobTitleDto, IUpdateJobTitleDto } from "../../../../types/JobTitle.type";
 import {  NEW_JOBTITLE_URL, UPDATE_JOBTITLE_URL, DELETE_JOBTITLE_URL, ALL_JOBTITLES } from "../../../../utils/globalConfig";
 import GenericModal from "../GenericModal";
-import { Seniority } from "../../../../types/auth.type";
 
 interface IProps {
   selectedJobTitleId: (departmentId: number | null) => void;
