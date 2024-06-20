@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Table, ButtonGroup } from "react-bootstrap";
 import { Button, TableHead, TablePagination } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { format } from 'date-fns';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { format } from "date-fns";
 
 interface TableFieldProps<T> {
   rows: T[];
@@ -11,8 +11,8 @@ interface TableFieldProps<T> {
   onEdit?: (data: any) => void;
   onDelete?: (id: number) => void;
   options?: { value: any; label: string }[];
-  onRowClick?: (value: any ) => void; // Added this line
-  showActions?:boolean;
+  onRowClick?: (value: any) => void; // Added this line
+  showActions?: boolean;
 }
 
 const TableField = <T,>({
@@ -20,7 +20,7 @@ const TableField = <T,>({
   columns,
   onEdit,
   onDelete,
-  onRowClick ,// Add this line,
+  onRowClick, // Add this line,
   showActions,
 }: TableFieldProps<T>) => {
   const [page, setPage] = useState(0);
@@ -37,13 +37,16 @@ const TableField = <T,>({
     setPage(0);
   };
 
-  const slicedRows = rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  const slicedRows = rows.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
 
   const formatDate = (date: Date) => {
     try {
-      return format(date, 'yyyy-MM-dd');
+      return format(date, "yyyy-MM-dd");
     } catch (error) {
-      console.error('Invalid date format', date);
+      console.error("Invalid date format", date);
       return date.toString();
     }
   };
@@ -55,45 +58,47 @@ const TableField = <T,>({
           <tr>
             {columns.map((column) => (
               <th key={column.key}>{column.label}</th>
-            ))}  {showActions &&(
-              <th>Actions</th>
-             )} 
+            ))}{" "}
+            {showActions && <th>Actions</th>}
           </tr>
         </thead>
         <tbody>
           {slicedRows.map((row: any, index) => (
-            <tr key={index} onClick={() => onRowClick && onRowClick(row)}> {/* Add onClick handler */}
+            <tr key={index} onClick={() => onRowClick && onRowClick(row)}>
+              {" "}
               {columns.map((column) => (
-  <td key={column.key}>
-    {console.log(column.key)} {/* Log column key for debugging */}
-        {column.key === 'date' ? formatDate((row as any)[column.key]) : (row as any)[column.key]}
-  </td>
-))}
-
+                <td key={column.key}>
+                  {console.log(column.key)} 
+                  {column.key === "date"
+                    ? formatDate((row as any)[column.key])
+                    : (row as any)[column.key]}
+                </td>
+              ))}
               <td>
-                
-              {showActions &&(
-                <ButtonGroup>
-                  <Button
-                    variant="outlined" color="warning"
-                    sx={{ height: '30px', width: '50%' }} // Adjust the height as needed
-                    style={{ fontSize: 'medium' }}
-                    startIcon={<EditIcon />}
-                    onClick={() => onEdit && onEdit(row)} // Pass the row data to the edit function
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="outlined" color="error"
-                    sx={{ height: '30px' }} // Adjust the height as needed
-                    style={{ fontSize: 'medium' }}
-                    startIcon={<DeleteOutlineIcon />}
-                    onClick={() => onDelete && onDelete(row.id)} // Implement delete functionality if needed
-                  >
-                    Delete
-                  </Button>
-                </ButtonGroup>
-              )}
+                {showActions && (
+                  <ButtonGroup>
+                    <Button
+                      variant="outlined"
+                      color="warning"
+                      sx={{ height: "30px", width: "50%" }} // Adjust the height as needed
+                      style={{ fontSize: "medium" }}
+                      startIcon={<EditIcon />}
+                      onClick={() => onEdit && onEdit(row)} // Pass the row data to the edit function
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      sx={{ height: "30px" }} // Adjust the height as needed
+                      style={{ fontSize: "medium" }}
+                      startIcon={<DeleteOutlineIcon />}
+                      onClick={() => onDelete && onDelete(row.id)} // Implement delete functionality if needed
+                    >
+                      Delete
+                    </Button>
+                  </ButtonGroup>
+                )}
               </td>
             </tr>
           ))}
