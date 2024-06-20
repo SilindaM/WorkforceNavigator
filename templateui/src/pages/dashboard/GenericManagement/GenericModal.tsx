@@ -1,29 +1,23 @@
 import React, { useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
+import { Modal, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
-interface FormField {
-  controlId: string;
-  label: string;
-  value: any;
-  onChange: (value: any) => void;
-  disabled?: boolean;
-  options?: { value: any; label: string }[];
-  type?: string; // Add type field for different input types
-}
 
 interface IProps {
   isOpen: boolean;
   closeModal: () => void;
   title: string;
-  formFields: FormField[];
+  formFields: {
+    controlId: string;
+    label: string;
+    value: any;
+    onChange: (value: any) => void;
+    options?: { value: any; label: string }[];
+    type?: string;
+  }[];
   handleSubmit: () => void;
   selectedEntity?: any;
-  updateEntity?: (id: number, data: any) => Promise<void>;
+  updateEntity?: (id: any, data: any) => Promise<void>;
   addEntity?: (data: any) => Promise<void>;
   mode: "edit" | "add";
   initialValues?: { [key: string]: any } | null;

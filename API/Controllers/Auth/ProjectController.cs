@@ -54,7 +54,8 @@ namespace API.Controllers.Auth
       return StatusCode(result.StatusCode, result.Message);
     }
 
-    [HttpPut("{id}")]
+    [HttpPost]
+    [Route("UpdateProject")]
     [ProducesResponseType(typeof(Project), 200)] // Define the response type for successful update
     [ProducesResponseType(typeof(IDictionary<string, string[]>), 400)] // Define the response type for validation errors
     [ProducesResponseType(404)] // Define the response type for not found
@@ -86,6 +87,5 @@ namespace API.Controllers.Auth
       }
       return Ok(result);
     }
-
   }
 }
