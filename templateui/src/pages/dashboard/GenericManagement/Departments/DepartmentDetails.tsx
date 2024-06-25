@@ -30,8 +30,8 @@ const DepartmentDetails = ({ selectedDepartment }: IProps) => {
 
   return (
     <TableField
-    rows={departmentUserJobTitleTeam}
-    columns={columns}
+      rows={departmentUserJobTitleTeam}
+      columns={columns}
       showActions={false}
     />
   );

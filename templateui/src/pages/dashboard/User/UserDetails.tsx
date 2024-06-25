@@ -55,7 +55,7 @@ const UserDetails = ({ username }: IProps) => {
   const [jobTitles, setJobTitles] = useState<IJobTitleDto[]>([]);
 
   const UpdateUserDetails = async (updateUsername: string, userDetail: UserDetailsUpdateDto) => {
-    await GenericCrudOperations.update(UPDATE_USER_DETAILS, updateUsername, userDetails, setLoading);
+    await GenericCrudOperations.update(UPDATE_USER_DETAILS, updateUsername, userDetail, setLoading);
   };
 
   const getJobTitles = async () => {
@@ -79,7 +79,7 @@ const UserDetails = ({ username }: IProps) => {
     getMyLeaves();
     getAllDepartments();
     getJobTitles();
-    setUserDetails(undefined);
+    setUserDetails(userDetails);
   }, [username]);
 
   const Gender = [
@@ -89,6 +89,7 @@ const UserDetails = ({ username }: IProps) => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
+
     const { name, value } = event.target;
     setUserDetails(
       (
@@ -126,6 +127,7 @@ const UserDetails = ({ username }: IProps) => {
       departmentName,
     };
     UpdateUserDetails(username, updateData);
+    console.log(username,"And ",updateData);
   };
 
   return (
