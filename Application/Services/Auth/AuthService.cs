@@ -167,10 +167,7 @@
       await roleManager.CreateAsync(new IdentityRole(StaticUserRoles.USER));
 
       return ResponseHelper.CreateResponse(true, 200, "Roles Seeding Done Successfully");
-
     }
-
-
 
     public async Task<GeneralServiceResponseDto> UpdateRoleAsync(ClaimsPrincipal User, UpdateRoleDto updateRoleDto)
     {
@@ -269,6 +266,7 @@
       var userInfor = await GenerateUserInfo(user, roles,userJobTitleService);
       return userInfor;
     }
+
     private async Task<UserDetailsDto> GenerateUserInfo(ApplicationUser user, IList<string> roles, IUserJobTitleService userJobTitleService)
     {
       var details = await userJobTitleService.GetJobTitleForUser(user.UserName);

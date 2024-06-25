@@ -6,6 +6,7 @@ export const REGISTER_URL = '/Auth/register';
 export const LOGIN_URL = '/Auth/login';
 export const ME_URL = '/Auth/me';
 export const UPDATE_ROLE_URL = '/Auth/UpdateRoles';
+export const UPDATE_USER_URL = '/Auth/update';
 
 //USERS
 

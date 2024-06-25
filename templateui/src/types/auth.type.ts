@@ -78,3 +78,21 @@ export enum Seniority {
   Senior = "Senior",
   Lead = "Lead"
 }
+
+enum Gender {
+  Male,
+  Female,
+  Other // Assuming there's a need for other options
+}
+
+export interface IUpdateUserDetailsDto {
+  firstName: string;
+  lastName: string;
+  roles: string[];
+  gender: Gender;
+  jobTitle?: string;
+  salary?: number;
+  lineManager?: string;
+  department: string;
+  seniority: Seniority;
+}

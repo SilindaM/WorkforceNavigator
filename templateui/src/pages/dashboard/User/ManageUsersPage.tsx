@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Segment, Container, Header, GridColumn } from "semantic-ui-react";
-import UsersManagementPage from "../UserManagementPage";
+import UsersManagementPage from "./UserManagementPage";
 import UserDetails from "./UserDetails";
 
 const ManageUsersPage = () => {

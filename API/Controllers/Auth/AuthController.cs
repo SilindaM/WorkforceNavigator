@@ -126,6 +126,7 @@
     //    return NotFound("Username not found");
     //  }
     //}
+
     [HttpGet]
     [Route("userDetails/{username}")]
     public async Task<ActionResult<UserDetailsDto>> GetUserExtraDetailsByUsername([FromRoute] string username)
@@ -149,7 +150,7 @@
     }
 
     [HttpPost]
-    [Route("update/{updateUsername}")]
+    [Route("update")]
     public async Task<ActionResult<GeneralServiceResponseDto>> UpdateUserDetails([FromRoute] string updateUsername, [FromBody]UpdateUserDetailsDto userDetailsDto)
     {
       try

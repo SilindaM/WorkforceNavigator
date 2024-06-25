@@ -10,7 +10,6 @@ import UserPage from './UserPage';
 import InboxPage from '../pages/dashboard/Messages/InboxPage';
 import SendMessagePage from '../pages/dashboard/Messages/SendMessagePage';
 import ManagerPage from '../pages/dashboard/ManagerPage';
-import AdminPage from '../pages/dashboard/AdminPage';
 import SystemLogsPage from '../pages/dashboard/SystemLogsPage';
 import AllMessagesPage from '../pages/dashboard/Messages/AllMessagesPage';
 import UpdateRolePage from '../pages/dashboard/UpdateRolePage';
@@ -34,6 +33,7 @@ import ManageDepartmentPage from '../pages/dashboard/GenericManagement/Departmen
 import ManageProjectPage from '../pages/dashboard/GenericManagement/Projects/ManageProjectPage';
 import ManageJobTitlePage from '../pages/dashboard/GenericManagement/JobTitles/ManageJobTitlePage';
 import ManageTeamPage from '../pages/dashboard/GenericManagement/Teams/ManageTeamPage';
+import AdminPage from '../pages/dashboard/User/AdminPage';
 
 const GlobalRouter = () => {
     return (
