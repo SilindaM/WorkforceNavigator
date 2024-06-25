@@ -1,10 +1,13 @@
 ﻿namespace Persistence
 {
-using Domain.Enties;
   using Domain.Enties.Leaves;
   using Domain.Enties.TimeSheets;
+  using Domain.Enties;
+  using Domain.Entities;
+  using Domain.Entities.TimeSheets;
   using Domain.Enums;
   using Microsoft.EntityFrameworkCore;
+  using System;
 
   public static class ModelBuilderExtensions
   {
@@ -135,6 +138,7 @@ using Domain.Enties;
             {
               Id = i + 1,
               TeamName = $"Team {i + 1}",
+              TeamLeader = saUsernames[i], // Assigning team leaders from the usernames
               Description = $"Description for Team {i + 1}",
               CreatedAt = DateTime.Now,
               UpdatedAt = DateTime.Now,

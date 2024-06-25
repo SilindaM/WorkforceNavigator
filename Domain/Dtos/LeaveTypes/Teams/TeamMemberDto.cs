@@ -1,4 +1,4 @@
-﻿namespace Domain.Dtos.Teams
+﻿namespace Domain.Dtos.LeaveTypes.Teams
 {
   using System;
   using System.Collections.Generic;
