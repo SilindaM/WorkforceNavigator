@@ -2,32 +2,30 @@
 {
   using Application.Helpers;
   using Application.Interfaces;
-  using Application.Interfaces.Auth;
-  using Application.Services.Auth;
-  using AutoMapper;
   using Domain.Dtos.General;
   using Domain.Dtos.GeneralAdmin;
   using Domain.Enties.TimeSheets;
-  using Microsoft.EntityFrameworkCore;
   using Persistence;
   using System;
   using System.Collections.Generic;
   using System.Data.Entity;
   using System.Linq;
-  using System.Text;
   using System.Threading.Tasks;
-  using Microsoft.EntityFrameworkCore;
-  using Domain.Dtos.LeaveRequest;
-  using Microsoft.AspNet.Identity;
+  using Microsoft.AspNetCore.Identity;
   using Domain.Account;
+  using Domain.Dtos.LeaveTypes.Teams;
+  using Microsoft.AspNet.Identity.EntityFramework;
+  using IdentityRole = Microsoft.AspNetCore.Identity.IdentityRole;
 
   public class TeamService : ITeamInterface
   {
     private readonly DataContext dataContext;
+    private readonly UserManager<ApplicationUser> userManager;
 
-    public TeamService(DataContext dataContext)
+    public TeamService(DataContext dataContext, UserManager<ApplicationUser> userManager)
     {
       this.dataContext = dataContext;
+      this.userManager = userManager;
     }
     public async Task<GeneralServiceResponseDto> UpdateTeamMembership(string username, int? teamId = null)
     {
@@ -64,9 +62,6 @@
       }
     }
 
-
-
-
     public async Task<IEnumerable<TeamMemberDetailsDto>> GetAllTeamsWithMembersAsync()
     {
       try
@@ -100,6 +95,78 @@
         return Enumerable.Empty<TeamMemberDetailsDto>(); // Return an empty list in case of an error
       }
     }
-  
+
+    public async Task<GeneralServiceResponseDto> CreateTeam(TeamDto teamDto)
+    {
+      try
+      {
+        // Check if a team with the same name already exists
+        var existingTeam =  dataContext.Teams.FirstOrDefault(t => t.TeamName == teamDto.TeamName);
+
+        if (existingTeam != null)
+        {
+          return ResponseHelper.CreateResponse(false, 400, "A team with this name already exists.");
+        }
+
+        // Check if the teamLeader is a Manager
+        var teamLeader = await userManager.FindByNameAsync(teamDto.TeamLeader);
+
+        if (teamLeader == null)
+        {
+          return ResponseHelper.CreateResponse(false, 400, "User Name  not found or invalid.");
+        }
+
+        if (!await IsUserManager(teamDto.TeamLeader))
+        {
+          return ResponseHelper.CreateResponse(false, 403, "The assigned user does not qualify to be team leader");
+        }
+
+        // Create a new team entity and populate it with data from the DTO
+        var newTeam = new Team
+        {
+          TeamName = teamDto.TeamName,
+          TeamLeader = teamDto.TeamLeader,
+          Description = teamDto.Description
+        };
+
+        // Add the new team to the data context
+        await dataContext.Teams.AddAsync(newTeam);
+
+        // Save changes to the database
+        await dataContext.SaveChangesAsync();
+
+        // Return a success response
+        return ResponseHelper.CreateResponse(true, 201, "Team created successfully.");
+      }
+      catch (Exception ex)
+      {
+        // Return an error response in case of an exception
+        return ResponseHelper.CreateResponse(false, 500, $"An error occurred: {ex.Message}");
+      }
+    }
+
+    private async Task<bool> IsUserManager(string username)
+    {
+      try
+      {
+        // Retrieve the user by username
+        var user = await userManager.FindByNameAsync(username);
+
+        if (user == null)
+        {
+          // User not found
+          return false;
+        }
+
+        // Check if the user has the Manager role
+        return await userManager.IsInRoleAsync(user, "Manager");
+      }
+      catch (Exception ex)
+      {
+        // Log or handle the exception as needed
+        // For simplicity, returning false if any exception occurs
+        return false;
+      }
+    }
   }
 }

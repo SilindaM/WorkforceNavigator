@@ -8,6 +8,7 @@
   using Application.Services.GenericServices;
   using Domain.Dtos.Account;
   using Domain.Dtos.GeneralAdmin;
+  using Domain.Dtos.LeaveTypes.Teams;
   using Domain.Enties.TimeSheets;
   using Domain.Entities;
   using FluentResults;
@@ -49,7 +50,7 @@
     [HttpPost]
     public async Task<IActionResult> CreateTeam([FromBody] TeamDto teamDto)
     {
-      var result = await _teamService.CreateAsync(teamDto);
+      var result = await teamInterface.CreateTeam(teamDto);
       if (result.IsSucceed)
       {
         return Ok(result.Message);
