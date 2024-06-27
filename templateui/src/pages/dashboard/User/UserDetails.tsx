@@ -164,17 +164,9 @@ const UserDetails = ({ username }: IProps) => {
           </Form.Group>
           <Form.Group widths="equal">
             <Form.Field>
-              <label>Career Manager</label>
-              <Dropdown
-                selection
-                options={departments.map((dept) => ({
-                  key: dept.id,
-                  text: dept.departmentName,
-                  value: dept.departmentName,
-                }))}
-                defaultValue={userDetails?.lineManager}
-              />
-            </Form.Field>
+              <label>Line Manager</label>
+              <input type="text" value={userDetails?.lineManager} disabled />
+            </Form.Field> 
             <Form.Field>
               <label>Level</label>
               <input
