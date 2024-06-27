@@ -91,9 +91,9 @@
       return StatusCode(result.StatusCode, result.Message);
     }
     [HttpPost("add-member")]
-    public async Task<IActionResult> AddTeamMember( string username, int teamId)
+    public async Task<IActionResult> AddTeamMember(string username, int teamId)
     {
-      var response = await teamInterface.UpdateTeamMembership(username,teamId);
+      var response = await teamInterface.UpdateTeamMembership(username, teamId);
       return StatusCode(response.StatusCode, response);
     }
 

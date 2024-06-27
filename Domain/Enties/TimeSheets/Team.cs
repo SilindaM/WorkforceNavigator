@@ -14,6 +14,7 @@
     public string Description { get; set; }
     public string TeamLeader { get; set; }
     public IEnumerable<Project> Project { get; set; }
-    public IEnumerable<ApplicationUser> TeamMembers { get; set; }
+    // Navigation property for many-to-many relationship with ApplicationUser
+    public ICollection<UserTeam> UserTeams { get; set; }
   }
 }

@@ -7,6 +7,7 @@
   public class TeamMemberDetailsDto
   {
     public string TeamName { get; set; }
+    public string TeamLeader { get; set; }
     public List<Project> Projects { get; set; } = new List<Project>();
 
     public List<MemberDetails> MemberDetails { get; set; }
