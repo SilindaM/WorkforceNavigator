@@ -29,6 +29,7 @@ namespace Persistence
     public DbSet<LeaveType> LeaveTypes { get; set; }
     public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
     public DbSet<TimesheetEntry> TimesheetEntries { get; set; }
+    public DbSet<UserTeam> UserTeams { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -72,10 +73,33 @@ namespace Persistence
         e.ToTable("RoleClaims");
       });
 
+      builder.Entity<UserTeam>()
+            .Property(ut => ut.Id)
+            .ValueGeneratedOnAdd();
+
       builder.Entity<TimesheetEntry>()
           .HasOne(te => te.Project)
           .WithMany(p => p.TimesheetEntries)
           .HasForeignKey(te => te.ProjectId);
+      builder.Entity<UserTeam>()
+
+    .HasKey(ut => new { ut.UserId, ut.TeamId });
+
+      builder.Entity<UserTeam>()
+          .HasOne(ut => ut.User)
+          .WithMany(u => u.UserTeams)
+          .HasForeignKey(ut => ut.UserId);
+
+      builder.Entity<UserTeam>()
+          .HasOne(ut => ut.Team)
+          .WithMany(t => t.UserTeams)
+          .HasForeignKey(ut => ut.TeamId);
+
+      builder.Entity<ApplicationUser>(entity =>
+      {
+        entity.Property(e => e.Salary)
+            .HasColumnType("decimal(18, 2)");
+      });
 
       //entity.HasOne(d => d.Client)
       //    .WithMany(p => p.ProjectDto)
