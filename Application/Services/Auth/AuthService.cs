@@ -305,7 +305,6 @@
       user.LastName = userDetailsDto.LastName;
       user.Gender = userDetailsDto.Gender;
       user.Salary = userDetailsDto.Salary;
-      user.LineManager = userDetailsDto.LineManager;
       user.Seniority = userDetailsDto.Seniority;
       user.JobTitle.Title = userDetailsDto.JobTitle; // Assuming JobTitle has a Title property
 
