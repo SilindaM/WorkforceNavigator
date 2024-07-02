@@ -8,6 +8,7 @@ export interface UserDetailsDto {
     gender?: string;
     jobTitle?: string;
     salary?: number;
+    phoneNumber?:string;
     lineManager?: string;
     department: string;
     seniority: string;
@@ -23,13 +24,10 @@ export interface DepartmentDto{
 export interface UserDetailsUpdateDto {
     firstName: string;
     lastName: string;
-    email: string;
-    roles: string[];
     gender?: string;
     jobTitle?: string;
     salary?: number;
-    lineManager?: string;
-    departmentName: string;
+    phoneNumber:string;
 }
 
 export interface DepartmentUserJobTitleTeam{

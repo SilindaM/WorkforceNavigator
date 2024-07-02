@@ -46,41 +46,68 @@ const UserDetails = ({ username }: IProps) => {
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [gender, setGender] = useState<string>("");
-  const [cellphone, setCellphone] = useState<number>(0);
+  const [seniority, setSeniority] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [salary, setSalary] = useState<number>(0);
   const [lineManager, setLineManager] = useState<string>("");
   const [jobTitle, setJobtitle] = useState<string>("");
-  const [departmentName, setdepartmentName] = useState<string>("");
   const [roles, setRoles] = useState<RolesEnum[]>([]);
-  const [departments, setDepartments] = useState<DepartmentDto[]>([]);
   const [jobTitles, setJobTitles] = useState<IJobTitleDto[]>([]);
 
-  const UpdateUserDetails = async (updateUsername: string, userDetail: UserDetailsUpdateDto) => {
-    await GenericCrudOperations.update(UPDATE_USER_DETAILS, updateUsername, userDetail, setLoading);
-  };
+
+// For updating user details based on the username
+const UpdateUserDetails = async (
+  updateUsername: string,
+  userDetail: UserDetailsUpdateDto
+) => {
+  await GenericCrudOperations.updateString(
+    UPDATE_USER_DETAILS,
+    { updateUsername: updateUsername },
+    userDetail,
+    setLoading
+  );
+};
 
   const getJobTitles = async () => {
-    await GenericCrudOperations.getAll(ALL_JOBTITLES, setJobTitles, setLoading);
-  };
-
-  const getAllDepartments = async () => {
-    await GenericCrudOperations.getAll(ALL_DEPARTMENTS, setDepartments, setLoading);
+  await GenericCrudOperations.getAll(ALL_JOBTITLES, setJobTitles, setLoading);
   };
 
   const getMyLeaves = async () => {
-    await GenericCrudOperations.getAll(MY_LEAVE_REQUESTS, setLeaves, setLoading);
+    await GenericCrudOperations.getAll(
+      MY_LEAVE_REQUESTS,
+      setLeaves,
+      setLoading
+    );
   };
 
   const getUserDetails = async (username: string) => {
-    await GenericCrudOperations.getDetails(USER_DETAILS_URL, username, setUserDetails, setLoading);
+    await GenericCrudOperations.getDetails(
+      USER_DETAILS_URL,
+      username,
+      setUserDetails,
+      setLoading
+    );
   };
 
   useEffect(() => {
     getUserDetails(username);
     getMyLeaves();
-    getAllDepartments();
     getJobTitles();
-    setUserDetails(userDetails);
   }, [username]);
+
+  useEffect(() => {
+    if (userDetails) {
+      setFirstName(userDetails.firstName || "");
+      setLastName(userDetails.lastName || "");
+      setEmail(userDetails.email || "");
+      setGender(userDetails.gender || "");
+      setLineManager(userDetails.lineManager || "");
+      setJobtitle(userDetails.jobTitle || "");
+      setPhoneNumber(userDetails.phoneNumber || "");
+      setSalary(userDetails.salary || 0);
+      setSeniority(userDetails.seniority || "")
+    }
+  }, [userDetails]);
 
   const Gender = [
     { key: "male", text: "Male", value: "male" },
@@ -88,46 +115,51 @@ const UserDetails = ({ username }: IProps) => {
   ];
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-
     const { name, value } = event.target;
-    setUserDetails(
-      (
-        prevDetails = {
-          id: "", // Provide default values for all properties
-          firstName: "",
-          lastName: "",
-          email: "",
-          username: "",
-          roles: [],
-          gender: "",
-          jobTitle: "",
-          salary: 0,
-          lineManager: "",
-          department: "",
-          seniority: "",
-          joiningDate: new Date(),
-        }
-      ) => ({
-        ...prevDetails,
-        [name]: value,
-      })
-    );
+    switch (name) {
+      case "firstName":
+        setFirstName(value);
+        break;
+      case "lastName":
+        setLastName(value);
+        break;
+      case "email":
+        setEmail(value);
+        break;
+      case "gender":
+        setGender(value);
+        break;
+      case "phoneNumber":
+        setPhoneNumber((value));
+        break;
+      case "lineManager":
+        setLineManager(value);
+        break;
+      case "jobTitle":
+        setJobtitle(value);
+        break;
+      case "salary":
+        setSalary(Number(value));
+        break;
+      case "seniority":
+        setSeniority(value);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleUpdate = () => {
     const updateData: UserDetailsUpdateDto = {
-      email,
       firstName,
       lastName,
       gender,
       jobTitle,
-      lineManager,
-      roles,
-      departmentName,
+      salary,
+      phoneNumber,
     };
+    console.log(username, "And ", updateData); // Log the data before sending
     UpdateUserDetails(username, updateData);
-    console.log(username,"And ",updateData);
   };
 
   return (
@@ -137,18 +169,29 @@ const UserDetails = ({ username }: IProps) => {
           <Form.Group widths="equal">
             <Form.Field>
               <label>First Name</label>
-              <input type="text" defaultValue={userDetails?.firstName} />
+              <input
+                type="text"
+                name="firstName"
+                value={firstName}
+                onChange={handleInputChange}
+              />
             </Form.Field>
             <Form.Field>
               <label>Last Name</label>
-              <input type="text" defaultValue={userDetails?.lastName} />
+              <input
+                type="text"
+                name="lastName"
+                value={lastName}
+                onChange={handleInputChange}
+              />
             </Form.Field>
             <Form.Field>
               <label>Gender</label>
               <Dropdown
                 selection
                 options={Gender}
-                defaultValue={userDetails?.gender}
+                value={gender}
+                onChange={(e, { value }) => setGender(value as string)}
               />
             </Form.Field>
           </Form.Group>
@@ -158,32 +201,68 @@ const UserDetails = ({ username }: IProps) => {
               <input type="text" value={userDetails?.username} disabled />
             </Form.Field>
             <Form.Field>
-              <label>Email</label>
-              <input type="email" defaultValue={userDetails?.email} />
-            </Form.Field>
-          </Form.Group>
-          <Form.Group widths="equal">
-            <Form.Field>
               <label>Line Manager</label>
-              <input type="text" value={userDetails?.lineManager} disabled />
-            </Form.Field> 
+              <input type="text" value={lineManager} disabled />
+            </Form.Field>
             <Form.Field>
-              <label>Level</label>
+              <label>Email</label>
               <input
-                placeholder="Level"
-                type="text"
-                value={userDetails?.seniority}
-                disabled
+                type="email"
+                name="email"
+                value={email}
+                onChange={handleInputChange}
               />
             </Form.Field>
           </Form.Group>
           <Form.Group widths="equal">
             <Form.Field>
+              <label>Job Title</label>
+              <Dropdown
+                selection
+                options={jobTitles.map((title) => ({
+                  key: title.id,
+                  text: title.title,
+                  value: title.title,
+                }))}
+                value={jobTitle}
+                onChange={(e, { value }) => setJobtitle(value as string)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Phone Number</label>
+              <input
+                type="phoneNumber"
+                name="phoneNumber"
+                value={phoneNumber}
+                onChange={handleInputChange}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Seniority</label>
+              <input
+                type="seniority"
+                name="seniority"
+                value={seniority}
+                onChange={handleInputChange}
+              />
+            </Form.Field>
+          </Form.Group>
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>Salary</label>
+              <input
+                type="text"
+                name="salary"
+                value={salary}
+                onChange={handleInputChange}
+              />
+            </Form.Field>
+            <Form.Field>
               <label>Assigned Roles</label>
               <input
                 placeholder="Assigned Roles"
                 type="text"
-                defaultValue={userDetails?.roles || ""}
+                value={roles.join(", ")}
                 disabled
               />
             </Form.Field>
@@ -194,22 +273,12 @@ const UserDetails = ({ username }: IProps) => {
                 type="date"
                 value={
                   userDetails?.joiningDate
-                    ? new Date(userDetails.joiningDate).toISOString().substring(0, 10)
+                    ? new Date(userDetails.joiningDate)
+                        .toISOString()
+                        .substring(0, 10)
                     : ""
                 }
                 disabled
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Job Title</label>
-              <Dropdown
-                selection
-                options={jobTitles.map((title) => ({
-                  key: title.id,
-                  text: title.title,
-                  value: title.title,
-                }))}
-                defaultValue={userDetails?.jobTitle}
               />
             </Form.Field>
           </Form.Group>
@@ -230,14 +299,21 @@ const UserDetails = ({ username }: IProps) => {
             </TableRow>
           </Table.Header>
           <TableBody>
-            {leaves.filter((row) => row.status === Status.Approved).length > 0 ? (
+            {leaves.filter((row) => row.status === Status.Approved).length >
+            0 ? (
               leaves
                 .filter((row) => row.status === Status.Approved)
                 .map((row) => (
                   <TableRow key={row.id}>
-                    <Table.Cell>{new Date(row.startDate).toLocaleDateString()}</Table.Cell>
-                    <Table.Cell>{new Date(row.endDate).toLocaleDateString()}</Table.Cell>
-                    <Table.Cell>{new Date(row.requestedDate).toLocaleDateString()}</Table.Cell>
+                    <Table.Cell>
+                      {new Date(row.startDate).toLocaleDateString()}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {new Date(row.endDate).toLocaleDateString()}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {new Date(row.requestedDate).toLocaleDateString()}
+                    </Table.Cell>
                     <Table.Cell>{row.numberOfDays}</Table.Cell>
                     <Table.Cell>{row.leaveName}</Table.Cell>
                     <Table.Cell>{row.status}</Table.Cell>

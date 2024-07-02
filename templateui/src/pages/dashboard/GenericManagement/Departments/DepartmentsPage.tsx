@@ -20,13 +20,13 @@ const DepartmentsPage = ({ selectedDepartmentId }: IProps) => {
   const [departments, setDepartments] = useState<IDepartmentDto[]>([]);
   const [selectedDepartment, setSelectedDepartment] = useState<IDepartmentDto | null>(null);
   const [departmentName, setDepartmentName] = useState<string | null>(null);
-  const [description, setDescription] = useState<string>("");
+  const [description, setDescription] = useState<string | null>(null);
 
   const handleOpenModal = () => {
     setIsOpen(true);
     setSelectedDepartment(null); // Reset selectedDepartment to null
     setDepartmentName(null); // Reset form fields to empty
-    setDescription("");
+    setDescription(null);
   };
 
   const handleCloseModal = () => {

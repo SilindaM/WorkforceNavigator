@@ -305,9 +305,8 @@
       user.LastName = userDetailsDto.LastName;
       user.Gender = userDetailsDto.Gender;
       user.Salary = userDetailsDto.Salary;
-      user.LineManager = userDetailsDto.LineManager;
-      user.Seniority = userDetailsDto.Seniority;
-      user.JobTitle.Title = userDetailsDto.JobTitle; // Assuming JobTitle has a Title property
+      user.PhoneNumber = userDetailsDto.Phonenumber;
+      user.JobTitle.Title = userDetailsDto .JobTitle; // Assuming JobTitle has a Title property
 
       // Step 3: Save the changes to the database
       await dataContext.SaveChangesAsync();
@@ -317,3 +316,6 @@
     }
   }
 }
+https://localhost:7148/api/Department/UpdateDepartment?id=1
+
+

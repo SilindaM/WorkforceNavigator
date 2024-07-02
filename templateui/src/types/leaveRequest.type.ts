@@ -10,6 +10,7 @@ export interface IMyLeaveRequestDto{
     status : Status;
     isEditing?:boolean;
 }
+
 export enum Status {
     Approved = 'Approved',
     Declined = 'Declined',
@@ -21,11 +22,13 @@ export enum Status {
     endDate:Date;
     comments:string;
   }
+
   export interface IAddLeaveRequestDto{
     startDate:Date;
     endDate:Date;
     leaveTypeid:number;
   }
+  
   export interface ILeaveRequestDto{
     id: number;
     leaveName: string;
