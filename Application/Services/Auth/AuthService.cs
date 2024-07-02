@@ -316,6 +316,4 @@
     }
   }
 }
-https://localhost:7148/api/Department/UpdateDepartment?id=1
-
 
