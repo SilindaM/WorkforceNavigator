@@ -33,12 +33,14 @@ import { IMyLeaveRequestDto, Status } from "../../../types/leaveRequest.type";
 import { RolesEnum } from "../../../types/auth.type";
 import { GenericCrudOperations } from "../../../components/general/GenericCrudOperations";
 import { IJobTitleDto } from "../../../types/JobTitle.type";
+import useAuth from "../../../hooks/useAuth.hook";
 
 interface IProps {
   username: string;
 }
 
 const UserDetails = ({ username }: IProps) => {
+  const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState<UserDetailsDto>();
   const [leaves, setLeaves] = useState<IMyLeaveRequestDto[]>([]);
@@ -156,7 +158,7 @@ const UpdateUserDetails = async (
       gender,
       jobTitle,
       salary,
-      phoneNumber,
+      phoneNumber
     };
     console.log(username, "And ", updateData); // Log the data before sending
     UpdateUserDetails(username, updateData);
@@ -282,9 +284,12 @@ const UpdateUserDetails = async (
               />
             </Form.Field>
           </Form.Group>
-          <Button primary type="submit" onClick={handleUpdate}>
-            Update User Details
-          </Button>
+          (if(user && user.roles.includes('ADMIN') ||  user.roles.includes('OWNER'))
+          {
+            <Button primary type="submit" onClick={handleUpdate}>
+              Update User Details
+            </Button>
+          })
         </Form>
         <Divider horizontal>Upcoming Leaves</Divider>
         <Table size="small" bordered>
