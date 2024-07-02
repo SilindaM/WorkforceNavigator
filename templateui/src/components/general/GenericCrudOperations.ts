@@ -51,6 +51,29 @@ export const GenericCrudOperations = {
     }
   },
   
+  async updateString(resourceUrl: string, queryParams: any, updatedData: any, setLoading: (loading: boolean) => void) {
+    try {
+      // Convert queryParams object to query string
+      const queryString = new URLSearchParams(queryParams).toString();
+      console.log("Query String: ", queryString);
+      console.log("Resource URL: ", resourceUrl);
+      
+      setLoading(true);
+      const response = await axiosInstance.post(`${resourceUrl}?${queryString}`, updatedData);
+      
+      const { data } = response;
+      console.log("Response: ", response);
+      toast.success("Updated Successfully");
+      setLoading(false);
+      return data;
+    } catch (error) {
+      console.error("Error Occurred: ", error);
+      toast.error("Error Occurred Here");
+      setLoading(false);
+      throw error;
+    }
+  },
+
   async remove(resourceUrl: any, id: number, setLoading: (loading: boolean) => void) {
     try {
       setLoading(true);

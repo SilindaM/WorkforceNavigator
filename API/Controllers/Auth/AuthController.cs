@@ -83,6 +83,7 @@
         return StatusCode(updateRoleResult.StatusCode, updateRoleResult.Message);
       }
     }
+
     [HttpPost]
     [Route("me")]
     public async Task<ActionResult<LoginServiceResponseDto>> Me([FromBody] MeDto token)
@@ -151,7 +152,7 @@
 
     [HttpPost]
     [Route("update")]
-    public async Task<ActionResult<GeneralServiceResponseDto>> UpdateUserDetails([FromRoute] string updateUsername, [FromBody]UpdateUserDetailsDto userDetailsDto)
+    public async Task<ActionResult<GeneralServiceResponseDto>> UpdateUserDetails( string updateUsername, [FromBody]UpdateUserDetailsDto userDetailsDto)
     {
       try
       {
