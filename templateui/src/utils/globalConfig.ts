@@ -39,6 +39,7 @@ export const UPDATE_LEAVE_REQUEST_URL = '/LeaveRequest/UpdateLeaveRequest';
 export const NEW_LEAVE_REQUEST_URL = '/LeaveRequest/Create';
 export const PROCESS_LEAVE_REQUEST_URL = '/LeaveRequest/ProcessLeaveRequest';
 export const ALL_LEAVE_REQUEST_URL = '/LeaveRequest/LeaveRequests';
+export const USER_LEAVE_REQUEST_URL ='/LeaveRequest/LeaveRequestsByUsereName'
 
 // Auth Routes
 export const PATH_AFTER_REGISTER = PATH_PUBLIC.login;
@@ -83,7 +84,6 @@ export const UPDATE_JOBTITLE_URL = '/JobTitle/UpdateJobTitle';
 export const DELETE_JOBTITLE_URL = '/JobTitle/DeleteJobTitle';
 export const ALL_JOBTITLES = '/JobTitle';
 export const JOBTITLE_DETAILS = '/JobTitle/JobTitleUserDetailJobTitle';
-
 
 //OTHERS
 export const GENERIC_MANAGEMENT = '/GenericManagement'
