@@ -34,6 +34,7 @@ import { RolesEnum } from "../../../types/auth.type";
 import { GenericCrudOperations } from "../../../components/general/GenericCrudOperations";
 import { IJobTitleDto } from "../../../types/JobTitle.type";
 import useAuth from "../../../hooks/useAuth.hook";
+import UserUpComingLeaveRequestsPage from "../LeaveRequests/UserUpComingLeaveRequestsPage";
 
 interface IProps {
   username: string;
@@ -43,7 +44,6 @@ const UserDetails = ({ username }: IProps) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState<UserDetailsDto>();
-  const [leaves, setLeaves] = useState<IMyLeaveRequestDto[]>([]);
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -56,30 +56,21 @@ const UserDetails = ({ username }: IProps) => {
   const [roles, setRoles] = useState<RolesEnum[]>([]);
   const [jobTitles, setJobTitles] = useState<IJobTitleDto[]>([]);
 
-
-// For updating user details based on the username
-const UpdateUserDetails = async (
-  updateUsername: string,
-  userDetail: UserDetailsUpdateDto
-) => {
-  await GenericCrudOperations.updateString(
-    UPDATE_USER_DETAILS,
-    { updateUsername: updateUsername },
-    userDetail,
-    setLoading
-  );
-};
-
-  const getJobTitles = async () => {
-  await GenericCrudOperations.getAll(ALL_JOBTITLES, setJobTitles, setLoading);
-  };
-
-  const getMyLeaves = async () => {
-    await GenericCrudOperations.getAll(
-      MY_LEAVE_REQUESTS,
-      setLeaves,
+  // For updating user details based on the username
+  const UpdateUserDetails = async (
+    updateUsername: string,
+    userDetail: UserDetailsUpdateDto
+  ) => {
+    await GenericCrudOperations.updateString(
+      UPDATE_USER_DETAILS,
+      { updateUsername: updateUsername },
+      userDetail,
       setLoading
     );
+  };
+
+  const getJobTitles = async () => {
+    await GenericCrudOperations.getAll(ALL_JOBTITLES, setJobTitles, setLoading);
   };
 
   const getUserDetails = async (username: string) => {
@@ -93,7 +84,6 @@ const UpdateUserDetails = async (
 
   useEffect(() => {
     getUserDetails(username);
-    getMyLeaves();
     getJobTitles();
   }, [username]);
 
@@ -107,7 +97,7 @@ const UpdateUserDetails = async (
       setJobtitle(userDetails.jobTitle || "");
       setPhoneNumber(userDetails.phoneNumber || "");
       setSalary(userDetails.salary || 0);
-      setSeniority(userDetails.seniority || "")
+      setSeniority(userDetails.seniority || "");
     }
   }, [userDetails]);
 
@@ -132,7 +122,7 @@ const UpdateUserDetails = async (
         setGender(value);
         break;
       case "phoneNumber":
-        setPhoneNumber((value));
+        setPhoneNumber(value);
         break;
       case "lineManager":
         setLineManager(value);
@@ -158,7 +148,7 @@ const UpdateUserDetails = async (
       gender,
       jobTitle,
       salary,
-      phoneNumber
+      phoneNumber,
     };
     console.log(username, "And ", updateData); // Log the data before sending
     UpdateUserDetails(username, updateData);
@@ -284,53 +274,18 @@ const UpdateUserDetails = async (
               />
             </Form.Field>
           </Form.Group>
-          (if(user && user.roles.includes('ADMIN') ||  user.roles.includes('OWNER'))
-          {
-            <Button primary type="submit" onClick={handleUpdate}>
-              Update User Details
-            </Button>
-          })
+          <Button primary type="submit" onClick={handleUpdate}>
+            Update User Details
+          </Button>
         </Form>
         <Divider horizontal>Upcoming Leaves</Divider>
         <Table size="small" bordered>
-          <Table.Header>
-            <TableRow>
-              <Table.HeaderCell>Start Date</Table.HeaderCell>
-              <Table.HeaderCell>End Date</Table.HeaderCell>
-              <Table.HeaderCell>Requested Date</Table.HeaderCell>
-              <Table.HeaderCell>Number Of Days</Table.HeaderCell>
-              <Table.HeaderCell>Leave Name</Table.HeaderCell>
-              <Table.HeaderCell>Status</Table.HeaderCell>
-            </TableRow>
-          </Table.Header>
           <TableBody>
-            {leaves.filter((row) => row.status === Status.Approved).length >
-            0 ? (
-              leaves
-                .filter((row) => row.status === Status.Approved)
-                .map((row) => (
-                  <TableRow key={row.id}>
-                    <Table.Cell>
-                      {new Date(row.startDate).toLocaleDateString()}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {new Date(row.endDate).toLocaleDateString()}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {new Date(row.requestedDate).toLocaleDateString()}
-                    </Table.Cell>
-                    <Table.Cell>{row.numberOfDays}</Table.Cell>
-                    <Table.Cell>{row.leaveName}</Table.Cell>
-                    <Table.Cell>{row.status}</Table.Cell>
-                  </TableRow>
-                ))
-            ) : (
-              <TableRow>
-                <Table.Cell colSpan={6} textAlign="center">
-                  No upcoming leave requests
-                </Table.Cell>
-              </TableRow>
-            )}
+            <TableRow>
+              <Table.Cell>
+                <UserUpComingLeaveRequestsPage username={username} />
+              </Table.Cell>
+            </TableRow>
           </TableBody>
         </Table>
       </Segment>
